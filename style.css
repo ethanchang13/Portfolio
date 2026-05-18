@@ -1,0 +1,1404 @@
+/* =============================================================
+   Journey Map Portfolio — style.css
+   Custom palette + custom illustrated map look. No frameworks.
+   ============================================================= */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --navy:        #0e1430;   /* deep navy background */
+  --navy-2:      #161d3f;
+  --navy-3:      #222a55;
+  --road:        #e7d6a6;   /* warm road beige */
+  --road-stripe: #fff6dc;
+  --map-bg:      #14224a;   /* base map color */
+  --map-grass:   #2f5d4a;   /* soft green */
+  --map-grass-2: #3d7a5e;
+  --map-water:   #2c4f8a;
+  --tree:        #234e3d;
+  --accent:      #ff8b5a;   /* bright accent (markers, car) */
+  --accent-2:    #ffd166;
+  --accent-dark: #c25a32;
+  --cream:       #fff7ec;   /* modal cards */
+  --ink:         #1a2240;
+  --ink-soft:    #4a5078;
+  --ink-mute:    #8a90b3;
+  --line:        rgba(255,255,255,.10);
+
+  --shadow-card: 0 24px 60px -20px rgba(0,0,0,.5), 0 8px 18px -8px rgba(0,0,0,.35);
+  --shadow-soft: 0 10px 30px -12px rgba(0,0,0,.4);
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: #e8ecff;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+button { font-family: inherit; cursor: pointer; }
+kbd {
+  font-family: var(--font-display);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.2);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-size: .82em;
+  color: #fff;
+  letter-spacing: .02em;
+}
+.accent { color: var(--accent-2); }
+
+/* =============================================================
+   WELCOME OVERLAY
+   ============================================================= */
+.welcome {
+  position: fixed; inset: 0; z-index: 60;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(900px 600px at 30% 20%, rgba(255,139,90,.18), transparent 60%),
+    radial-gradient(800px 600px at 80% 80%, rgba(255,209,102,.10), transparent 60%),
+    var(--navy);
+  padding: 24px;
+  animation: fade-in .5s var(--ease);
+}
+.welcome__card {
+  max-width: 620px;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 36px 36px 32px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-card);
+}
+.welcome__eyebrow {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--accent-2);
+  padding: 6px 12px;
+  border: 1px solid rgba(255,209,102,.35);
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+.welcome__title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.6vw, 44px);
+  margin: 4px 0 14px;
+  line-height: 1.05;
+  letter-spacing: -.01em;
+}
+.welcome__lede {
+  font-size: 16px; line-height: 1.6; color: #c7cdf0;
+  margin: 0 auto 22px;
+  max-width: 48ch;
+}
+.welcome__keys {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 8px 18px; padding: 0; margin: 0 0 22px;
+  list-style: none; font-size: 13px; color: #c7cdf0;
+}
+.welcome__keys li { display: inline-flex; align-items: center; gap: 6px; }
+.welcome__hint { color: var(--ink-mute); font-size: 12px; margin: 14px 0 0; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 0; border-radius: 999px;
+  padding: 14px 24px;
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 15px;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s;
+}
+.btn--primary {
+  background: var(--accent); color: #2a1408;
+  box-shadow: 0 10px 24px -10px rgba(255,139,90,.7);
+}
+.btn--primary:hover { transform: translateY(-1px); background: #ff9a6e; }
+.btn--ghost {
+  background: rgba(255,255,255,.06); color: #e8ecff;
+  border: 1px solid var(--line);
+}
+.btn--ghost:hover { background: rgba(255,255,255,.1); }
+
+/* =============================================================
+   TOP HUD NAV
+   ============================================================= */
+.hud-top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 22px;
+  background: linear-gradient(180deg, rgba(14,20,48,.85), rgba(14,20,48,0));
+  pointer-events: none;
+}
+.hud-top > * { pointer-events: auto; }
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; color: #fff;
+  font-family: var(--font-display); font-weight: 700;
+  background: rgba(14,20,48,.7);
+  padding: 10px 14px; border-radius: 999px;
+  border: 1px solid var(--line);
+}
+.brand__mark { color: var(--accent-2); font-size: 18px; }
+.hud-nav {
+  display: flex; gap: 4px;
+  background: rgba(14,20,48,.7);
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.hud-nav__link {
+  background: transparent; border: 0; color: #d1d6f2;
+  padding: 8px 14px; border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  transition: background .2s, color .2s;
+}
+.hud-nav__link:hover { background: rgba(255,255,255,.08); color: #fff; }
+
+/* =============================================================
+   MAP VIEW
+   ============================================================= */
+.map-view {
+  position: relative;
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  background: #06091e;
+}
+/* Parallax layers — each is a wide horizontal "world" the JS translates
+   at a different speed. Sky scrolls slowest, mountains medium, world 1x. */
+.sky-layer, .mountains-layer, .map-world {
+  position: absolute; left: 0; top: 0;
+  height: 100%;
+  aspect-ratio: 3600 / 900;
+  will-change: transform;
+  transform: translate(0, 0);
+}
+.sky-layer       { z-index: 1; }
+.mountains-layer { z-index: 2; }
+.map-world       { z-index: 3; }
+.sky-svg, .map {
+  display: block;
+  width: 100%; height: 100%;
+}
+
+/* ---------- Twinkling stars (DOM, generated by JS) ---------- */
+.stars { position: absolute; inset: 0; pointer-events: none; }
+.star {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: .8;
+  animation: twinkle var(--dur, 3s) ease-in-out var(--delay, 0s) infinite;
+  box-shadow: 0 0 4px #fff;
+}
+.star.is-big { width: 3px; height: 3px; box-shadow: 0 0 6px #fff, 0 0 14px #aac8ff; }
+@keyframes twinkle {
+  0%, 100% { opacity: .25; transform: scale(.7); }
+  50%      { opacity: 1;   transform: scale(1.2); }
+}
+
+/* ---------- Shooting stars ----------
+   Streaks UPWARD (and slightly to the right) like a slow rising
+   meteor / lantern trail, instead of the previous downward drift.
+   The bar is rotated so its bright "head" leads the motion vector
+   and the transparent tail trails behind. Slower duration and a
+   longer visible window so each streak reads clearly. */
+.shooter {
+  position: absolute;
+  width: 180px; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.85) 80%, #fff);
+  filter: blur(.4px);
+  opacity: 0;
+  pointer-events: none;
+  animation: shoot 14s linear infinite;
+}
+/* Place starts in the LOWER half of the sky so they have room to
+   streak upward into the upper sky without clipping out of view. */
+.shooter--1 { top: 55%; left: 14%; animation-delay: 0s; }
+.shooter--2 { top: 68%; left: 42%; animation-delay: 5s;  animation-duration: 16s; }
+.shooter--3 { top: 50%; left: 70%; animation-delay: 9s;  animation-duration: 18s; }
+@keyframes shoot {
+  /* Gentle ~25° upward rake. Motion vector (+440, -200) gives a
+     long shallow streak instead of a near-vertical spike. The bar
+     is rotated -24deg so the bright "head" leads the motion and
+     the transparent tail trails behind. */
+  0%   { opacity: 0; transform: translate(0, 0)          rotate(-24deg); animation-timing-function: cubic-bezier(.25,.6,.4,1); }
+  2%   { opacity: 1; }
+  20%  { opacity: 1; transform: translate(440px, -200px) rotate(-24deg); }
+  22%  { opacity: 0; transform: translate(440px, -200px) rotate(-24deg); }
+  100% { opacity: 0; transform: translate(440px, -200px) rotate(-24deg); }
+}
+
+/* ---------- Drifting clouds ----------
+   Each cloud is rendered from an inline-SVG silhouette via a CSS
+   mask, so we get a true puffy-cumulus outline (multiple bumps on
+   top, smooth concave underside) instead of stacked circles. The
+   element itself is just a coloured rectangle that the mask cuts
+   into a cloud shape — that lets `--cloud-color` swap between dark
+   and light themes without changing the silhouette. */
+.cloud {
+  position: absolute;
+  width: 200px; height: 90px;
+  --cloud-color: rgba(255,255,255,.12);
+  background-color: var(--cloud-color);
+  -webkit-mask-image: var(--cloud-mask);
+          mask-image: var(--cloud-mask);
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  --cloud-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100' preserveAspectRatio='none'><path d='M 30 78 C 8 78 4 56 22 50 C 14 30 38 18 54 32 C 60 12 92 10 102 30 C 110 14 140 18 144 38 C 168 36 184 58 166 72 C 158 88 110 92 80 80 C 60 90 40 88 30 78 Z' fill='white'/></svg>");
+  filter: blur(.6px);
+  pointer-events: none;
+  animation: cloud-drift 60s linear infinite;
+}
+/* Variant masks so each cloud has a slightly different silhouette
+   instead of the same stamp repeated across the sky. */
+.cloud--2 {
+  --cloud-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 110' preserveAspectRatio='none'><path d='M 26 86 C 4 84 4 60 24 56 C 18 32 50 22 64 38 C 74 18 100 18 110 34 C 122 18 152 22 158 42 C 178 38 196 56 188 72 C 200 84 184 96 162 92 C 148 104 110 104 86 92 C 60 102 38 96 26 86 Z' fill='white'/></svg>");
+}
+.cloud--3 {
+  --cloud-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100' preserveAspectRatio='none'><path d='M 28 80 C 10 78 6 56 26 52 C 22 32 46 24 60 38 C 70 18 96 22 104 36 C 116 22 142 28 144 46 C 168 46 178 64 162 76 C 152 90 102 90 78 80 C 56 88 38 86 28 80 Z' fill='white'/></svg>");
+}
+.cloud--4 {
+  --cloud-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 110' preserveAspectRatio='none'><path d='M 30 88 C 8 84 6 60 28 56 C 22 34 52 24 66 40 C 76 20 104 18 116 36 C 130 20 162 24 168 44 C 192 40 214 58 204 76 C 220 90 196 100 170 96 C 156 108 110 108 86 96 C 58 106 38 100 30 88 Z' fill='white'/></svg>");
+}
+.cloud--1 { top: 18%; left: 10%; }
+.cloud--2 { top: 14%; left: 42%; width: 240px; height: 100px; animation-duration: 80s; }
+.cloud--3 { top: 24%; left: 70%; width: 200px; height: 92px; animation-duration: 70s; animation-delay: -25s; }
+.cloud--4 { top: 30%; left: 22%; width: 260px; height: 110px; animation-duration: 90s; animation-delay: -40s; }
+@keyframes cloud-drift {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(140px); }
+}
+.kbd-arrow {
+  display: inline-grid; place-items: center;
+  min-width: 22px; padding: 2px 4px;
+  font-size: 13px; line-height: 1;
+}
+
+/* ---------- Lamppost glow flicker ---------- */
+.lamp-bulb {
+  filter: drop-shadow(0 0 6px #ffe9a8) drop-shadow(0 0 14px #ffd166);
+  animation: lamp-flicker 4s ease-in-out infinite;
+  transform-origin: center;
+}
+@keyframes lamp-flicker {
+  0%, 100% { opacity: 1; }
+  47%      { opacity: 1; }
+  48%      { opacity: .55; }
+  49%      { opacity: 1; }
+  82%      { opacity: 1; }
+  83%      { opacity: .7; }
+  84%      { opacity: 1; }
+}
+
+/* ---------- Tree sway ---------- */
+.tree { animation: sway 5s ease-in-out infinite; }
+.tree:nth-child(2n) { animation-duration: 6.5s; animation-delay: -2s; }
+.tree:nth-child(3n) { animation-duration: 4.2s; animation-delay: -1s; }
+@keyframes sway {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50%      { transform: rotate(1.5deg); }
+}
+
+/* ---------- Castle beam rotation ---------- */
+.castle-beam { animation: beam-spin 6s linear infinite; transform-origin: 3452px 478px; }
+@keyframes beam-spin {
+  0%   { transform: rotate(-30deg); }
+  100% { transform: rotate(330deg); }
+}
+
+/* ---------- Rocket flame flicker ---------- */
+.rocket-flame {
+  transform-origin: 3000px 660px;
+  animation: flame-flicker .15s linear infinite;
+  filter: drop-shadow(0 0 8px #ffb24c);
+}
+@keyframes flame-flicker {
+  0%, 100% { transform: scale(1, 1); }
+  50%      { transform: scale(1.15, 1.4); }
+}
+
+/* ---------- ROCKET LAUNCH SEQUENCE ---------- */
+/* Vehicle group lifts off the pad. */
+.rocket-vehicle { transform-origin: 3000px 660px; }
+.rocket-pad.is-launching .rocket-vehicle {
+  animation: rocket-liftoff 4.6s cubic-bezier(.35, 0, .9, .9) forwards;
+}
+@keyframes rocket-liftoff {
+  0%   { transform: translateY(0)     scale(1); }
+  8%   { transform: translateY(-4px)  scale(1); }     /* pad shake */
+  12%  { transform: translateY(2px)   scale(1); }
+  16%  { transform: translateY(-2px)  scale(1); }
+  100% { transform: translateY(-1100px) scale(.85); } /* zooms off-screen */
+}
+/* Flame grows huge during launch. */
+.rocket-pad.is-launching .rocket-flame {
+  animation: rocket-flame-burst .15s linear infinite;
+  filter: drop-shadow(0 0 24px #ff6a3a) drop-shadow(0 0 12px #ffd166);
+}
+@keyframes rocket-flame-burst {
+  0%, 100% { transform: scale(2.4, 4.5); }
+  50%      { transform: scale(3.1, 5.6); }
+}
+/* Smoke billows out at the base. */
+.rocket-pad.is-launching .rocket-smoke circle {
+  animation: smoke-puff 3s ease-out forwards;
+}
+.rocket-pad.is-launching .rocket-smoke circle:nth-child(1) { animation-delay: .05s; }
+.rocket-pad.is-launching .rocket-smoke circle:nth-child(2) { animation-delay: .15s; }
+.rocket-pad.is-launching .rocket-smoke circle:nth-child(3) { animation-delay: .10s; }
+.rocket-pad.is-launching .rocket-smoke circle:nth-child(4) { animation-delay: .25s; }
+.rocket-pad.is-launching .rocket-smoke circle:nth-child(5) { animation-delay: .20s; }
+@keyframes smoke-puff {
+  0%   { opacity: 0;   transform: scale(0.3); }
+  20%  { opacity: .85; transform: scale(1.6) translateY(-4px); }
+  100% { opacity: 0;   transform: scale(3.4) translateY(-30px); }
+}
+
+/* ---------- Hot air balloons ---------- */
+.balloon {
+  position: absolute;
+  width: 60px; height: 90px;
+  top: 0; left: 0;
+  animation: balloon-drift linear infinite, balloon-bob ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.35));
+  will-change: transform;
+}
+.balloon svg { width: 100%; height: 100%; display: block; }
+.balloon--1 { animation-duration: 70s, 4s;  animation-delay: -10s, 0s;  top: 12%; }
+.balloon--2 { animation-duration: 90s, 5s;  animation-delay: -45s, -1s; top: 28%; }
+.balloon--3 { animation-duration: 80s, 4.5s;animation-delay: -75s, -2s; top: 18%; }
+@keyframes balloon-drift {
+  0%   { transform: translateX(-10vw) translateY(0); }
+  100% { transform: translateX(110vw) translateY(0); }
+}
+@keyframes balloon-bob {
+  0%, 100% { margin-top: 0; }
+  50%      { margin-top: 8px; }
+}
+
+/* ---------- Bird flock (V formation, drifts across sky) ---------- */
+.flock {
+  position: absolute;
+  top: 18%; left: 0;
+  width: 120px; height: 60px;
+  animation: flock-drift 38s linear infinite;
+  animation-delay: -8s;
+  pointer-events: none;
+}
+.bird {
+  position: absolute;
+  width: 14px; height: 6px;
+  display: block;
+}
+.bird::before, .bird::after {
+  content: ''; position: absolute; top: 0; left: 50%;
+  width: 8px; height: 6px;
+  border-top: 1.5px solid #1a1530;
+  transform-origin: 0 50%;
+  animation: bird-flap 0.45s ease-in-out infinite;
+}
+.bird::before { transform: rotate(-30deg); border-top-left-radius: 8px; }
+.bird::after  { transform: rotate(210deg); border-top-right-radius: 8px; animation-delay: 0s; }
+.bird--1 { left: 60px; top: 0;  }
+.bird--2 { left: 48px; top: 8px; }
+.bird--3 { left: 72px; top: 8px; }
+.bird--4 { left: 36px; top: 16px; }
+.bird--5 { left: 84px; top: 16px; }
+.bird--6 { left: 24px; top: 24px; }
+.bird--7 { left: 96px; top: 24px; }
+@keyframes flock-drift {
+  0%   { transform: translateX(-15vw) translateY(0); }
+  50%  { transform: translateX(50vw)  translateY(-20px); }
+  100% { transform: translateX(115vw) translateY(0); }
+}
+@keyframes bird-flap {
+  0%, 100% { transform: rotate(-30deg) scaleY(1); }
+  50%      { transform: rotate(-10deg) scaleY(.5); }
+}
+.bird::after { animation-name: bird-flap-r; }
+@keyframes bird-flap-r {
+  0%, 100% { transform: rotate(210deg) scaleY(1); }
+  50%      { transform: rotate(190deg) scaleY(.5); }
+}
+
+/* ---------- Fireworks ---------- */
+.fireworks { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.firework {
+  position: absolute;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  animation: firework-spark 1.4s ease-out forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+@keyframes firework-spark {
+  0%   { opacity: 1;   transform: translate(0, 0) scale(1.5); }
+  60%  { opacity: 1;   transform: translate(var(--dx), var(--dy)) scale(1); }
+  100% { opacity: 0;   transform: translate(calc(var(--dx) * 1.15), calc(var(--dy) * 1.15 + 14px)) scale(.4); }
+}
+.firework-trail {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: #fff5d4;
+  box-shadow: 0 0 6px #ffd166;
+  animation: firework-rise 0.8s cubic-bezier(.2,.7,.4,1) forwards;
+}
+@keyframes firework-rise {
+  0%   { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(var(--rise, -120px)); }
+}
+
+/* ---------- Tire trail particles ---------- */
+.particles { position: absolute; inset: 0; pointer-events: none; }
+.particle {
+  position: absolute;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(220, 220, 240, .55);
+  animation: particle-fade 1s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes particle-fade {
+  0%   { opacity: .65; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(2.6); }
+}
+
+/* ---------- Top-right icon buttons (mute, day/night) ---------- */
+.icon-btn {
+  position: fixed; top: 16px;
+  z-index: 25;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(14,20,48,.78);
+  color: var(--accent-2);
+  display: grid; place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: transform .15s var(--ease), background .2s, color .2s;
+  padding: 0;
+}
+.icon-btn:hover { transform: scale(1.08); color: #fff; background: rgba(14,20,48,.95); }
+.icon-btn svg  { width: 20px; height: 20px; display: block; }
+
+.mute-btn { right: 16px; }
+.mute-btn .mute-btn__off { display: none; }
+body.is-muted .mute-btn { color: #ff6a6a; }
+body.is-muted .mute-btn .mute-btn__on  { display: none; }
+body.is-muted .mute-btn .mute-btn__off { display: block; }
+
+.day-btn  { right: 64px; }
+.day-btn .day-btn__sun  { display: none; }
+body.is-day .day-btn { color: #ffd166; background: rgba(255,255,255,.85); }
+body.is-day .day-btn .day-btn__moon { display: none; }
+body.is-day .day-btn .day-btn__sun  { display: block; }
+
+/* ---------- DAY MODE OVERRIDES ----------
+   Toggle every "night" element off and reveal the "day" elements.
+   Keeps the world art (buildings, trees, etc.) but bathes it in
+   sunlight: brighter sky, no stars/aurora/moon, dimmed lamp halos
+   and beams, sun in the sky, brighter clouds. */
+/* The two sky rectangles + moon/sun groups crossfade. */
+.sky-svg .sky-day  { opacity: 0; transition: opacity .8s ease; }
+.sky-svg .sky-night{ opacity: 1; transition: opacity .8s ease; }
+body.is-day .sky-svg .sky-day   { opacity: 1; }
+body.is-day .sky-svg .sky-night { opacity: 0; }
+/* Hide nighttime atmospherics during the day. */
+body.is-day .stars,
+body.is-day .shooter { display: none; }
+/* Lamp halos and lit windows still visible but much dimmer in daylight. */
+body.is-day [fill="url(#lamp-halo)"]   { opacity: .12; }
+body.is-day [fill="url(#window-glow)"] { opacity: .3; }
+body.is-day [fill="url(#beam-grad)"]   { opacity: 0; }
+/* Soften the headlight cone in daylight. */
+body.is-day .car__headlight { opacity: .15; }
+/* Clouds become bright white puffs. */
+body.is-day .cloud { --cloud-color: rgba(255,255,255,.96); filter: blur(.4px) drop-shadow(0 4px 8px rgba(120,140,180,.18)); }
+/* Mute the rotating castle beam ring. */
+body.is-day .castle-beam { display: none; }
+/* Slightly brighten foreground ground for daylight. */
+body.is-day #map-world { filter: saturate(1.1) brightness(1.08); }
+body.is-day #mountains-layer { filter: saturate(.95) brightness(1.15); }
+
+/* ---------- ANIMATED AMBIENT BACKGROUND ----------
+   All animations below use only `transform` and `opacity` so the
+   browser composites them on the GPU. Nothing here forces layout or
+   paint per frame. The whole bundle adds ~zero JS-per-frame cost.
+
+   Honors `prefers-reduced-motion` at the bottom of this block to
+   disable the looping ambience for users who prefer reduced motion. */
+
+/* Background skyline (Year 2 / Year 3 city blocks): slight
+   desaturation + reduced opacity so the towers read as a distant
+   background layer behind the road, not as foreground structures.
+   The road is drawn LATER in the SVG so it naturally renders in
+   front of these groups in z-order. */
+.bg-skyline { opacity: .82; filter: saturate(.85) brightness(.94); }
+body.is-day .bg-skyline { opacity: .72; filter: saturate(.7) brightness(1.05); }
+
+/* River — discrete cresting wavelets. Each `.wavelet` is a tiny
+   "~" glyph that breathes between invisible (scale 0) and full
+   crest (scale 1.05) and back, with a unique delay per glyph so
+   the surface looks like dozens of independent broken waves
+   appearing and dissolving — not a single sliding sine wave.
+   `transform-box: fill-box` + `transform-origin: center` keeps
+   each glyph scaling around its own center inside the SVG. */
+.wavelet {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wavelet-crest 3.2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@keyframes wavelet-crest {
+  0%, 100% { transform: scale(.2);  opacity: 0;   }
+  35%      { transform: scale(1);   opacity: .85; }
+  65%      { transform: scale(1.05); opacity: .7; }
+  85%      { transform: scale(.6);  opacity: .35; }
+}
+/* Stagger every wavelet so they crest at independent moments —
+   no two adjacent glyphs share a phase. Durations are also varied
+   so the cadence keeps shifting instead of looping in lockstep. */
+.wavelet--a { animation-delay: -0.0s; animation-duration: 3.0s; }
+.wavelet--b { animation-delay: -0.7s; animation-duration: 3.6s; }
+.wavelet--c { animation-delay: -1.4s; animation-duration: 2.8s; }
+.wavelet--d { animation-delay: -2.1s; animation-duration: 3.4s; }
+.wavelet--e { animation-delay: -0.4s; animation-duration: 3.8s; }
+.wavelet--f { animation-delay: -1.9s; animation-duration: 3.2s; }
+.wavelet--g { animation-delay: -2.6s; animation-duration: 2.6s; }
+.wavelet--h { animation-delay: -1.1s; animation-duration: 3.5s; }
+.wavelet--i { animation-delay: -0.3s; animation-duration: 3.3s; }
+.wavelet--j { animation-delay: -2.0s; animation-duration: 2.9s; }
+.wavelet--k { animation-delay: -0.9s; animation-duration: 3.7s; }
+.wavelet--l { animation-delay: -2.5s; animation-duration: 3.1s; }
+.wavelet--m { animation-delay: -1.5s; animation-duration: 3.4s; }
+.wavelet--n { animation-delay: -0.6s; animation-duration: 2.7s; }
+.wavelet--o { animation-delay: -2.2s; animation-duration: 3.6s; }
+.wavelet--p { animation-delay: -1.0s; animation-duration: 3.0s; }
+.wavelet--q { animation-delay: -2.4s; animation-duration: 3.5s; }
+.wavelet--r { animation-delay: -0.5s; animation-duration: 2.8s; }
+.wavelet--s { animation-delay: -1.7s; animation-duration: 3.3s; }
+.wavelet--t { animation-delay: -0.8s; animation-duration: 3.6s; }
+.wavelet--u { animation-delay: -2.3s; animation-duration: 2.9s; }
+/* The moon/sun reflection on the water shimmers (subtle horizontal
+   stretch) and crossfades with day/night via the existing
+   .sky-day / .sky-night opacity rules. */
+.water-reflect {
+  animation: water-shimmer 4.5s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+  will-change: transform, opacity;
+}
+@keyframes water-shimmer {
+  0%, 100% { transform: scaleX(1)    scaleY(1);   }
+  50%      { transform: scaleX(1.12) scaleY(.85); }
+}
+
+/* Aurora — slow opacity + vertical breath. */
+.aurora {
+  animation: aurora-pulse 14s ease-in-out infinite;
+  transform-origin: 1800px 240px;
+  transform-box: view-box;
+  will-change: transform, opacity;
+}
+@keyframes aurora-pulse {
+  0%, 100% { opacity: .85; transform: scaleY(1)    translateX(0); }
+  50%      { opacity: 1;   transform: scaleY(1.15) translateX(40px); }
+}
+
+/* Chimney smoke — three puffs rise + fade on a loop. They use a
+   group transform-origin tied to the chimney top via CSS variables
+   set inline on each <g class="smoke">. Three staggered children
+   give the look of continuous emission with only 3 elements. */
+.smoke {
+  transform-origin: var(--smoke-x, 0) var(--smoke-y, 0);
+  transform-box: view-box;
+  pointer-events: none;
+}
+.smoke__puff {
+  transform-origin: var(--smoke-x, 0) var(--smoke-y, 0);
+  transform-box: view-box;
+  animation: smoke-rise 4.2s linear infinite;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.smoke__puff--1 { animation-delay: 0s;    }
+.smoke__puff--2 { animation-delay: 1.4s;  }
+.smoke__puff--3 { animation-delay: 2.8s;  }
+.smoke--delayed .smoke__puff--1 { animation-delay: .7s; }
+.smoke--delayed .smoke__puff--2 { animation-delay: 2.1s; }
+.smoke--delayed .smoke__puff--3 { animation-delay: 3.5s; }
+@keyframes smoke-rise {
+  0%   { opacity: 0;   transform: translate(var(--smoke-x), var(--smoke-y)) scale(.4); }
+  15%  { opacity: .35; }
+  100% { opacity: 0;   transform: translate(calc(var(--smoke-x) + 14px), calc(var(--smoke-y) - 60px)) scale(1.6); }
+}
+
+/* Splash — a tiny ring that scales + fades when the car bumps the
+   river edge. Spawned briefly by JS, removed automatically. */
+.splash {
+  position: absolute;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(164, 200, 255, .9);
+  background: radial-gradient(circle, rgba(164,200,255,.55), rgba(164,200,255,0) 70%);
+  transform: translate(-50%, -50%) scale(.3);
+  pointer-events: none;
+  animation: splash-burst .55s ease-out forwards;
+  will-change: transform, opacity;
+  z-index: 6;
+}
+@keyframes splash-burst {
+  from { transform: translate(-50%, -50%) scale(.3); opacity: 1; }
+  to   { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+}
+
+/* Reduced-motion: kill all of the above looping ambience. */
+@media (prefers-reduced-motion: reduce) {
+  .wavelet, .water-reflect, .aurora,
+  .smoke__puff, .splash { animation: none !important; }
+  .wavelet { opacity: .55; transform: none; }
+  .water-reflect { transform: none; }
+}
+
+/* ---------- Speedometer ---------- */
+.speedo {
+  position: fixed; left: 18px; bottom: 18px;
+  z-index: 24;
+  background: rgba(14,20,48,.78);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 14px 8px;
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-display);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+.speedo__ring {
+  position: relative;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background:
+    conic-gradient(from 135deg, #1f5d4a 0deg, #ffd166 100deg, #ff5a3a 180deg, transparent 270deg, transparent 360deg);
+  padding: 4px;
+}
+.speedo__ring::before {
+  content: '';
+  position: absolute; inset: 4px;
+  background: rgba(14,20,48,.95);
+  border-radius: 50%;
+}
+.speedo__needle {
+  position: absolute; left: 50%; top: 50%;
+  width: 2px; height: 18px;
+  background: var(--accent);
+  transform-origin: 50% 100%;
+  transform: translate(-50%, -100%) rotate(-135deg);
+  border-radius: 2px;
+  z-index: 2;
+  transition: transform .12s linear;
+  box-shadow: 0 0 6px var(--accent);
+}
+.speedo__center {
+  position: absolute; left: 50%; top: 50%;
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+.speedo__label {
+  display: flex; flex-direction: column;
+  align-items: flex-start; line-height: 1;
+}
+.speedo__label > span:first-child {
+  font-size: 22px; color: #fff; font-weight: 700;
+}
+.speedo__unit {
+  font-size: 9px; color: var(--accent-2);
+  letter-spacing: .14em; text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* Journey progress strip (fixed across the bottom of the viewport) */
+.journey-bar {
+  position: fixed;
+  left: 50%; bottom: 18px;
+  transform: translateX(-50%);
+  width: min(640px, 80vw);
+  height: 26px;
+  z-index: 22;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent-2);
+}
+.journey-bar__track {
+  position: absolute; left: 0; right: 0; top: 9px; height: 4px;
+  background: rgba(255,255,255,.12);
+  border-radius: 2px;
+}
+.journey-bar__fill {
+  position: absolute; left: 0; top: 9px; height: 4px;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 2px;
+  transition: width .15s linear;
+}
+.journey-bar__car {
+  position: absolute; top: -2px;
+  transform: translateX(-50%) rotate(90deg);
+  color: var(--accent);
+  font-size: 14px; line-height: 1;
+  text-shadow: 0 1px 2px rgba(0,0,0,.5);
+  transition: left .15s linear;
+}
+.journey-bar__labels {
+  position: absolute; left: 0; right: 0; top: 18px;
+  display: flex; justify-content: space-between;
+  color: rgba(255,255,255,.55);
+}
+
+/* ---------- Markers (live INSIDE #map-world) ----------
+   The marker div is sized to exactly match the pin so its CENTER lines
+   up perfectly with loc.x / loc.y (which is what the proximity check
+   uses). The label is absolutely positioned BELOW the pin so it doesn't
+   add any height — that prevents the proximity ring from appearing
+   off-center relative to where the car actually has to be. */
+.markers {
+  position: absolute; left: 0; top: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+.marker {
+  position: absolute;
+  width: 56px; height: 56px;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+.marker__pin {
+  width: 56px; height: 56px;
+  border-radius: 50% 50% 50% 8%;
+  transform: rotate(-45deg);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  display: grid; place-items: center;
+  box-shadow: 0 14px 24px -10px rgba(0,0,0,.6), inset 0 -4px 8px rgba(0,0,0,.2);
+  border: 3px solid #fff;
+  cursor: pointer;
+  padding: 0;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+  animation: pin-bob 3.4s ease-in-out infinite;
+}
+.marker__pin > span {
+  transform: rotate(45deg);
+  font-family: var(--font-display);
+  color: #fff; font-weight: 700; font-size: 20px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+.marker__pin:hover {
+  transform: rotate(-45deg) scale(1.08);
+  box-shadow: 0 18px 32px -10px rgba(0,0,0,.7), inset 0 -4px 8px rgba(0,0,0,.2);
+}
+.marker__label {
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 13px; color: #fff;
+  background: rgba(14,20,48,.85);
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+.marker__ring {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 130px; height: 130px;
+  border-radius: 50%;
+  border: 2px dashed var(--accent-2);
+  opacity: 0; transition: opacity .25s var(--ease);
+  pointer-events: none;
+  animation: ring-spin 8s linear infinite;
+}
+.marker.is-near .marker__ring { opacity: .9; }
+.marker.is-visited .marker__pin {
+  background: linear-gradient(135deg, #6dd28b, #2f9b58);
+}
+
+@keyframes pin-bob {
+  0%, 100% { transform: rotate(-45deg) translateY(0); }
+  50%      { transform: rotate(-45deg) translateY(-6px); }
+}
+@keyframes ring-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ---------- Car ---------- */
+.car {
+  position: absolute;
+  width: 60px; height: 32px;
+  left: 0; top: 0;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  filter: drop-shadow(0 8px 6px rgba(0,0,0,.45));
+  transition: filter .3s;
+  will-change: transform;
+}
+.car svg { width: 100%; height: 100%; display: block; position: relative; z-index: 2; }
+.car__glow {
+  position: absolute; inset: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,209,102,.45), transparent 60%);
+  opacity: 0; transition: opacity .3s var(--ease);
+  pointer-events: none;
+}
+.car.is-near .car__glow { opacity: 1; }
+/* Headlight cone projecting from the front of the car. The car's transform
+   already rotates with movement direction, so this rotates with it. */
+.car__headlight {
+  position: absolute;
+  left: 100%; top: 50%;
+  width: 220px; height: 140px;
+  transform: translate(-20px, -50%);
+  background:
+    radial-gradient(ellipse at 0% 50%, rgba(255,245,200,.55) 0%, rgba(255,245,200,.18) 40%, rgba(255,245,200,0) 70%);
+  clip-path: polygon(0% 38%, 0% 62%, 100% 100%, 100% 0%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(2px);
+  opacity: .75;
+}
+
+/* ---------- Proximity prompt ---------- */
+.prompt {
+  position: fixed; left: 50%; bottom: clamp(72px, 9vh, 110px);
+  transform: translateX(-50%);
+  z-index: 20;
+  background: var(--cream); color: var(--ink);
+  padding: 10px 16px; border-radius: 999px;
+  font-family: var(--font-display); font-weight: 600; font-size: 14px;
+  display: inline-flex; align-items: center; gap: 8px;
+  box-shadow: var(--shadow-soft);
+  animation: prompt-in .25s var(--ease);
+}
+.prompt kbd {
+  background: var(--ink); color: #fff; border-color: var(--ink);
+}
+@keyframes prompt-in {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ---------- HUD panels ---------- */
+.hud-instructions, .hud-progress {
+  position: fixed; z-index: 25;
+  background: rgba(14,20,48,.78);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  font-size: 13px; line-height: 1.55;
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-soft);
+  max-width: 260px;
+}
+.hud-instructions {
+  left: 22px; top: 78px;
+  padding-right: 36px;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+.hud-instructions.is-hidden {
+  opacity: 0; transform: translateY(-6px);
+  pointer-events: none;
+}
+.hud-instructions__close {
+  position: absolute; top: 6px; right: 8px;
+  width: 22px; height: 22px;
+  border: none; background: transparent;
+  color: var(--ink-mute); font-size: 18px; line-height: 1;
+  cursor: pointer; border-radius: 50%;
+  display: grid; place-items: center;
+  transition: background .15s, color .15s;
+}
+.hud-instructions__close:hover { background: rgba(255,255,255,.08); color: #fff; }
+/* Floating "?" toggle that re-shows the panel after dismissal. */
+.hud-help-btn {
+  position: fixed; left: 22px; top: 78px;
+  z-index: 25;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(14,20,48,.78);
+  color: var(--accent-2);
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  display: none;
+  transition: transform .15s var(--ease), background .2s, color .2s;
+}
+.hud-help-btn:hover { transform: scale(1.08); color: #fff; background: rgba(14,20,48,.95); }
+.hud-help-btn.is-visible { display: grid; place-items: center; }
+.hud-instructions__title {
+  font-family: var(--font-display); font-size: 13px;
+  text-transform: uppercase; letter-spacing: .14em;
+  color: var(--accent-2);
+  margin: 0 0 6px;
+}
+.hud-instructions p { margin: 4px 0; color: #c7cdf0; }
+.hud-progress {
+  /* Position + size scale with viewport instead of being pinned to
+     fixed pixels, so the panel stays proportional on tall ultrawides
+     and short laptop screens alike. */
+  right: clamp(12px, 2vw, 28px);
+  bottom: clamp(12px, 2.4vh, 28px);
+  min-width: clamp(200px, 18vw, 260px);
+  max-width: 280px;
+}
+.hud-progress__row {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 8px;
+  font-family: var(--font-display); font-weight: 600;
+}
+/* Collapsible toggle: rotates a chevron, hides the bar and list when
+   the panel is in the `is-collapsed` state. */
+.hud-progress__toggle {
+  background: none; border: 0; padding: 0;
+  width: 22px; height: 22px;
+  display: grid; place-items: center;
+  color: var(--accent-2); cursor: pointer;
+  border-radius: 50%;
+  transition: background .15s, transform .15s;
+}
+.hud-progress__toggle:hover { background: rgba(255,255,255,.08); }
+.hud-progress__chev {
+  display: inline-block; line-height: 1;
+  transition: transform .25s var(--ease);
+}
+.hud-progress.is-collapsed .hud-progress__chev { transform: rotate(180deg); }
+.hud-progress.is-collapsed .hud-progress__bar,
+.hud-progress.is-collapsed .hud-progress__list { display: none; }
+.hud-progress.is-collapsed { padding-bottom: 10px; }
+.hud-progress__label { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-2); }
+.hud-progress__count { font-size: 14px; color: #fff; white-space: nowrap; }
+.hud-progress__bar {
+  height: 6px; border-radius: 999px; background: rgba(255,255,255,.08);
+  margin: 8px 0 10px; overflow: hidden;
+}
+.hud-progress__bar-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width .4s var(--ease);
+}
+.hud-progress__list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 4px 6px;
+  /* Viewport-aware cap (~2 chip rows on most screens, shrinks on
+     short viewports) so the panel stays compact even when every
+     location has been visited. Remaining chips scroll inside this
+     fixed region instead of pushing the panel taller. */
+  max-height: clamp(40px, 8vh, 72px);
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.2) transparent;
+}
+.hud-progress__list::-webkit-scrollbar { width: 6px; }
+.hud-progress__list::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 3px; }
+.hud-progress__list li {
+  font-size: 11px;
+  background: rgba(255,255,255,.07);
+  padding: 2px 8px; border-radius: 999px;
+  color: #d1d6f2;
+}
+
+/* =============================================================
+   MODALS
+   ============================================================= */
+.modal {
+  position: fixed; inset: 0; z-index: 70;
+  display: grid; place-items: center;
+  padding: 24px;
+  animation: fade-in .2s var(--ease);
+}
+.modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(8,10,28,.7);
+  backdrop-filter: blur(4px);
+}
+.modal__card {
+  position: relative;
+  width: min(940px, 100%);
+  max-height: 88vh; overflow: auto;
+  background: var(--cream);
+  color: var(--ink);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  animation: modal-in .25s var(--ease);
+}
+.modal__card--narrow { width: min(640px, 100%); }
+.modal__head {
+  position: sticky; top: 0; z-index: 2;
+  background: var(--cream);
+  padding: 22px 28px 10px;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.modal__eyebrow {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--accent-dark);
+  margin-bottom: 4px;
+}
+.modal__title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 32px);
+  margin: 2px 0 8px;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+.modal__close {
+  position: absolute; right: 16px; top: 14px;
+  width: 38px; height: 38px;
+  border-radius: 50%; border: 0;
+  background: rgba(0,0,0,.06); color: var(--ink);
+  font-size: 22px; line-height: 1;
+  display: grid; place-items: center;
+  transition: background .2s;
+}
+.modal__close:hover { background: rgba(0,0,0,.12); }
+.modal__body { padding: 18px 28px 28px; }
+.modal__body p { line-height: 1.65; color: var(--ink-soft); margin: 0 0 12px; }
+.modal__body h3 {
+  font-family: var(--font-display);
+  font-size: 18px; margin: 18px 0 8px; color: var(--ink);
+}
+.modal__body a { color: var(--accent-dark); text-decoration: underline; text-underline-offset: 3px; }
+.modal__body ul { padding-left: 18px; }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- About / Profile block ---------- */
+.about {
+  display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: start;
+}
+.about__photo {
+  width: 180px; height: 180px;
+  border-radius: 22px; object-fit: cover;
+  background: #ddd;
+  box-shadow: var(--shadow-soft);
+}
+.about__interests {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 8px; padding: 0; list-style: none;
+}
+.about__interests li {
+  background: rgba(255,139,90,.12);
+  color: var(--accent-dark);
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 500;
+}
+
+/* ---------- Project gallery ---------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+.proj {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.proj:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+.proj__img {
+  aspect-ratio: 16 / 10;
+  background:
+    repeating-linear-gradient(45deg, #f1e4c8 0 16px, #ead7a8 16px 32px);
+  position: relative;
+}
+.proj__img::after {
+  content: 'Placeholder screenshot';
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 12px;
+  color: var(--ink-soft);
+  background: rgba(255,255,255,.6);
+}
+.proj__body { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; }
+.proj__year {
+  font-family: var(--font-display); font-size: 11px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent-dark);
+}
+.proj__title {
+  font-family: var(--font-display);
+  font-size: 17px; margin: 4px 0 6px; color: var(--ink);
+}
+.proj__desc { font-size: 13px; color: var(--ink-soft); margin: 0 0 10px; line-height: 1.55; }
+.proj__tags { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 12px; padding: 0; list-style: none; }
+.proj__tags li {
+  font-size: 11px; padding: 2px 8px;
+  background: rgba(0,0,0,.05); border-radius: 999px; color: var(--ink-soft);
+}
+.proj__actions { margin-top: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.proj__actions a, .proj__actions button {
+  font-size: 12px; font-weight: 600;
+  padding: 7px 12px; border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.1);
+  background: #fff; color: var(--ink);
+  text-decoration: none; transition: background .2s;
+}
+.proj__actions a:hover, .proj__actions button:hover { background: #f5f0e1; }
+.proj__actions .is-primary {
+  background: var(--ink); color: #fff; border-color: var(--ink);
+}
+.proj__actions .is-primary:hover { background: #2a3265; }
+
+/* ---------- Year tabs ---------- */
+.year-tabs {
+  display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 16px;
+}
+.year-tabs button {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 13px; padding: 8px 14px;
+  background: #fff; color: var(--ink);
+  border: 1px solid rgba(0,0,0,.1); border-radius: 999px;
+  transition: background .2s, color .2s;
+}
+.year-tabs button.is-active {
+  background: var(--ink); color: #fff; border-color: var(--ink);
+}
+
+/* ---------- AI examples / Research / Feedback blocks ---------- */
+.stack > * + * { margin-top: 18px; }
+.note {
+  background: #fff; border-radius: var(--radius-md);
+  padding: 16px 18px; border: 1px solid rgba(0,0,0,.06);
+}
+.note h4 {
+  font-family: var(--font-display); font-size: 14px; margin: 0 0 6px;
+  color: var(--accent-dark); text-transform: uppercase; letter-spacing: .14em;
+}
+.note p { margin: 4px 0; font-size: 14px; }
+.note pre {
+  background: #f5f0e1; padding: 10px 12px; border-radius: var(--radius-sm);
+  font-size: 12px; overflow: auto; white-space: pre-wrap;
+}
+
+/* =============================================================
+   TOUCH CONTROLS (joystick + action button)
+   Hidden by default; shown via JS on touch devices.
+   ============================================================= */
+.touch-controls {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  z-index: 28;
+  pointer-events: none;
+  display: none;
+  padding: 16px 18px calc(16px + env(safe-area-inset-bottom));
+  justify-content: space-between; align-items: flex-end;
+}
+.touch-controls.is-active { display: flex; }
+.touch-controls > * { pointer-events: auto; }
+
+.joystick {
+  position: relative;
+  width: 140px; height: 140px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.joystick__base {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: rgba(14,20,48,.72);
+  border: 2px solid rgba(255,255,255,.18);
+  box-shadow: var(--shadow-soft), inset 0 0 30px rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+}
+.joystick__base::before {
+  content: '';
+  position: absolute; left: 50%; top: 50%;
+  width: 46px; height: 46px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px dashed rgba(255,255,255,.18);
+}
+.joystick__thumb {
+  position: absolute; left: 50%; top: 50%;
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border: 3px solid #fff;
+  box-shadow: 0 10px 22px -6px rgba(0,0,0,.6);
+  transform: translate(-50%, -50%);
+  transition: transform .12s var(--ease), box-shadow .15s;
+  pointer-events: none;
+}
+.joystick.is-active .joystick__thumb {
+  box-shadow: 0 14px 28px -6px rgba(255,139,90,.55), 0 0 0 6px rgba(255,139,90,.18);
+  transition: box-shadow .15s;
+}
+
+.action-btn {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #2a1408;
+  font-family: var(--font-display);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px;
+  box-shadow: 0 14px 28px -10px rgba(0,0,0,.6);
+  transition: transform .15s var(--ease), opacity .2s, box-shadow .2s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.action-btn:disabled {
+  opacity: .35;
+  background: rgba(14,20,48,.7);
+  color: #fff;
+  border-color: rgba(255,255,255,.25);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.action-btn:not(:disabled):active { transform: scale(.95); }
+.action-btn:not(:disabled) {
+  animation: action-pulse 1.6s ease-in-out infinite;
+}
+.action-btn__icon { font-size: 28px; line-height: 1; }
+.action-btn__label {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+}
+@keyframes action-pulse {
+  0%, 100% { box-shadow: 0 14px 28px -10px rgba(0,0,0,.6), 0 0 0 0 rgba(255,209,102,.5); }
+  50%      { box-shadow: 0 14px 28px -10px rgba(0,0,0,.6), 0 0 0 14px rgba(255,209,102,0); }
+}
+
+/* =============================================================
+   RESPONSIVE BREAKPOINTS
+   Mobile = same map, with touch controls instead of keyboard.
+   ============================================================= */
+@media (max-width: 980px) {
+  .brand { font-size: 14px; }
+}
+
+/* When touch controls are active, hide the keyboard "How to drive"
+   panel and shrink the progress HUD so it doesn't crowd the joystick. */
+.touch-controls.is-active ~ .hud-instructions,
+body:has(.touch-controls.is-active) .hud-instructions { display: none; }
+
+@media (max-width: 760px) {
+  /* Default-hide on mobile via JS (which adds .is-hidden). When the
+     user taps the "?" button, the class is removed and the panel
+     pops up as a small overlay anchored under the toggle. */
+  .hud-instructions.is-hidden { display: none; }
+  .hud-instructions {
+    top: 124px; left: 12px; right: 12px;
+    max-width: none;
+    z-index: 30;
+  }
+  .hud-progress {
+    /* Pinned to the very TOP-right on mobile (sitting in the sky
+       margin above the map) so it never overlaps the map content,
+       markers, or the on-screen joystick at the bottom. The chip
+       list / progress bar / toggle button are all hidden — only
+       the count chip is shown and it cannot be expanded. */
+    /* On mobile the chip lives in the TOP-RIGHT column directly
+       under the day/sound toggle buttons (which are at top:16,
+       height:40 → bottom edge ~56). */
+    right: clamp(8px, 2vw, 16px); left: auto;
+    top: clamp(64px, 9vh, 78px) !important;
+    bottom: auto !important;
+    transform: none !important;
+    min-width: 0; max-width: 45vw;
+    padding: 0.35em 0.7em;
+    border-radius: 0.6em;
+    font-size: clamp(10px, 2.6vw, 12px);
+  }
+  .hud-progress.is-collapsed { padding-bottom: 0.4em; }
+  .hud-progress__list,
+  .hud-progress__bar,
+  .hud-progress__toggle { display: none !important; }
+  /* Sits just a hair above the journey-bar (which is now glued to
+     the very bottom of the screen). */
+  .prompt {
+    bottom: clamp(56px, 10vh, 84px);
+    font-size: 13px; padding: 8px 14px;
+  }
+  /* On mobile the speedometer takes the TOP slot of the left column
+     and the "?" help button is pushed BELOW it. That way when the
+     user taps "?" and the instructions panel pops open under the
+     button, it never covers the mph wheel. */
+  .speedo {
+    left: clamp(8px, 2vw, 16px);
+    top: clamp(72px, 10vh, 92px);
+    bottom: auto;
+    padding: 0.4em 0.7em;
+  }
+  .hud-help-btn {
+    left: clamp(12px, 3vw, 22px);
+    top: clamp(128px, 18vh, 148px);
+  }
+  /* Push the instructions panel down so it opens under the "?"
+     button (which is now lower) instead of under the speedometer. */
+  .hud-instructions { top: clamp(170px, 23vh, 192px); }
+  .speedo__ring { width: 34px; height: 34px; }
+  .speedo__needle { height: 14px; }
+  .speedo__label > span:first-child { font-size: 16px; }
+  /* On mobile the journey progress bar is pinned to the absolute
+     bottom of the viewport, sitting in the gap between the
+     joystick (left) and the action button (right). Width is
+     capped so it can't reach into either touch control. */
+  .journey-bar {
+    bottom: clamp(12px, 3vh, 24px);
+    left: 50%; transform: translateX(-50%);
+    width: 48vw; max-width: 320px;
+  }
+  .welcome__card { padding: 28px 22px; }
+  .about { grid-template-columns: 1fr; text-align: center; }
+  .about__photo { margin: 0 auto; }
+  .about__interests { justify-content: center; }
+  .modal__body { padding: 14px 18px 22px; }
+  .modal__head { padding: 18px 18px 8px; }
+  .marker__label { font-size: 11px; padding: 3px 8px; }
+  .marker__pin { width: 44px; height: 44px; border-width: 2px; }
+  .marker__pin > span { font-size: 16px; }
+}
+@media (max-width: 420px) {
+  .joystick { width: 120px; height: 120px; }
+  .joystick__thumb { width: 54px; height: 54px; }
+  .action-btn { width: 84px; height: 84px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
