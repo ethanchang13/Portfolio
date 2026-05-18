@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Journey Map Portfolio — an interactive map-style senior portfolio you drive through." />
+  <title>Journey Map Portfolio</title>
+
+  <!-- Custom fonts (Space Grotesk for display, Inter for body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- ============================================================
+       WELCOME OVERLAY — shown on first load
+       ============================================================ -->
+  <div id="welcome" class="welcome" role="dialog" aria-labelledby="welcome-title">
+    <div class="welcome__card">
+      <span class="welcome__eyebrow">Ethan Chang · Class of 2026</span>
+      <h1 id="welcome-title" class="welcome__title">
+        Welcome to my <br><span class="accent">Web Design Journey</span>
+      </h1>
+      <p class="welcome__lede">
+        This portfolio is an interactive map of my growth across three years
+        in the Web Design Pathway Program. Drive a car around town, visit
+        each stop, and see what I built.
+      </p>
+      <ul class="welcome__keys" aria-label="Controls">
+        <li><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrow keys to drive</li>
+        <li><kbd>E</kbd> or click a marker to enter &nbsp;·&nbsp; <kbd>Esc</kbd> to close any panel</li>
+      </ul>
+      <button id="start-btn" class="btn btn--primary">Start Driving</button>
+      <p class="welcome__hint">Phone or tablet: drag the joystick to drive, tap the action button to enter.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TOP HUD — brand only. Navigation happens by driving the car
+       around the map and visiting markers, not via a nav bar.
+       ============================================================ -->
+  <header class="hud-top" role="banner">
+    <a href="#home" class="brand" data-nav="home">
+      <span class="brand__mark" aria-hidden="true">◇</span>
+      <span class="brand__name">Ethan's Journey Map</span>
+    </a>
+  </header>
+
+  <!-- ============================================================
+       DESKTOP MAP VIEW
+       ============================================================ -->
+  <main id="map-view" class="map-view" aria-label="Interactive portfolio map">
+    <!-- ============ PARALLAX SKY LAYER (scrolls slowest) ============ -->
+    <div id="sky-layer" class="sky-layer" aria-hidden="true">
+      <svg viewBox="0 0 3600 900" preserveAspectRatio="none" class="sky-svg">
+        <defs>
+          <linearGradient id="sky-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#06091e" />
+            <stop offset="40%"  stop-color="#101848" />
+            <stop offset="70%"  stop-color="#2a2363" />
+            <stop offset="100%" stop-color="#683a6a" />
+          </linearGradient>
+          <radialGradient id="aurora-grad" cx="50%" cy="40%" r="60%">
+            <stop offset="0%"   stop-color="#3aff9d" stop-opacity=".18" />
+            <stop offset="50%"  stop-color="#5e7bff" stop-opacity=".12" />
+            <stop offset="100%" stop-color="#ff7ad9" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="moon-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#fff5d4" stop-opacity=".55" />
+            <stop offset="60%"  stop-color="#ffd166" stop-opacity=".15" />
+            <stop offset="100%" stop-color="#ffd166" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <defs>
+          <linearGradient id="sky-grad-day" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#4cb3ff" />
+            <stop offset="55%"  stop-color="#a8dcff" />
+            <stop offset="100%" stop-color="#ffe7c4" />
+          </linearGradient>
+          <radialGradient id="sun-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#fff7c2" stop-opacity=".95" />
+            <stop offset="60%"  stop-color="#ffd76b" stop-opacity=".25" />
+            <stop offset="100%" stop-color="#ffd76b" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="3600" height="900" fill="url(#sky-grad)" class="sky-night" />
+        <rect x="0" y="0" width="3600" height="900" fill="url(#sky-grad-day)" class="sky-day" />
+        <!-- Aurora shimmer band (night only) — wrapped so CSS can
+             animate a slow opacity + scaleY pulse on the whole group
+             without touching the gradient stops. -->
+        <g class="aurora sky-night">
+          <ellipse cx="1800" cy="240" rx="2400" ry="280" fill="url(#aurora-grad)" />
+        </g>
+        <!-- Moon halo + moon (night only) -->
+        <g class="sky-night">
+          <circle cx="2900" cy="200" r="180" fill="url(#moon-glow)" />
+          <circle cx="2900" cy="200" r="62"  fill="#fff5d4" />
+          <circle cx="2920" cy="184" r="10"  fill="#e9d4a3" opacity=".55" />
+          <circle cx="2880" cy="220" r="7"   fill="#e9d4a3" opacity=".4" />
+          <circle cx="2895" cy="170" r="5"   fill="#e9d4a3" opacity=".5" />
+        </g>
+        <!-- Sun halo + sun (day only) -->
+        <g class="sky-day">
+          <circle cx="2900" cy="200" r="220" fill="url(#sun-glow)" />
+          <circle cx="2900" cy="200" r="68"  fill="#fff7c2" />
+          <circle cx="2900" cy="200" r="58"  fill="#ffd76b" opacity=".7" />
+        </g>
+      </svg>
+      <!-- DOM-based starfield for cheap CSS twinkle animations -->
+      <div class="stars" aria-hidden="true"></div>
+      <!-- Shooting stars (CSS animated) -->
+      <span class="shooter shooter--1"></span>
+      <span class="shooter shooter--2"></span>
+      <span class="shooter shooter--3"></span>
+      <!-- Drifting clouds -->
+      <div class="cloud cloud--1"></div>
+      <div class="cloud cloud--2"></div>
+      <div class="cloud cloud--3"></div>
+      <div class="cloud cloud--4"></div>
+
+      <!-- Hot air balloons drifting across the sky -->
+      <div class="balloon balloon--1" aria-hidden="true">
+        <svg viewBox="0 0 60 90"><path d="M30 4 C 12 4, 4 22, 12 44 L 24 56 L 36 56 L 48 44 C 56 22, 48 4, 30 4 Z" fill="#ff6f7a"/><path d="M30 4 C 22 4, 18 22, 22 44 L 26 50 L 34 50 L 38 44 C 42 22, 38 4, 30 4 Z" fill="#ffd166" opacity=".7"/><line x1="24" y1="56" x2="24" y2="70" stroke="#3a2c1a" stroke-width="1"/><line x1="36" y1="56" x2="36" y2="70" stroke="#3a2c1a" stroke-width="1"/><rect x="22" y="70" width="16" height="10" fill="#7a4a26" rx="1"/></svg>
+      </div>
+      <div class="balloon balloon--2" aria-hidden="true">
+        <svg viewBox="0 0 60 90"><path d="M30 4 C 12 4, 4 22, 12 44 L 24 56 L 36 56 L 48 44 C 56 22, 48 4, 30 4 Z" fill="#5e7bff"/><path d="M30 4 C 22 4, 18 22, 22 44 L 26 50 L 34 50 L 38 44 C 42 22, 38 4, 30 4 Z" fill="#3aff9d" opacity=".55"/><line x1="24" y1="56" x2="24" y2="70" stroke="#3a2c1a" stroke-width="1"/><line x1="36" y1="56" x2="36" y2="70" stroke="#3a2c1a" stroke-width="1"/><rect x="22" y="70" width="16" height="10" fill="#7a4a26" rx="1"/></svg>
+      </div>
+      <div class="balloon balloon--3" aria-hidden="true">
+        <svg viewBox="0 0 60 90"><path d="M30 4 C 12 4, 4 22, 12 44 L 24 56 L 36 56 L 48 44 C 56 22, 48 4, 30 4 Z" fill="#a855f7"/><path d="M30 4 C 22 4, 18 22, 22 44 L 26 50 L 34 50 L 38 44 C 42 22, 38 4, 30 4 Z" fill="#ff7ad9" opacity=".6"/><line x1="24" y1="56" x2="24" y2="70" stroke="#3a2c1a" stroke-width="1"/><line x1="36" y1="56" x2="36" y2="70" stroke="#3a2c1a" stroke-width="1"/><rect x="22" y="70" width="16" height="10" fill="#7a4a26" rx="1"/></svg>
+      </div>
+
+      <!-- Bird flock in V formation -->
+      <div class="flock" aria-hidden="true">
+        <span class="bird bird--1"></span>
+        <span class="bird bird--2"></span>
+        <span class="bird bird--3"></span>
+        <span class="bird bird--4"></span>
+        <span class="bird bird--5"></span>
+        <span class="bird bird--6"></span>
+        <span class="bird bird--7"></span>
+      </div>
+
+      <!-- Fireworks layer (JS spawns bursts here, positioned over castle area) -->
+      <div id="fireworks" class="fireworks" aria-hidden="true"></div>
+    </div>
+
+    <!-- ============ MID-PARALLAX MOUNTAINS LAYER ============ -->
+    <div id="mountains-layer" class="mountains-layer" aria-hidden="true">
+      <svg viewBox="0 0 3600 900" preserveAspectRatio="none" class="sky-svg">
+        <!-- Distant range with snow caps -->
+        <path
+          d="M 0 480 L 180 320 L 240 360 L 320 280 L 380 340 L 480 220 L 560 320 L 660 380 L 820 280 L 920 360 L 1040 240 L 1180 360 L 1300 280 L 1400 340 L 1520 240 L 1680 380 L 1820 260 L 1980 360 L 2120 280 L 2260 360 L 2400 240 L 2560 380 L 2720 260 L 2880 340 L 3040 240 L 3200 360 L 3360 280 L 3500 340 L 3600 320 L 3600 700 L 0 700 Z"
+          fill="#252962" opacity=".88"
+        />
+        <!-- Snow caps (lighter peaks) -->
+        <g fill="#aab5e8" opacity=".7">
+          <path d="M 460 240 L 480 220 L 510 250 L 490 245 L 480 260 Z" />
+          <path d="M 1020 260 L 1040 240 L 1070 260 L 1050 250 L 1040 280 Z" />
+          <path d="M 1500 260 L 1520 240 L 1550 260 L 1530 255 L 1520 275 Z" />
+          <path d="M 2380 260 L 2400 240 L 2430 260 L 2410 255 L 2400 275 Z" />
+          <path d="M 3020 260 L 3040 240 L 3070 260 L 3050 255 L 3040 275 Z" />
+        </g>
+        <!-- Closer range -->
+        <path
+          d="M 0 580 L 220 460 L 380 540 L 580 420 L 760 540 L 940 460 L 1120 540 L 1320 440 L 1500 540 L 1680 460 L 1860 540 L 2040 420 L 2220 540 L 2400 460 L 2580 540 L 2780 440 L 2960 540 L 3140 460 L 3320 540 L 3500 460 L 3600 500 L 3600 720 L 0 720 Z"
+          fill="#1c2150" opacity=".95"
+        />
+        <!-- Mist along mountain bases -->
+        <ellipse cx="1800" cy="640" rx="2200" ry="50" fill="#fff" opacity=".05" />
+      </svg>
+    </div>
+
+    <!-- ============ MAIN WORLD (1x scroll, contains gameplay) ============ -->
+    <div id="map-world" class="map-world">
+      <svg
+        id="map"
+        class="map"
+        viewBox="0 0 3600 900"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#3d6a4f" />
+            <stop offset="100%" stop-color="#1f3a2c" />
+          </linearGradient>
+          <linearGradient id="road-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#3a3326" />
+            <stop offset="50%"  stop-color="#594b35" />
+            <stop offset="100%" stop-color="#3a3326" />
+          </linearGradient>
+          <linearGradient id="water-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#3a6cb8" />
+            <stop offset="100%" stop-color="#1c3870" />
+          </linearGradient>
+          <linearGradient id="window-glow" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#ffd97a" />
+            <stop offset="100%" stop-color="#ff9f43" />
+          </linearGradient>
+          <radialGradient id="lamp-halo" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#ffe9a8" stop-opacity=".9" />
+            <stop offset="100%" stop-color="#ffe9a8" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="beam-grad" cx="0%" cy="50%" r="100%">
+            <stop offset="0%"   stop-color="#c5a0ff" stop-opacity=".95" />
+            <stop offset="60%"  stop-color="#7e5bff" stop-opacity=".5" />
+            <stop offset="100%" stop-color="#7e5bff" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+
+        <!-- Far ground (rolling hills) -->
+        <path
+          d="M 0 700 Q 300 650 600 690 T 1200 700 T 1800 680 T 2400 700 T 3000 690 T 3600 700 L 3600 900 L 0 900 Z"
+          fill="url(#ground)"
+        />
+        <path
+          d="M 0 760 Q 400 720 800 760 T 1600 760 T 2400 750 T 3200 760 T 3600 760 L 3600 900 L 0 900 Z"
+          fill="#264a36" opacity=".7"
+        />
+
+        <!-- ============== ROAD EMBANKMENT ==============
+             Filled terrain that follows the road's lower edge down to
+             the ground hills below. Without this, the road appeared
+             to float in mid-air over the landscape. The path mirrors
+             the road's `d` attribute with y-values offset by +32 (half
+             the road's stroke-width of 64) and closes to y=900 so the
+             road sits on a continuous earthen shoulder. The river at
+             the bridge area (x=1740-2060) renders on top of this so
+             the water still appears below the bridge. -->
+        <path
+          d="M -50 632 C 200 632, 350 572, 540 592 C 720 612, 820 532, 920 532 C 1100 532, 1280 612, 1500 592 C 1620 612, 1700 722, 1740 722 L 2060 722 C 2120 722, 2200 612, 2280 612 C 2440 612, 2560 552, 2680 552 C 2820 552, 2960 572, 3060 572 C 3160 572, 3200 612, 3220 612 C 3280 632, 3340 712, 3400 792 L 3700 792 L 3700 900 L -50 900 Z"
+          fill="#2c4233"
+        />
+        <!-- Subtle grassy edge along the embankment top so the road
+             shoulder doesn't read as a hard horizon line. -->
+        <path
+          d="M -50 632 C 200 632, 350 572, 540 592 C 720 612, 820 532, 920 532 C 1100 532, 1280 612, 1500 592 C 1620 612, 1700 722, 1740 722 L 2060 722 C 2120 722, 2200 612, 2280 612 C 2440 612, 2560 552, 2680 552 C 2820 552, 2960 572, 3060 572 C 3160 572, 3200 612, 3220 612 C 3280 632, 3340 712, 3400 792 L 3700 792"
+          stroke="#3d6049" stroke-width="6" fill="none" opacity=".7"
+        />
+
+        <!-- River + Reflection Bridge area (around x=1900).
+             Water uses an organic curved shape (not a perfect rectangle)
+             with wavy top and bottom edges. A clipPath keeps the wave
+             lines strictly inside the water — they used to spill onto
+             the surrounding grass. -->
+        <defs>
+          <clipPath id="water-clip">
+            <!-- Highly irregular pond/river silhouette: bays and
+                 inlets eat into the top shoreline at varying depths,
+                 the sides bulge and pinch asymmetrically, and the
+                 bottom shoreline meanders. Nothing here is parallel
+                 or symmetrical — it should read as a natural river,
+                 not a rectangle. -->
+            <path d="M 1690 712 C 1718 686, 1758 708, 1796 692 C 1832 678, 1860 716, 1898 700 C 1938 684, 1970 720, 2008 706 C 2042 696, 2068 718, 2094 706 C 2118 696, 2128 728, 2118 752 C 2126 776, 2110 808, 2080 818 C 2050 826, 2018 808, 1980 820 C 1944 832, 1908 814, 1872 824 C 1836 832, 1796 814, 1762 822 C 1730 830, 1700 820, 1690 798 C 1678 776, 1696 754, 1684 736 C 1676 724, 1682 716, 1690 712 Z"/>
+          </clipPath>
+        </defs>
+        <g class="river">
+          <path d="M 1690 712 C 1718 686, 1758 708, 1796 692 C 1832 678, 1860 716, 1898 700 C 1938 684, 1970 720, 2008 706 C 2042 696, 2068 718, 2094 706 C 2118 696, 2128 728, 2118 752 C 2126 776, 2110 808, 2080 818 C 2050 826, 2018 808, 1980 820 C 1944 832, 1908 814, 1872 824 C 1836 832, 1796 814, 1762 822 C 1730 830, 1700 820, 1690 798 C 1678 776, 1696 754, 1684 736 C 1676 724, 1682 716, 1690 712 Z"
+                fill="url(#water-grad)"/>
+          <g clip-path="url(#water-clip)">
+            <!-- Lilypads scattered across the pond surface. Each pad
+                 is a flattened ellipse with a darker rim and a notch
+                 cut out of one side (drawn as a small dark wedge) so
+                 it reads as the classic top-down water-lily silhouette
+                 instead of a plain dot. A few pads carry a tiny pink
+                 lily flower on top. Positions and sizes are varied
+                 by hand so they don't look like a regular grid. -->
+            <g class="lilypads">
+              <!-- Pad 1 (with flower) -->
+              <ellipse cx="1758" cy="772" rx="14" ry="7" fill="#3b7a4a"/>
+              <ellipse cx="1758" cy="770" rx="12" ry="5.5" fill="#4f9560"/>
+              <path d="M 1758 770 L 1764 766 L 1762 774 Z" fill="#1f3a26"/>
+              <circle cx="1756" cy="767" r="2.2" fill="#ffd1e8"/>
+              <circle cx="1756" cy="767" r="0.9" fill="#ffe9b3"/>
+              <!-- Pad 2 -->
+              <ellipse cx="1820" cy="788" rx="11" ry="5" fill="#356a40"/>
+              <ellipse cx="1820" cy="787" rx="9.5" ry="4" fill="#4a8a55"/>
+              <path d="M 1820 787 L 1826 784 L 1824 790 Z" fill="#1f3a26"/>
+              <!-- Pad 3 (with flower) -->
+              <ellipse cx="1898" cy="780" rx="16" ry="7.5" fill="#3b7a4a"/>
+              <ellipse cx="1898" cy="778" rx="14" ry="6" fill="#549a64"/>
+              <path d="M 1898 778 L 1892 773 L 1894 782 Z" fill="#1f3a26"/>
+              <circle cx="1900" cy="775" r="2.6" fill="#ffe2ee"/>
+              <circle cx="1900" cy="775" r="1.1" fill="#ffd166"/>
+              <!-- Pad 4 -->
+              <ellipse cx="1968" cy="792" rx="12" ry="5.5" fill="#356a40"/>
+              <ellipse cx="1968" cy="791" rx="10" ry="4.2" fill="#4a8a55"/>
+              <path d="M 1968 791 L 1974 787 L 1972 794 Z" fill="#1f3a26"/>
+              <!-- Pad 5 -->
+              <ellipse cx="2030" cy="776" rx="10" ry="4.5" fill="#3b7a4a"/>
+              <ellipse cx="2030" cy="775" rx="8.5" ry="3.5" fill="#4f9560"/>
+              <path d="M 2030 775 L 2025 772 L 2027 778 Z" fill="#1f3a26"/>
+              <!-- Pad 6 (small) -->
+              <ellipse cx="2070" cy="794" rx="8" ry="3.5" fill="#356a40"/>
+              <ellipse cx="2070" cy="793" rx="6.5" ry="2.8" fill="#4a8a55"/>
+            </g>
+            <!-- Discrete cresting wavelets instead of a continuous
+                 wavy line. Each `<path>` is a tiny stand-alone "~"
+                 glyph scattered across the water surface, and each
+                 one has its own crest-and-fade animation with a
+                 unique delay so they bloom and disappear at varied
+                 cadences — like real broken waves on a pond rather
+                 than a rolling treadmill of sine waves. -->
+            <g class="river__waves" fill="none" stroke="#bcdcff" stroke-linecap="round" stroke-width="1.4">
+              <!-- Row 1 (y ~720) -->
+              <path class="wavelet wavelet--a" d="M 1712 718 q 4 -2.5 8 0 t 8 0"/>
+              <path class="wavelet wavelet--b" d="M 1758 724 q 5 -3 10 0 t 10 0"/>
+              <path class="wavelet wavelet--c" d="M 1808 716 q 4 -2 8 0 t 8 0"/>
+              <path class="wavelet wavelet--d" d="M 1856 722 q 5 -2.5 10 0 t 10 0"/>
+              <path class="wavelet wavelet--e" d="M 1908 718 q 4 -2 8 0 t 8 0"/>
+              <path class="wavelet wavelet--f" d="M 1958 724 q 5 -3 10 0 t 10 0"/>
+              <path class="wavelet wavelet--g" d="M 2010 720 q 4 -2.5 8 0 t 8 0"/>
+              <path class="wavelet wavelet--h" d="M 2060 718 q 5 -2 10 0 t 10 0"/>
+              <!-- Row 2 (y ~750) — staggered x so it doesn't align with row 1 -->
+              <path class="wavelet wavelet--i" d="M 1730 748 q 5 -2.5 10 0 t 10 0"/>
+              <path class="wavelet wavelet--j" d="M 1786 752 q 4 -2 8 0 t 8 0"/>
+              <path class="wavelet wavelet--k" d="M 1834 746 q 5 -3 10 0 t 10 0"/>
+              <path class="wavelet wavelet--l" d="M 1888 750 q 4 -2 8 0 t 8 0"/>
+              <path class="wavelet wavelet--m" d="M 1940 754 q 5 -2.5 10 0 t 10 0"/>
+              <path class="wavelet wavelet--n" d="M 1994 748 q 4 -2 8 0 t 8 0"/>
+              <path class="wavelet wavelet--o" d="M 2044 752 q 5 -3 10 0 t 10 0"/>
+              <!-- Row 3 (y ~782) — sparser, shorter glyphs -->
+              <path class="wavelet wavelet--p" d="M 1748 780 q 4 -2 8 0 t 8 0"/>
+              <path class="wavelet wavelet--q" d="M 1812 784 q 4 -2.5 8 0 t 8 0"/>
+              <path class="wavelet wavelet--r" d="M 1872 780 q 5 -2 10 0 t 10 0"/>
+              <path class="wavelet wavelet--s" d="M 1934 786 q 4 -2 8 0 t 8 0"/>
+              <path class="wavelet wavelet--t" d="M 1996 782 q 4 -2.5 8 0 t 8 0"/>
+              <path class="wavelet wavelet--u" d="M 2052 786 q 4 -2 8 0 t 8 0"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- ============== ROAD ==============
+             Drawn early so structures (buildings, garage, castle, plaza,
+             rocket pad) naturally cover it within their bounding boxes.
+             The road dips DOWN at the river crossing (x=1740-2060) so
+             it meets the bridge deck at water level, then climbs back
+             up to continue the journey. -->
+        <path id="road"
+          d="M -50 600 C 200 600, 350 540, 540 560 C 720 580, 820 500, 920 500 C 1100 500, 1280 580, 1500 560 C 1620 580, 1700 690, 1740 690 L 2060 690 C 2120 690, 2200 580, 2280 580 C 2440 580, 2560 520, 2680 520 C 2820 520, 2960 540, 3060 540 C 3160 540, 3200 580, 3220 580 C 3280 600, 3340 680, 3400 760 L 3700 760"
+          stroke="url(#road-grad)" stroke-width="64" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"
+        />
+        <path
+          d="M -50 600 C 200 600, 350 540, 540 560 C 720 580, 820 500, 920 500 C 1100 500, 1280 580, 1500 560 C 1620 580, 1700 690, 1740 690 L 2060 690 C 2120 690, 2200 580, 2280 580 C 2440 580, 2560 520, 2680 520 C 2820 520, 2960 540, 3060 540 C 3160 540, 3200 580, 3220 580 C 3280 600, 3340 680, 3400 760 L 3700 760"
+          stroke="#ffd166" stroke-width="3" stroke-dasharray="22 28" fill="none"
+          stroke-linecap="round" opacity=".75" class="road-stripes"
+        />
+
+        <!-- Bridge spanning the river ==============
+             Sits LOW across the water (river surface ~y=720) so it
+             reads as a footbridge across the water, while the road
+             above continues across the river area as an elevated
+             route. The bridge no longer overlaps with the road. -->
+        <g class="bridge">
+          <rect x="1740" y="684" width="320" height="14" fill="#7a5430" />
+          <rect x="1740" y="698" width="320" height="6"  fill="#5a3d23" />
+          <!-- Bridge towers (rise above the deck only a little) -->
+          <rect x="1750" y="644" width="10" height="50" fill="#8a6440" />
+          <rect x="2040" y="644" width="10" height="50" fill="#8a6440" />
+          <!-- Piers reaching down into the water -->
+          <rect x="1810" y="698" width="8" height="80" fill="#5a3d23" opacity=".75"/>
+          <rect x="1980" y="698" width="8" height="80" fill="#5a3d23" opacity=".75"/>
+          <!-- Suspension cables -->
+          <path d="M 1755 644 Q 1900 726 2045 644" stroke="#c9a570" stroke-width="2" fill="none"/>
+          <path d="M 1755 644 L 1820 688 M 1860 688 L 1900 688 M 1940 688 L 1980 688 M 2045 644 L 2020 688"
+                stroke="#c9a570" stroke-width="1" fill="none" opacity=".7"/>
+          <!-- Bridge cap lights -->
+          <circle cx="1755" cy="642" r="3" fill="#ffd166" class="lamp-bulb"/>
+          <circle cx="2045" cy="642" r="3" fill="#ffd166" class="lamp-bulb"/>
+        </g>
+
+        <!-- ============== ORIGINS VILLAGE (x ~ 460-620) ==============
+             No transform — houses sit on the grass strip BELOW the
+             road, the way a real roadside village would. The label
+             tab floats above the road in the sky band (see
+             LOCATIONS.origins.y in script.js). -->
+        <g class="village">
+          <!-- ============ THE HOMETOWN COTTAGE (x ~ 312-448, w=136) ============
+               A LARGE, UNIQUE storybook cottage centered directly
+               below the "Hometown Cottage" label tag (label centered
+               at x=380). The whole cottage group is LIFTED UP by
+               180px (transform below) so the cottage's wall-base
+               sits ON TOP of the road's top edge — same anchoring
+               as Y1 / Y2 / Y3 — instead of down on the grass. Walls
+               are sunshine YELLOW so it pops against every other
+               building palette on the map. -->
+          <g transform="translate(0,-185)">
+          <!-- yellow walls: tall enough to read as a real cottage -->
+          <rect x="312" y="640" width="136" height="78" fill="#f4c430"/>
+          <!-- horizontal plank/clapboard shading -->
+          <rect x="312" y="660" width="136" height="2" fill="#b88a14" opacity=".55"/>
+          <rect x="312" y="682" width="136" height="2" fill="#b88a14" opacity=".55"/>
+          <rect x="312" y="704" width="136" height="2" fill="#b88a14" opacity=".55"/>
+          <!-- deep AMBER pitched roof, wide eaves -->
+          <polygon points="304,640 456,640 380,606" fill="#c98c1c"/>
+          <!-- roof shadow line (thickness) -->
+          <polygon points="304,640 456,640 452,644 308,644" fill="#8a5d10"/>
+          <!-- arched door, centered on the cottage -->
+          <rect x="370" y="676" width="20" height="42" fill="#5a3a22"/>
+          <path d="M 370 676 A 10 10 0 0 1 390 676 Z" fill="#5a3a22"/>
+          <circle cx="386" cy="697" r="1.5" fill="#ffd166"/>
+          <!-- round attic window (the cottage signature) -->
+          <circle cx="380" cy="628" r="7" fill="url(#window-glow)" stroke="#8a5d10" stroke-width="2"/>
+          <line x1="373" y1="628" x2="387" y2="628" stroke="#8a5d10" stroke-width="1"/>
+          <line x1="380" y1="621" x2="380" y2="635" stroke="#8a5d10" stroke-width="1"/>
+          <!-- two ground-floor windows flanking the door -->
+          <rect x="328" y="660" width="20" height="20" fill="url(#window-glow)"/>
+          <rect x="337" y="660" width="2" height="20" fill="#8a5d10" opacity=".8"/>
+          <rect x="328" y="669" width="20" height="2" fill="#8a5d10" opacity=".8"/>
+          <rect x="412" y="660" width="20" height="20" fill="url(#window-glow)"/>
+          <rect x="421" y="660" width="2" height="20" fill="#8a5d10" opacity=".8"/>
+          <rect x="412" y="669" width="20" height="2" fill="#8a5d10" opacity=".8"/>
+          <!-- chimney + animated smoke (smoke uses --smoke-x/y in
+               UNTRANSLATED coords — the SVG transform on the parent
+               group shifts the whole cottage including the smoke
+               anchor, so the puffs still rise above the chimney) -->
+          <rect x="430" y="612" width="10" height="32" fill="#3a2a20"/>
+          <g class="smoke" style="--smoke-x: 435px; --smoke-y: 608px;">
+            <circle class="smoke__puff smoke__puff--1" cx="0" cy="0" r="5" fill="#fff"/>
+            <circle class="smoke__puff smoke__puff--2" cx="2" cy="0" r="6" fill="#fff"/>
+            <circle class="smoke__puff smoke__puff--3" cx="-2" cy="0" r="7" fill="#fff"/>
+          </g>
+          </g>
+          <!-- ============ ORIGINAL VILLAGE HOUSES (restored) ============ -->
+          <!-- house 1 -->
+          <rect x="430" y="650" width="44" height="40" fill="#a8754a"/>
+          <polygon points="425,650 477,650 451,628" fill="#6e3e26"/>
+          <rect x="445" y="666" width="10" height="14" fill="url(#window-glow)"/>
+          <rect x="438" y="654" width="6" height="6" fill="url(#window-glow)" opacity=".8"/>
+          <!-- chimney + animated smoke (CSS-driven, GPU-cheap) -->
+          <rect x="461" y="635" width="6" height="14" fill="#3a2a20"/>
+          <g class="smoke smoke--delayed" style="--smoke-x: 464px; --smoke-y: 632px;">
+            <circle class="smoke__puff smoke__puff--1" cx="0" cy="0" r="4" fill="#fff"/>
+            <circle class="smoke__puff smoke__puff--2" cx="2" cy="0" r="5" fill="#fff"/>
+            <circle class="smoke__puff smoke__puff--3" cx="-2" cy="0" r="6" fill="#fff"/>
+          </g>
+          <!-- house 2 -->
+          <rect x="490" y="660" width="50" height="34" fill="#9a6442"/>
+          <polygon points="486,660 544,660 515,640" fill="#5d3320"/>
+          <rect x="510" y="672" width="9" height="13" fill="url(#window-glow)"/>
+          <rect x="496" y="668" width="7" height="7" fill="url(#window-glow)" opacity=".8"/>
+          <!-- house 3 -->
+          <rect x="556" y="652" width="48" height="40" fill="#b07a52"/>
+          <polygon points="552,652 608,652 580,628" fill="#6e3e26"/>
+          <rect x="572" y="668" width="10" height="14" fill="url(#window-glow)"/>
+          <rect x="586" y="668" width="10" height="14" fill="url(#window-glow)"/>
+          <!-- chimney + smoke on house 3 (offset cycle so puffs don't sync) -->
+          <rect x="586" y="635" width="6" height="14" fill="#3a2a20"/>
+          <g class="smoke smoke--delayed" style="--smoke-x: 589px; --smoke-y: 632px;">
+            <circle class="smoke__puff smoke__puff--1" cx="0" cy="0" r="4" fill="#fff"/>
+            <circle class="smoke__puff smoke__puff--2" cx="2" cy="0" r="5" fill="#fff"/>
+            <circle class="smoke__puff smoke__puff--3" cx="-2" cy="0" r="6" fill="#fff"/>
+          </g>
+        </g>
+
+        <!-- ============== YEAR 1 OFFICE BLOCK (x ~ 860-1040) ==============
+             Lifted UP 282px so the bottom of the plaza sits exactly
+             on the road's top edge in this section (road centerline
+             y=500, half-stroke 32 → top edge y=468; plaza bottom
+             750 - 282 = 468). -->
+        <g class="buildings" transform="translate(0,-282)">
+          <!-- Plaza/sidewalk foundation under the towers -->
+          <rect x="848" y="690" width="200" height="60" fill="#3d1f10"/>
+          <rect x="848" y="690" width="200" height="6"  fill="#5a2d18"/>
+          <!-- Year 1 palette: deep INDIGO/BLUE — distinct from the
+               amber Year-1 label so building + label read as
+               different elements. -->
+          <rect x="858" y="580" width="40" height="110" fill="#2e4790"/>
+          <rect x="906" y="560" width="44" height="130" fill="#4f6dc7"/>
+          <rect x="958" y="600" width="36" height="90"  fill="#28407d"/>
+          <!-- Signature taller tower for Year 1 -->
+          <rect x="1000" y="500" width="42" height="190" fill="#3956a8"/>
+          <line x1="1021" y1="500" x2="1021" y2="476" stroke="#888" stroke-width="2"/>
+          <circle cx="1021" cy="476" r="3" fill="#ff4d4d" class="lamp-bulb"/>
+          <!-- windows for the signature tower -->
+          <g fill="url(#window-glow)" opacity=".95">
+            <rect x="1006" y="514" width="6" height="8"/><rect x="1020" y="514" width="6" height="8"/><rect x="1034" y="514" width="6" height="8"/>
+            <rect x="1006" y="530" width="6" height="8"/><rect x="1020" y="530" width="6" height="8"/><rect x="1034" y="530" width="6" height="8"/>
+            <rect x="1006" y="546" width="6" height="8"/><rect x="1020" y="546" width="6" height="8"/><rect x="1034" y="546" width="6" height="8"/>
+            <rect x="1006" y="562" width="6" height="8"/><rect x="1020" y="562" width="6" height="8"/><rect x="1034" y="562" width="6" height="8"/>
+            <rect x="1006" y="578" width="6" height="8"/><rect x="1020" y="578" width="6" height="8"/><rect x="1034" y="578" width="6" height="8"/>
+            <rect x="1006" y="594" width="6" height="8"/><rect x="1020" y="594" width="6" height="8"/><rect x="1034" y="594" width="6" height="8"/>
+            <rect x="1006" y="610" width="6" height="8"/><rect x="1020" y="610" width="6" height="8"/><rect x="1034" y="610" width="6" height="8"/>
+            <rect x="1006" y="626" width="6" height="8"/><rect x="1020" y="626" width="6" height="8"/><rect x="1034" y="626" width="6" height="8"/>
+          </g>
+          <!-- windows (regular grid for office vibe) -->
+          <g fill="url(#window-glow)" opacity=".95">
+            <rect x="866" y="592" width="6" height="8"/><rect x="880" y="592" width="6" height="8"/>
+            <rect x="866" y="608" width="6" height="8"/><rect x="880" y="608" width="6" height="8"/>
+            <rect x="866" y="624" width="6" height="8"/><rect x="880" y="624" width="6" height="8"/>
+            <rect x="866" y="640" width="6" height="8"/><rect x="880" y="640" width="6" height="8"/>
+            <rect x="866" y="656" width="6" height="8"/><rect x="880" y="656" width="6" height="8"/>
+            <rect x="914" y="572" width="6" height="8"/><rect x="930" y="572" width="6" height="8"/>
+            <rect x="914" y="588" width="6" height="8"/><rect x="930" y="588" width="6" height="8"/>
+            <rect x="914" y="604" width="6" height="8"/><rect x="930" y="604" width="6" height="8"/>
+            <rect x="914" y="620" width="6" height="8"/><rect x="930" y="620" width="6" height="8"/>
+            <rect x="914" y="636" width="6" height="8"/><rect x="930" y="636" width="6" height="8"/>
+            <rect x="914" y="652" width="6" height="8"/><rect x="930" y="652" width="6" height="8"/>
+            <rect x="966" y="612" width="6" height="8"/><rect x="980" y="612" width="6" height="8"/>
+            <rect x="966" y="628" width="6" height="8"/><rect x="980" y="628" width="6" height="8"/>
+            <rect x="966" y="644" width="6" height="8"/><rect x="980" y="644" width="6" height="8"/>
+          </g>
+        </g>
+
+        <!-- ============== YEAR 2 SKYLINE (x ~ 1440-1580) ==============
+             Restored the full-height plaza foundation and lifted the
+             whole group UP 220px so the bottom of the plaza sits
+             just above the road's top edge instead of bleeding
+             into the asphalt. -->
+        <g class="buildings" transform="translate(0,-220)">
+          <!-- Plaza/sidewalk foundation under the towers -->
+          <!-- Year 2 palette: TEAL / CYAN — readable against the
+               cool blue/purple mountain ranges behind. -->
+          <rect x="1418" y="690" width="200" height="60" fill="#0e3f48"/>
+          <rect x="1418" y="690" width="200" height="6"  fill="#155b66"/>
+          <!-- All four towers shortened by 10px so their bases land
+               exactly on the plaza top edge (y=690) instead of
+               punching down into the plaza slab — matches Y1. -->
+          <rect x="1430" y="540" width="38" height="150" fill="#176470"/>
+          <rect x="1476" y="500" width="44" height="190" fill="#1f8896"/>
+          <rect x="1528" y="560" width="36" height="130" fill="#175b67"/>
+          <rect x="1572" y="540" width="32" height="150" fill="#1a7480"/>
+          <g fill="url(#window-glow)" opacity=".9">
+            <rect x="1438" y="552" width="5" height="7"/><rect x="1450" y="552" width="5" height="7"/>
+            <rect x="1438" y="568" width="5" height="7"/><rect x="1450" y="568" width="5" height="7"/>
+            <rect x="1438" y="584" width="5" height="7"/><rect x="1450" y="584" width="5" height="7"/>
+            <rect x="1438" y="600" width="5" height="7"/><rect x="1450" y="600" width="5" height="7"/>
+            <rect x="1438" y="616" width="5" height="7"/><rect x="1450" y="616" width="5" height="7"/>
+            <rect x="1438" y="632" width="5" height="7"/><rect x="1450" y="632" width="5" height="7"/>
+            <rect x="1438" y="648" width="5" height="7"/><rect x="1450" y="648" width="5" height="7"/>
+            <rect x="1438" y="664" width="5" height="7"/><rect x="1450" y="664" width="5" height="7"/>
+            <rect x="1486" y="512" width="5" height="7"/><rect x="1500" y="512" width="5" height="7"/>
+            <rect x="1486" y="528" width="5" height="7"/><rect x="1500" y="528" width="5" height="7"/>
+            <rect x="1486" y="544" width="5" height="7"/><rect x="1500" y="544" width="5" height="7"/>
+            <rect x="1486" y="560" width="5" height="7"/><rect x="1500" y="560" width="5" height="7"/>
+            <rect x="1486" y="576" width="5" height="7"/><rect x="1500" y="576" width="5" height="7"/>
+            <rect x="1486" y="592" width="5" height="7"/><rect x="1500" y="592" width="5" height="7"/>
+            <rect x="1486" y="608" width="5" height="7"/><rect x="1500" y="608" width="5" height="7"/>
+            <rect x="1486" y="624" width="5" height="7"/><rect x="1500" y="624" width="5" height="7"/>
+            <rect x="1486" y="640" width="5" height="7"/><rect x="1500" y="640" width="5" height="7"/>
+            <rect x="1486" y="656" width="5" height="7"/><rect x="1500" y="656" width="5" height="7"/>
+            <rect x="1538" y="572" width="5" height="7"/><rect x="1552" y="572" width="5" height="7"/>
+            <rect x="1538" y="588" width="5" height="7"/><rect x="1552" y="588" width="5" height="7"/>
+            <rect x="1538" y="604" width="5" height="7"/><rect x="1552" y="604" width="5" height="7"/>
+            <rect x="1538" y="620" width="5" height="7"/><rect x="1552" y="620" width="5" height="7"/>
+            <rect x="1538" y="636" width="5" height="7"/><rect x="1552" y="636" width="5" height="7"/>
+            <rect x="1538" y="652" width="5" height="7"/><rect x="1552" y="652" width="5" height="7"/>
+            <rect x="1580" y="552" width="5" height="7"/><rect x="1592" y="552" width="5" height="7"/>
+            <rect x="1580" y="568" width="5" height="7"/><rect x="1592" y="568" width="5" height="7"/>
+            <rect x="1580" y="584" width="5" height="7"/><rect x="1592" y="584" width="5" height="7"/>
+            <rect x="1580" y="600" width="5" height="7"/><rect x="1592" y="600" width="5" height="7"/>
+            <rect x="1580" y="616" width="5" height="7"/><rect x="1592" y="616" width="5" height="7"/>
+            <rect x="1580" y="632" width="5" height="7"/><rect x="1592" y="632" width="5" height="7"/>
+          </g>
+          <!-- antenna with blinker -->
+          <line x1="1498" y1="500" x2="1498" y2="470" stroke="#888" stroke-width="2"/>
+          <circle cx="1498" cy="470" r="3" fill="#ff4d4d" class="lamp-bulb"/>
+        </g>
+
+        <!-- ============== YEAR 3 CITY CENTER (x ~ 2200-2360) ==============
+             Restored the full-height plaza foundation and lifted the
+             whole group UP 200px so the plaza sits just above the
+             road's top edge instead of overlapping the asphalt. -->
+        <g class="buildings" transform="translate(0,-200)">
+          <!-- Plaza/sidewalk foundation under the towers -->
+          <!-- Year 3 palette: MAGENTA / VIOLET — high contrast
+               against both sky and the bluish mountains behind. -->
+          <rect x="2168" y="690" width="220" height="60" fill="#3d1748"/>
+          <rect x="2168" y="690" width="220" height="6"  fill="#52205f"/>
+          <!-- All four towers shortened by 10px so their bases land
+               exactly on the plaza top edge (y=690) instead of
+               punching down into the plaza slab — matches Y1. -->
+          <rect x="2180" y="500" width="40" height="190" fill="#6a2a7a"/>
+          <rect x="2226" y="440" width="50" height="250" fill="#9038a8"/>
+          <rect x="2284" y="480" width="44" height="210" fill="#7a2f8e"/>
+          <rect x="2334" y="520" width="38" height="170" fill="#682678"/>
+          <g fill="url(#window-glow)" opacity=".9">
+            <!-- procedural-looking grid -->
+            <rect x="2188" y="514" width="5" height="7"/><rect x="2200" y="514" width="5" height="7"/><rect x="2210" y="514" width="5" height="7"/>
+            <rect x="2188" y="530" width="5" height="7"/><rect x="2200" y="530" width="5" height="7"/><rect x="2210" y="530" width="5" height="7"/>
+            <rect x="2188" y="546" width="5" height="7"/><rect x="2200" y="546" width="5" height="7"/><rect x="2210" y="546" width="5" height="7"/>
+            <rect x="2188" y="562" width="5" height="7"/><rect x="2200" y="562" width="5" height="7"/><rect x="2210" y="562" width="5" height="7"/>
+            <rect x="2188" y="578" width="5" height="7"/><rect x="2200" y="578" width="5" height="7"/><rect x="2210" y="578" width="5" height="7"/>
+            <rect x="2188" y="594" width="5" height="7"/><rect x="2200" y="594" width="5" height="7"/><rect x="2210" y="594" width="5" height="7"/>
+            <rect x="2188" y="610" width="5" height="7"/><rect x="2200" y="610" width="5" height="7"/><rect x="2210" y="610" width="5" height="7"/>
+            <rect x="2188" y="626" width="5" height="7"/><rect x="2200" y="626" width="5" height="7"/><rect x="2210" y="626" width="5" height="7"/>
+            <rect x="2188" y="642" width="5" height="7"/><rect x="2200" y="642" width="5" height="7"/><rect x="2210" y="642" width="5" height="7"/>
+            <rect x="2188" y="658" width="5" height="7"/><rect x="2200" y="658" width="5" height="7"/><rect x="2210" y="658" width="5" height="7"/>
+            <rect x="2188" y="674" width="5" height="7"/><rect x="2200" y="674" width="5" height="7"/><rect x="2210" y="674" width="5" height="7"/>
+            <rect x="2236" y="454" width="5" height="7"/><rect x="2248" y="454" width="5" height="7"/><rect x="2260" y="454" width="5" height="7"/>
+            <rect x="2236" y="470" width="5" height="7"/><rect x="2248" y="470" width="5" height="7"/><rect x="2260" y="470" width="5" height="7"/>
+            <rect x="2236" y="486" width="5" height="7"/><rect x="2248" y="486" width="5" height="7"/><rect x="2260" y="486" width="5" height="7"/>
+            <rect x="2236" y="502" width="5" height="7"/><rect x="2248" y="502" width="5" height="7"/><rect x="2260" y="502" width="5" height="7"/>
+            <rect x="2236" y="518" width="5" height="7"/><rect x="2248" y="518" width="5" height="7"/><rect x="2260" y="518" width="5" height="7"/>
+            <rect x="2236" y="534" width="5" height="7"/><rect x="2248" y="534" width="5" height="7"/><rect x="2260" y="534" width="5" height="7"/>
+            <rect x="2236" y="550" width="5" height="7"/><rect x="2248" y="550" width="5" height="7"/><rect x="2260" y="550" width="5" height="7"/>
+            <rect x="2236" y="566" width="5" height="7"/><rect x="2248" y="566" width="5" height="7"/><rect x="2260" y="566" width="5" height="7"/>
+            <rect x="2236" y="582" width="5" height="7"/><rect x="2248" y="582" width="5" height="7"/><rect x="2260" y="582" width="5" height="7"/>
+            <rect x="2236" y="598" width="5" height="7"/><rect x="2248" y="598" width="5" height="7"/><rect x="2260" y="598" width="5" height="7"/>
+            <rect x="2236" y="614" width="5" height="7"/><rect x="2248" y="614" width="5" height="7"/><rect x="2260" y="614" width="5" height="7"/>
+            <rect x="2236" y="630" width="5" height="7"/><rect x="2248" y="630" width="5" height="7"/><rect x="2260" y="630" width="5" height="7"/>
+            <rect x="2236" y="646" width="5" height="7"/><rect x="2248" y="646" width="5" height="7"/><rect x="2260" y="646" width="5" height="7"/>
+            <rect x="2236" y="662" width="5" height="7"/><rect x="2248" y="662" width="5" height="7"/><rect x="2260" y="662" width="5" height="7"/>
+            <rect x="2236" y="678" width="5" height="7"/><rect x="2248" y="678" width="5" height="7"/><rect x="2260" y="678" width="5" height="7"/>
+            <rect x="2294" y="494" width="5" height="7"/><rect x="2308" y="494" width="5" height="7"/>
+            <rect x="2294" y="510" width="5" height="7"/><rect x="2308" y="510" width="5" height="7"/>
+            <rect x="2294" y="526" width="5" height="7"/><rect x="2308" y="526" width="5" height="7"/>
+            <rect x="2294" y="542" width="5" height="7"/><rect x="2308" y="542" width="5" height="7"/>
+            <rect x="2294" y="558" width="5" height="7"/><rect x="2308" y="558" width="5" height="7"/>
+            <rect x="2294" y="574" width="5" height="7"/><rect x="2308" y="574" width="5" height="7"/>
+            <rect x="2294" y="590" width="5" height="7"/><rect x="2308" y="590" width="5" height="7"/>
+            <rect x="2294" y="606" width="5" height="7"/><rect x="2308" y="606" width="5" height="7"/>
+            <rect x="2294" y="622" width="5" height="7"/><rect x="2308" y="622" width="5" height="7"/>
+            <rect x="2294" y="638" width="5" height="7"/><rect x="2308" y="638" width="5" height="7"/>
+            <rect x="2294" y="654" width="5" height="7"/><rect x="2308" y="654" width="5" height="7"/>
+            <rect x="2294" y="670" width="5" height="7"/><rect x="2308" y="670" width="5" height="7"/>
+            <rect x="2342" y="534" width="5" height="7"/><rect x="2354" y="534" width="5" height="7"/>
+            <rect x="2342" y="550" width="5" height="7"/><rect x="2354" y="550" width="5" height="7"/>
+            <rect x="2342" y="566" width="5" height="7"/><rect x="2354" y="566" width="5" height="7"/>
+            <rect x="2342" y="582" width="5" height="7"/><rect x="2354" y="582" width="5" height="7"/>
+            <rect x="2342" y="598" width="5" height="7"/><rect x="2354" y="598" width="5" height="7"/>
+            <rect x="2342" y="614" width="5" height="7"/><rect x="2354" y="614" width="5" height="7"/>
+            <rect x="2342" y="630" width="5" height="7"/><rect x="2354" y="630" width="5" height="7"/>
+            <rect x="2342" y="646" width="5" height="7"/><rect x="2354" y="646" width="5" height="7"/>
+            <rect x="2342" y="662" width="5" height="7"/><rect x="2354" y="662" width="5" height="7"/>
+            <rect x="2342" y="678" width="5" height="7"/><rect x="2354" y="678" width="5" height="7"/>
+          </g>
+          <!-- Spire on tallest -->
+          <line x1="2251" y1="440" x2="2251" y2="406" stroke="#aaa" stroke-width="2"/>
+          <circle cx="2251" cy="406" r="3" fill="#ff4d4d" class="lamp-bulb"/>
+        </g>
+
+        <!-- ============== FEATURED PROJECTS PLAZA STAGE (x ~ 2620-2740) ============== -->
+        <g class="plaza">
+          <!-- stage platform -->
+          <rect x="2620" y="660" width="120" height="14" fill="#3a2f1b"/>
+          <rect x="2630" y="674" width="100" height="20" fill="#26200f"/>
+          <!-- spotlight cone -->
+          <polygon points="2680,460 2630,650 2730,650" fill="#fff5d4" opacity=".18"/>
+          <polygon points="2680,460 2655,650 2705,650" fill="#fff5d4" opacity=".30"/>
+          <!-- big star at top -->
+          <polygon points="2680,440 2688,464 2714,464 2693,478 2701,502 2680,488 2659,502 2667,478 2646,464 2672,464"
+                   fill="#ffd166" class="lamp-bulb"/>
+          <!-- stage curtains -->
+          <rect x="2620" y="600" width="14" height="60" fill="#7c2c2c"/>
+          <rect x="2726" y="600" width="14" height="60" fill="#7c2c2c"/>
+        </g>
+
+        <!-- ============== AI STATION ROCKET (x ~ 2960-3040) ============== -->
+        <g class="rocket-pad" id="rocket-pad">
+          <!-- launch pad -->
+          <rect x="2960" y="660" width="80" height="14" fill="#444"/>
+          <rect x="2960" y="674" width="80" height="20" fill="#222"/>
+          <!-- support tower (stays put) -->
+          <rect x="2954" y="500" width="4" height="160" fill="#666"/>
+          <line x1="2958" y1="520" x2="2992" y2="520" stroke="#666" stroke-width="2"/>
+          <line x1="2958" y1="560" x2="2992" y2="560" stroke="#666" stroke-width="2"/>
+          <line x1="2958" y1="600" x2="2992" y2="600" stroke="#666" stroke-width="2"/>
+          <!-- satellite dish (stays put) -->
+          <ellipse cx="3060" cy="640" rx="14" ry="6" fill="#aab5e8"/>
+          <line x1="3060" y1="640" x2="3060" y2="680" stroke="#888" stroke-width="3"/>
+
+          <!-- Smoke cloud puffs at the base (animated during launch) -->
+          <g class="rocket-smoke">
+            <circle cx="2980" cy="680" r="14" fill="#fff" opacity=".0"/>
+            <circle cx="2998" cy="685" r="18" fill="#e8e8f0" opacity=".0"/>
+            <circle cx="3018" cy="682" r="16" fill="#fff" opacity=".0"/>
+            <circle cx="3038" cy="686" r="14" fill="#dadbe6" opacity=".0"/>
+            <circle cx="2966" cy="688" r="11" fill="#fff" opacity=".0"/>
+          </g>
+
+          <!-- Rocket vehicle (the part that lifts off) -->
+          <g class="rocket-vehicle" id="rocket-vehicle">
+            <rect x="2992" y="500" width="16" height="160" rx="3" fill="#dde3ff"/>
+            <polygon points="2992,500 3008,500 3000,470" fill="#aab5e8"/>
+            <rect x="2994" y="540" width="12" height="14" fill="#5e7bff"/>
+            <!-- fins -->
+            <polygon points="2992,640 2982,660 2992,660" fill="#9aa6e0"/>
+            <polygon points="3008,640 3018,660 3008,660" fill="#9aa6e0"/>
+            <!-- exhaust flame -->
+            <g class="rocket-flame">
+              <polygon points="2994,660 3000,690 3006,660" fill="#ffb24c"/>
+              <polygon points="2996,660 3000,680 3004,660" fill="#fff5d4"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- ============== FEEDBACK GARAGE (x ~ 3180-3260) ==============
+             Translated DOWN 36px so the garage roof no longer
+             coincides with the road sweeping past at this x range. -->
+        <g class="garage" transform="translate(0,100)">
+          <!-- Recolored to a saturated TEAL/SAGE so the building no
+               longer reads as a slab of asphalt the same gray as the
+               road sweeping past it. -->
+          <rect x="3170" y="620" width="100" height="80" fill="#c43d8c"/>
+          <polygon points="3168,620 3272,620 3220,592" fill="#7d2358"/>
+          <rect x="3186" y="650" width="30" height="50" fill="#3d1428"/>
+          <rect x="3186" y="650" width="30" height="6"  fill="#ffd5ec"/>
+          <rect x="3186" y="668" width="30" height="6"  fill="#ffd5ec"/>
+          <rect x="3186" y="686" width="30" height="6"  fill="#ffd5ec"/>
+          <rect x="3226" y="640" width="30" height="20" fill="url(#window-glow)" opacity=".85"/>
+        </g>
+
+        <!-- ============== FUTURE CASTLE (x ~ 3500-3640 after transform) ==============
+             Translated +120 right and +28 down so the castle sits on
+             the final straight stretch of road (the L 3400 760 L 3700
+             760 segment), with the bottom of the keep flush against
+             the road's top edge. -->
+        <g class="castle" transform="translate(48,28)">
+          <!-- main keep -->
+          <rect x="3402" y="540" width="100" height="160" fill="#3e3a52"/>
+          <!-- battlements -->
+          <g fill="#3e3a52">
+            <rect x="3402" y="528" width="12" height="14"/>
+            <rect x="3422" y="528" width="12" height="14"/>
+            <rect x="3442" y="528" width="12" height="14"/>
+            <rect x="3462" y="528" width="12" height="14"/>
+            <rect x="3482" y="528" width="12" height="14"/>
+          </g>
+          <!-- left tower -->
+          <rect x="3380" y="500" width="26" height="200" fill="#4a4660"/>
+          <polygon points="3378,500 3408,500 3393,470" fill="#7c3a3a"/>
+          <!-- right tower -->
+          <rect x="3498" y="510" width="26" height="190" fill="#4a4660"/>
+          <polygon points="3496,510 3526,510 3511,480" fill="#7c3a3a"/>
+          <!-- center spire -->
+          <rect x="3442" y="478" width="20" height="62" fill="#564f70"/>
+          <polygon points="3440,478 3464,478 3452,448" fill="#7c3a3a"/>
+          <!-- door -->
+          <rect x="3442" y="660" width="20" height="40" rx="10" fill="#1a1a2e"/>
+          <!-- windows -->
+          <rect x="3389" y="540" width="8" height="10" fill="url(#window-glow)"/>
+          <rect x="3389" y="576" width="8" height="10" fill="url(#window-glow)"/>
+          <rect x="3505" y="552" width="8" height="10" fill="url(#window-glow)"/>
+          <rect x="3505" y="588" width="8" height="10" fill="url(#window-glow)"/>
+          <rect x="3448" y="496" width="8" height="10" fill="url(#window-glow)"/>
+          <rect x="3420" y="572" width="8" height="10" fill="url(#window-glow)"/>
+          <rect x="3475" y="572" width="8" height="10" fill="url(#window-glow)"/>
+          <!-- flag on the spire -->
+          <line x1="3452" y1="448" x2="3452" y2="420" stroke="#ddd" stroke-width="1.5"/>
+          <polygon points="3452,420 3470,426 3452,432" fill="#ff8b5a"/>
+          <!-- beam (rotating via CSS) -->
+          <g class="castle-beam" style="transform-origin: 3452px 478px;">
+            <polygon points="3452,478 3700,400 3700,556" fill="url(#beam-grad)" opacity=".6"/>
+          </g>
+        </g>
+
+        <!-- ============== TREES (more, layered) ============== -->
+        <g class="trees">
+          <g class="tree" style="transform-origin: 140px 720px"><rect x="137" y="700" width="6" height="22" fill="#3a2616"/><polygon points="120,706 160,706 140,672" fill="#1f4a3a"/><polygon points="124,694 156,694 140,664" fill="#2f6049"/></g>
+          <g class="tree" style="transform-origin: 240px 736px"><rect x="237" y="716" width="6" height="20" fill="#3a2616"/><circle cx="240" cy="710" r="14" fill="#3d7a5e"/></g>
+          <g class="tree" style="transform-origin: 360px 740px"><rect x="357" y="720" width="6" height="20" fill="#3a2616"/><polygon points="340,724 380,724 360,690" fill="#1f4a3a"/><polygon points="344,712 376,712 360,684" fill="#2f6049"/></g>
+          <g class="tree" style="transform-origin: 680px 730px"><rect x="677" y="710" width="6" height="20" fill="#3a2616"/><circle cx="680" cy="704" r="16" fill="#3d7a5e"/></g>
+          <g class="tree" style="transform-origin: 760px 746px"><rect x="757" y="726" width="6" height="20" fill="#3a2616"/><polygon points="740,730 780,730 760,696" fill="#1f4a3a"/></g>
+          <g class="tree" style="transform-origin: 1080px 740px"><rect x="1077" y="720" width="6" height="20" fill="#3a2616"/><circle cx="1080" cy="714" r="15" fill="#3d7a5e"/></g>
+          <g class="tree" style="transform-origin: 1200px 730px"><rect x="1197" y="710" width="6" height="20" fill="#3a2616"/><polygon points="1180,716 1220,716 1200,680" fill="#1f4a3a"/><polygon points="1184,704 1216,704 1200,676" fill="#2f6049"/></g>
+          <g class="tree" style="transform-origin: 1340px 740px"><rect x="1337" y="720" width="6" height="20" fill="#3a2616"/><circle cx="1340" cy="714" r="14" fill="#3d7a5e"/></g>
+          <g class="tree" style="transform-origin: 1660px 740px"><rect x="1657" y="720" width="6" height="20" fill="#3a2616"/><circle cx="1660" cy="714" r="14" fill="#3d7a5e"/></g>
+          <g class="tree" style="transform-origin: 2120px 730px"><rect x="2117" y="710" width="6" height="20" fill="#3a2616"/><polygon points="2100,716 2140,716 2120,682" fill="#1f4a3a"/></g>
+          <g class="tree" style="transform-origin: 2440px 740px"><rect x="2437" y="720" width="6" height="20" fill="#3a2616"/><circle cx="2440" cy="714" r="14" fill="#3d7a5e"/></g>
+          <g class="tree" style="transform-origin: 2540px 730px"><rect x="2537" y="710" width="6" height="22" fill="#3a2616"/><polygon points="2520,716 2560,716 2540,680" fill="#1f4a3a"/><polygon points="2524,704 2556,704 2540,676" fill="#2f6049"/></g>
+          <g class="tree" style="transform-origin: 2820px 720px"><rect x="2817" y="700" width="6" height="22" fill="#3a2616"/><circle cx="2820" cy="694" r="18" fill="#2f5d4a"/></g>
+          <g class="tree" style="transform-origin: 3120px 740px"><rect x="3117" y="720" width="6" height="20" fill="#3a2616"/><polygon points="3100,724 3140,724 3120,690" fill="#1f4a3a"/></g>
+          <g class="tree" style="transform-origin: 3320px 730px"><rect x="3317" y="710" width="6" height="22" fill="#3a2616"/><circle cx="3320" cy="704" r="16" fill="#3d7a5e"/></g>
+
+          <!-- bushes -->
+          <circle cx="240"  cy="780" r="10" fill="#2a4a3a"/>
+          <circle cx="780"  cy="790" r="9"  fill="#2a4a3a"/>
+          <circle cx="1240" cy="780" r="11" fill="#2a4a3a"/>
+          <circle cx="2360" cy="780" r="10" fill="#2a4a3a"/>
+          <circle cx="2900" cy="790" r="9"  fill="#2a4a3a"/>
+          <circle cx="3300" cy="780" r="11" fill="#2a4a3a"/>
+        </g>
+
+        <!-- ============== LAMPPOSTS along the road ============== -->
+        <g class="lampposts">
+          <g transform="translate(300 0)">
+            <rect x="-2" y="540" width="4" height="160" fill="#222"/>
+            <rect x="-10" y="534" width="20" height="6" rx="2" fill="#333"/>
+            <circle cx="0" cy="530" r="40" fill="url(#lamp-halo)"/>
+            <circle cx="0" cy="530" r="6" fill="#fff5b8" class="lamp-bulb"/>
+          </g>
+          <g transform="translate(700 0)">
+            <rect x="-2" y="520" width="4" height="180" fill="#222"/>
+            <rect x="-10" y="514" width="20" height="6" rx="2" fill="#333"/>
+            <circle cx="0" cy="510" r="40" fill="url(#lamp-halo)"/>
+            <circle cx="0" cy="510" r="6" fill="#fff5b8" class="lamp-bulb"/>
+          </g>
+          <g transform="translate(1100 0)">
+            <rect x="-2" y="510" width="4" height="190" fill="#222"/>
+            <rect x="-10" y="504" width="20" height="6" rx="2" fill="#333"/>
+            <circle cx="0" cy="500" r="40" fill="url(#lamp-halo)"/>
+            <circle cx="0" cy="500" r="6" fill="#fff5b8" class="lamp-bulb"/>
+          </g>
+          <g transform="translate(1700 0)">
+            <rect x="-2" y="540" width="4" height="160" fill="#222"/>
+            <rect x="-10" y="534" width="20" height="6" rx="2" fill="#333"/>
+            <circle cx="0" cy="530" r="40" fill="url(#lamp-halo)"/>
+            <circle cx="0" cy="530" r="6" fill="#fff5b8" class="lamp-bulb"/>
+          </g>
+          <g transform="translate(2100 0)">
+            <rect x="-2" y="540" width="4" height="160" fill="#222"/>
+            <rect x="-10" y="534" width="20" height="6" rx="2" fill="#333"/>
+            <circle cx="0" cy="530" r="40" fill="url(#lamp-halo)"/>
+            <circle cx="0" cy="530" r="6" fill="#fff5b8" class="lamp-bulb"/>
+          </g>
+          <g transform="translate(2500 0)">
+            <rect x="-2" y="500" width="4" height="200" fill="#222"/>
+            <rect x="-10" y="494" width="20" height="6" rx="2" fill="#333"/>
+            <circle cx="0" cy="490" r="40" fill="url(#lamp-halo)"/>
+            <circle cx="0" cy="490" r="6" fill="#fff5b8" class="lamp-bulb"/>
+          </g>
+          <g transform="translate(2880 0)">
+            <rect x="-2" y="500" width="4" height="200" fill="#222"/>
+            <rect x="-10" y="494" width="20" height="6" rx="2" fill="#333"/>
+            <circle cx="0" cy="490" r="40" fill="url(#lamp-halo)"/>
+            <circle cx="0" cy="490" r="6" fill="#fff5b8" class="lamp-bulb"/>
+          </g>
+          <g transform="translate(3360 0)">
+            <rect x="-2" y="500" width="4" height="200" fill="#222"/>
+            <rect x="-10" y="494" width="20" height="6" rx="2" fill="#333"/>
+            <circle cx="0" cy="490" r="40" fill="url(#lamp-halo)"/>
+            <circle cx="0" cy="490" r="6" fill="#fff5b8" class="lamp-bulb"/>
+          </g>
+        </g>
+
+        <!-- ============== Foreground grass tufts ============== -->
+        <g class="grass" fill="#1a3a2a">
+          <path d="M 100 870 q 5 -20 10 0 q 5 -16 10 0 q 5 -22 10 0 z"/>
+          <path d="M 500 870 q 5 -16 10 0 q 5 -22 10 0 q 5 -18 10 0 z"/>
+          <path d="M 900 870 q 5 -20 10 0 q 5 -16 10 0 q 5 -22 10 0 z"/>
+          <path d="M 1300 870 q 5 -16 10 0 q 5 -22 10 0 q 5 -18 10 0 z"/>
+          <path d="M 1700 870 q 5 -20 10 0 q 5 -16 10 0 q 5 -22 10 0 z"/>
+          <path d="M 2100 870 q 5 -16 10 0 q 5 -22 10 0 q 5 -18 10 0 z"/>
+          <path d="M 2500 870 q 5 -20 10 0 q 5 -16 10 0 q 5 -22 10 0 z"/>
+          <path d="M 2900 870 q 5 -16 10 0 q 5 -22 10 0 q 5 -18 10 0 z"/>
+          <path d="M 3300 870 q 5 -20 10 0 q 5 -16 10 0 q 5 -22 10 0 z"/>
+        </g>
+      </svg>
+
+      <!-- Tire-trail particle container (inside world so it scrolls with camera) -->
+      <div id="particles" class="particles" aria-hidden="true"></div>
+
+      <!-- Location markers (positioned in world coords). -->
+      <div id="markers" class="markers" aria-hidden="true"></div>
+
+      <!-- The car (DOM, GPU-transformed) — lives inside the world so it
+           translates with the camera naturally. -->
+      <div id="car" class="car" role="img" aria-label="Your car avatar">
+        <!-- Headlight cone (rotates with car since it's a child) -->
+        <div class="car__headlight" aria-hidden="true"></div>
+        <svg viewBox="0 0 60 32" aria-hidden="true">
+          <rect x="4" y="10" width="52" height="14" rx="6" fill="var(--accent)" />
+          <rect x="14" y="4" width="32" height="12" rx="4" fill="var(--accent-dark)" />
+          <rect x="18" y="6" width="10" height="8" rx="2" fill="#cfeeff" />
+          <rect x="32" y="6" width="10" height="8" rx="2" fill="#cfeeff" />
+          <circle cx="16" cy="26" r="5" fill="#1a1a2e" />
+          <circle cx="44" cy="26" r="5" fill="#1a1a2e" />
+          <circle cx="16" cy="26" r="2" fill="#888" />
+          <circle cx="44" cy="26" r="2" fill="#888" />
+          <rect x="52" y="13" width="4" height="3" rx="1" fill="#fff7c2" />
+        </svg>
+        <div class="car__glow" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Journey progress strip (fixed, shows position along the world) -->
+    <div class="journey-bar" aria-hidden="true">
+      <div class="journey-bar__track"></div>
+      <div id="journey-bar-fill" class="journey-bar__fill"></div>
+      <div id="journey-bar-car" class="journey-bar__car">▲</div>
+      <div class="journey-bar__labels">
+        <span>Start</span><span>Year 1</span><span>Year 2</span><span>Year 3</span><span>Future</span>
+      </div>
+    </div>
+
+    <!-- Top-right control cluster: day/night + mute -->
+    <button id="day-btn" class="icon-btn day-btn" type="button"
+            aria-label="Toggle day / night" aria-pressed="false" title="Toggle day / night">
+      <svg class="day-btn__moon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 14.5A8 8 0 119.5 4a7 7 0 0010.5 10.5z" fill="currentColor"/>
+      </svg>
+      <svg class="day-btn__sun" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2" fill="currentColor"/>
+        <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line x1="12" y1="2.5" x2="12" y2="5"/>
+          <line x1="12" y1="19" x2="12" y2="21.5"/>
+          <line x1="2.5" y1="12" x2="5" y2="12"/>
+          <line x1="19" y1="12" x2="21.5" y2="12"/>
+          <line x1="5" y1="5" x2="6.8" y2="6.8"/>
+          <line x1="17.2" y1="17.2" x2="19" y2="19"/>
+          <line x1="5" y1="19" x2="6.8" y2="17.2"/>
+          <line x1="17.2" y1="6.8" x2="19" y2="5"/>
+        </g>
+      </svg>
+    </button>
+    <button id="mute-btn" class="icon-btn mute-btn" type="button"
+            aria-label="Toggle sound" aria-pressed="false" title="Toggle sound">
+      <svg class="mute-btn__on" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 10v4h4l5 4V6L7 10H3z" fill="currentColor"/>
+        <path d="M16 8a5 5 0 010 8M18.5 5.5a9 9 0 010 13" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </svg>
+      <svg class="mute-btn__off" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 10v4h4l5 4V6L7 10H3z" fill="currentColor"/>
+        <line x1="16" y1="9" x2="22" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="9" x2="16" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- Speedometer (fixed, bottom-left on desktop) -->
+    <div class="speedo" aria-hidden="true">
+      <div class="speedo__ring">
+        <div id="speedo-needle" class="speedo__needle"></div>
+        <div class="speedo__center"></div>
+      </div>
+      <div class="speedo__label">
+        <span id="speedo-value">0</span><span class="speedo__unit">mph</span>
+      </div>
+    </div>
+
+    <!-- Proximity prompt -->
+    <div id="prompt" class="prompt" role="status" aria-live="polite" hidden>
+      <kbd>E</kbd> <span id="prompt-text">Press E to enter</span>
+    </div>
+
+    <!-- HUD: instructions panel (keyboard).
+         Collapsible so it doesn't permanently block the speedometer.
+         Auto-collapses on first drive key press; can be toggled via
+         the floating "?" button at any time. -->
+    <aside id="hud-instructions" class="hud-instructions" aria-label="How to play">
+      <button id="hud-instructions-close" class="hud-instructions__close"
+              type="button" aria-label="Hide instructions">×</button>
+      <h2 class="hud-instructions__title">How to drive</h2>
+      <p>Use <kbd>WASD</kbd> or <kbd class="kbd-arrow">↑</kbd><kbd class="kbd-arrow">↓</kbd><kbd class="kbd-arrow">←</kbd><kbd class="kbd-arrow">→</kbd> to drive.</p>
+      <p>Visit each location to explore my portfolio.</p>
+      <p>Press <kbd>E</kbd> or click a marker to enter.</p>
+    </aside>
+    <button id="hud-help-btn" class="hud-help-btn" type="button"
+            aria-label="Show controls" title="Show controls">?</button>
+
+    <!-- Touch controls (only visible on touch devices via CSS) -->
+    <div id="touch-controls" class="touch-controls" aria-hidden="true">
+      <div id="joystick" class="joystick" role="application" aria-label="Driving joystick">
+        <div class="joystick__base"></div>
+        <div id="joystick-thumb" class="joystick__thumb"></div>
+      </div>
+      <button id="action-btn" class="action-btn" aria-label="Enter location" disabled>
+        <span class="action-btn__icon">↵</span>
+        <span class="action-btn__label">Enter</span>
+      </button>
+    </div>
+
+    <!-- HUD: progress tracker. The chip list is collapsible via the
+         small caret button on the header row so the panel can shrink
+         to just the count + bar when the user wants more map space. -->
+    <aside id="hud-progress" class="hud-progress" aria-label="Locations visited">
+      <div class="hud-progress__row">
+        <span class="hud-progress__label">Locations visited</span>
+        <span class="hud-progress__count">
+          <span id="visited-count">0</span> / <span id="total-count">0</span>
+        </span>
+        <button id="hud-progress-toggle" class="hud-progress__toggle"
+                type="button" aria-expanded="true"
+                aria-controls="visited-list"
+                aria-label="Collapse visited list">
+          <span class="hud-progress__chev" aria-hidden="true">▾</span>
+        </button>
+      </div>
+      <div class="hud-progress__bar" aria-hidden="true">
+        <div id="visited-bar" class="hud-progress__bar-fill"></div>
+      </div>
+      <ul id="visited-list" class="hud-progress__list" aria-live="polite"></ul>
+    </aside>
+  </main>
+
+  <!-- ============================================================
+       MODAL CONTAINER (a single dialog, content swapped per location)
+       ============================================================ -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal__backdrop" data-close="true"></div>
+    <article class="modal__card" role="document">
+      <header class="modal__head">
+        <span id="modal-eyebrow" class="modal__eyebrow">Location</span>
+        <h2 id="modal-title" class="modal__title">Title</h2>
+        <button class="modal__close" aria-label="Close" data-close="true">×</button>
+      </header>
+      <div id="modal-body" class="modal__body"></div>
+    </article>
+  </div>
+
+  <!-- Detail modal (nested-style: shown on top of project cards) -->
+  <div id="detail-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="detail-title" hidden>
+    <div class="modal__backdrop" data-close-detail="true"></div>
+    <article class="modal__card modal__card--narrow" role="document">
+      <header class="modal__head">
+        <span class="modal__eyebrow">Project Detail</span>
+        <h2 id="detail-title" class="modal__title">Project</h2>
+        <button class="modal__close" aria-label="Close" data-close-detail="true">×</button>
+      </header>
+      <div id="detail-body" class="modal__body"></div>
+    </article>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
