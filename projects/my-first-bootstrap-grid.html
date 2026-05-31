@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My First Bootstrap Grid · Ethan Chang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./project-page.css" />
+</head>
+<body>
+  <header class="pp-topbar">
+    <a href="../index.html" class="pp-brand"><span>◇</span>Ethan's Journey Map</a>
+    <a href="../index.html" class="pp-back">← Back to the map</a>
+  </header>
+
+  <main class="pp-wrap">
+    <span class="pp-eyebrow">Featured · Sophomore Year</span>
+    <h1 class="pp-title">My First Bootstrap Grid</h1>
+    <p class="pp-lede">
+      The very first project — a multi-column responsive layout built
+      entirely with Bootstrap's 12-column grid. The one where the grid
+      finally clicked.
+    </p>
+
+    <div class="pp-meta">
+      <span><strong>Year:</strong> Sophomore</span>
+      <span><strong>Type:</strong> Responsive layout</span>
+      <span><strong>Built in:</strong> CodeSandbox</span>
+    </div>
+
+    <div class="pp-actions">
+      <a class="pp-btn pp-btn--primary" href="https://p7v5hn.csb.app/" target="_blank" rel="noopener">Visit the live site ↗</a>
+      <a class="pp-btn" href="https://codesandbox.io/p/sandbox/myfirstbootstrapethanchang-p7v5hn?file=%2Findex.html" target="_blank" rel="noopener">View on CodeSandbox ↗</a>
+    </div>
+
+    <section class="pp-section">
+      <h2>What it is</h2>
+      <p>
+        A multi-column layout page built from scratch using Bootstrap 5's
+        grid system — rows, columns, and breakpoint utilities only. No
+        custom CSS tricks, no flexbox workarounds. The goal was to
+        understand the 12-column system by actually using it, not just
+        reading about it.
+      </p>
+    </section>
+
+    <section class="pp-section">
+      <h2>Tech stack</h2>
+      <ul class="pp-stack">
+        <li>HTML5</li>
+        <li>Bootstrap 5</li>
+        <li>CodeSandbox</li>
+      </ul>
+    </section>
+
+    <section class="pp-section">
+      <h2>Highlights</h2>
+      <div class="pp-card">
+        <h3>12-column grid from scratch</h3>
+        <p>Built entirely from Bootstrap's row / col system — no copy-pasted
+        templates, just the docs and trial and error until columns stacked
+        where they were supposed to.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Responsive breakpoints</h3>
+        <p>Used <code>col-sm</code>, <code>col-md</code>, and
+        <code>col-lg</code> classes to control exactly how columns collapse
+        at each screen size.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Fixed vs. fluid containers</h3>
+        <p>Experimented with <code>.container</code> and
+        <code>.container-fluid</code> to understand why they behave
+        differently at wide viewports.</p>
+      </div>
+    </section>
+
+    <section class="pp-section">
+      <h2>What I learned</h2>
+      <ul>
+        <li>How the 12-column grid system works — and why 12 divides
+        so cleanly into halves, thirds, and quarters.</li>
+        <li>Watching columns automatically stack on mobile was the moment
+        "responsive design" stopped being abstract.</li>
+        <li>The difference between a fixed-width container and a
+        full-width one, and when you'd choose each.</li>
+      </ul>
+    </section>
+
+    <footer class="pp-footer">
+      <span>Ethan Chang · Class of 2026</span>
+      <a href="../index.html">← Back to the Journey Map</a>
+    </footer>
+  </main>
+</body>
+</html>

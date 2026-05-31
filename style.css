@@ -1154,6 +1154,9 @@ body.is-day .bg-skyline { opacity: .72; filter: saturate(.7) brightness(1.05); }
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 18px;
 }
+.gallery--2col { grid-template-columns: repeat(2, 1fr) !important; }
+.gallery--3col { grid-template-columns: repeat(3, 1fr) !important; }
+.gallery + .gallery { margin-top: 18px; }
 .proj {
   background: #fff;
   border: 1px solid rgba(0,0,0,.06);

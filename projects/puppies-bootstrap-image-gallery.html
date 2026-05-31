@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puppies — Bootstrap Image Gallery · Ethan Chang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./project-page.css" />
+</head>
+<body>
+  <header class="pp-topbar">
+    <a href="../index.html" class="pp-brand"><span>◇</span>Ethan's Journey Map</a>
+    <a href="../index.html" class="pp-back">← Back to the map</a>
+  </header>
+
+  <main class="pp-wrap">
+    <span class="pp-eyebrow">Featured · Sophomore Year</span>
+    <h1 class="pp-title">Puppies — Bootstrap Image Gallery</h1>
+    <p class="pp-lede">
+      A responsive puppy photo gallery built with Bootstrap's grid
+      system — the first time I thought seriously about how a layout
+      breaks at different screen sizes.
+    </p>
+
+    <div class="pp-meta">
+      <span><strong>Year:</strong> Sophomore</span>
+      <span><strong>Type:</strong> Responsive image gallery</span>
+      <span><strong>Built in:</strong> CodeSandbox</span>
+    </div>
+
+    <div class="pp-actions">
+      <a class="pp-btn pp-btn--primary" href="https://4t64xq.csb.app/" target="_blank" rel="noopener">Visit the live site ↗</a>
+      <a class="pp-btn" href="https://codesandbox.io/p/sandbox/puppies-part1-bootstrap-grid-image-gallery-practice-ethan-chang-4t64xq" target="_blank" rel="noopener">View on CodeSandbox ↗</a>
+    </div>
+
+    <section class="pp-section">
+      <h2>What it is</h2>
+      <p>
+        A photo gallery page filled with puppy images, arranged in a
+        responsive grid using Bootstrap 5. At wide viewports the images
+        sit in a multi-column grid; at smaller sizes the columns collapse
+        so no image gets squished. Every image has proper alt text — the
+        first time accessibility was a deliberate part of the build, not
+        an afterthought.
+      </p>
+    </section>
+
+    <section class="pp-section">
+      <h2>Tech stack</h2>
+      <ul class="pp-stack">
+        <li>HTML5</li>
+        <li>Bootstrap 5</li>
+        <li>CodeSandbox</li>
+      </ul>
+    </section>
+
+    <section class="pp-section">
+      <h2>Highlights</h2>
+      <div class="pp-card">
+        <h3>Image-heavy responsive grid</h3>
+        <p>Arranged images across multiple columns with Bootstrap's grid
+        so the gallery adapts cleanly from desktop to phone without any
+        custom media queries.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Alt text on everything</h3>
+        <p>Every image got a meaningful alt description — my first project
+        where I thought about what a screen reader would say, not just
+        what the page looks like.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Column nesting</h3>
+        <p>Used nested Bootstrap columns to fit a featured large image
+        alongside a grid of smaller thumbnails on the same row.</p>
+      </div>
+    </section>
+
+    <section class="pp-section">
+      <h2>What I learned</h2>
+      <ul>
+        <li>How to arrange images in a grid that works at every screen
+        size — not just "how it looks on my laptop."</li>
+        <li>Why alt text matters and how to write it usefully rather
+        than leaving it blank.</li>
+        <li>What Bootstrap column nesting is for and how to use it
+        without breaking the 12-column math.</li>
+      </ul>
+    </section>
+
+    <footer class="pp-footer">
+      <span>Ethan Chang · Class of 2026</span>
+      <a href="../index.html">← Back to the Journey Map</a>
+    </footer>
+  </main>
+</body>
+</html>

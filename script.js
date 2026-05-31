@@ -1150,16 +1150,21 @@ function renderYearProjects(year) {
 
 function renderFeatured() {
   const featured = state.projects.filter(p => p.featured);
+  const y1 = featured.filter(p => p.year === 1);
+  const y2 = featured.filter(p => p.year === 2);
+  const y3 = featured.filter(p => p.year === 3);
   return `
-    <p>Six of my best projects across all three years — each one has its own dedicated <em>Project Page</em> with the tech stack, features, and what I learned. Click <em>View Details</em> for the quick version, or <em>Project Page</em> for the full write-up.</p>
-    ${renderProjectGrid(featured, { showDetail: true })}
+    <p>Eight of my best projects across all three years — each one has its own dedicated <em>Project Page</em> with the tech stack, features, and what I learned. Click <em>View Details</em> for the quick version, or <em>Project Page</em> for the full write-up.</p>
+    ${renderProjectGrid(y1, { showDetail: true, galleryClass: 'gallery--2col' })}
+    ${renderProjectGrid(y2, { showDetail: true, galleryClass: 'gallery--3col' })}
+    ${renderProjectGrid(y3, { showDetail: true, galleryClass: 'gallery--3col' })}
   `;
 }
 
 function renderProjectGrid(list, opts = {}) {
   if (!list.length) return `<p>No projects yet — check back soon.</p>`;
   return `
-    <div class="gallery">
+    <div class="gallery${opts.galleryClass ? ' ' + opts.galleryClass : ''}">
       ${list.map(p => {
         const isSandbox = (p.githubLink || '').includes('codesandbox.io');
         const codeLabel = isSandbox ? 'CodeSandbox ↗' : 'GitHub ↗';
@@ -1177,8 +1182,8 @@ function renderProjectGrid(list, opts = {}) {
             <div class="proj__actions">
               <a href="${escapeAttr(p.liveLink)}" target="_blank" rel="noopener">Live ↗</a>
               ${p.githubLink ? `<a href="${escapeAttr(p.githubLink)}" target="_blank" rel="noopener">${codeLabel}</a>` : ''}
-              ${p.detailPage ? `<a class="is-primary" href="${escapeAttr(p.detailPage)}" target="_blank" rel="noopener">Project Page ↗</a>` : ''}
               ${opts.showDetail ? `<button${p.detailPage ? '' : ' class="is-primary"'} data-detail-id="${p.id}">View Details</button>` : ''}
+              ${p.detailPage ? `<a class="is-primary" href="${escapeAttr(p.detailPage)}" target="_blank" rel="noopener">Project Page ↗</a>` : ''}
             </div>
           </div>
         </article>
