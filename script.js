@@ -897,6 +897,11 @@ function initCar() {
       // keeps its wheels on the ground. The headlight cone is a child
       // div so it gets mirrored along with the body — exactly what we
       // want for backwards / left-facing driving.
+      // Off-road wings: show when car is more than 40px above the road line.
+      const roadY = sampleRoadY(car.x);
+      const offRoad = car.y < roadY - 40;
+      carEl.classList.toggle('is-flying', offRoad);
+
       const facingLeft = Math.cos(car.angle) < 0;
       const visualAngle = facingLeft ? car.angle - Math.PI : car.angle;
       const deg = (visualAngle * 180) / Math.PI;

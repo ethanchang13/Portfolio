@@ -875,6 +875,31 @@ body.is-day .bg-skyline { opacity: .72; filter: saturate(.7) brightness(1.05); }
   pointer-events: none;
 }
 .car.is-near .car__glow { opacity: 1; }
+
+/* --- Off-road wings --- */
+.car__wings {
+  position: absolute;
+  /* Centre the 120-wide SVG over the 60-wide car body */
+  left: 50%; top: 50%;
+  width: 120px; height: 32px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.car.is-flying .car__wings { opacity: 1; }
+.car.is-flying .car__wing--left  { animation: wing-flap-l .45s ease-in-out infinite alternate; }
+.car.is-flying .car__wing--right { animation: wing-flap-r .45s ease-in-out infinite alternate; }
+
+@keyframes wing-flap-l {
+  from { transform: rotate(0deg);   transform-origin: 30px 16px; }
+  to   { transform: rotate(-22deg); transform-origin: 30px 16px; }
+}
+@keyframes wing-flap-r {
+  from { transform: rotate(0deg);  transform-origin: 90px 16px; }
+  to   { transform: rotate(22deg); transform-origin: 90px 16px; }
+}
 /* Headlight cone projecting from the front of the car. The car's transform
    already rotates with movement direction, so this rotates with it. */
 .car__headlight {
