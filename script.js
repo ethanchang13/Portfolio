@@ -1044,9 +1044,14 @@ function closeModal() {
 function openProjectDetail(id) {
   const p = state.projects.find(pr => pr.id === id);
   if (!p) return;
+  const isSandbox = (p.githubLink || '').includes('codesandbox.io');
+  const codeLabel = isSandbox ? 'CodeSandbox ↗' : 'GitHub ↗';
+  const imgMarkup = p.image
+    ? `<div class="proj__img has-image" aria-label="Screenshot of ${escapeHtml(p.title)}"><img src="${escapeAttr(p.image)}" alt="Screenshot of ${escapeHtml(p.title)}" loading="lazy" /></div>`
+    : `<div class="proj__img" aria-label="Screenshot placeholder for ${escapeHtml(p.title)}"></div>`;
   document.getElementById('detail-title').textContent = p.title;
   document.getElementById('detail-body').innerHTML = `
-    <div class="proj__img" aria-label="Placeholder screenshot for ${escapeHtml(p.title)}"></div>
+    ${imgMarkup}
     <p style="margin-top:12px;"><strong>Year ${p.year} · ${escapeHtml(p.category)}</strong></p>
     <p>${escapeHtml(p.description)}</p>
     <h3>Skills learned</h3>
@@ -1057,7 +1062,8 @@ function openProjectDetail(id) {
     <ul class="proj__tags">${p.tags.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
     <div class="proj__actions" style="margin-top:14px;">
       <a class="is-primary" href="${escapeAttr(p.liveLink)}" target="_blank" rel="noopener">Live Project ↗</a>
-      <a href="${escapeAttr(p.githubLink)}" target="_blank" rel="noopener">GitHub ↗</a>
+      ${p.githubLink ? `<a href="${escapeAttr(p.githubLink)}" target="_blank" rel="noopener">${codeLabel}</a>` : ''}
+      ${p.detailPage ? `<a href="${escapeAttr(p.detailPage)}" target="_blank" rel="noopener">Full Project Page ↗</a>` : ''}
     </div>
   `;
   document.getElementById('detail-modal').hidden = false;
@@ -1093,19 +1099,22 @@ function updateProgress() {
 function renderAboutMe() {
   return `
     <div class="about">
-      <img class="about__photo" alt="Placeholder profile photo of Ethan Chang"
-           src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><rect fill='%23e7d6a6' width='200' height='200'/><circle cx='100' cy='80' r='34' fill='%23c25a32'/><rect x='50' y='120' width='100' height='80' rx='20' fill='%23c25a32'/><text x='100' y='195' font-family='Inter,sans-serif' font-size='10' fill='%231a2240' text-anchor='middle'>Placeholder photo</text></svg>" />
+      <img class="about__photo" alt="Illustrated avatar of Ethan Chang"
+           src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><rect fill='%23e7d6a6' width='200' height='200'/><circle cx='100' cy='80' r='34' fill='%23c25a32'/><rect x='50' y='120' width='100' height='80' rx='20' fill='%23c25a32'/><text x='100' y='195' font-family='Inter,sans-serif' font-size='10' fill='%231a2240' text-anchor='middle'>Ethan Chang</text></svg>" />
       <div>
         <p>
-          <strong>Hi, I'm Ethan Chang.</strong> Placeholder paragraph
-          about who I am, where I'm from, and what shaped me. This space
-          should feel personal — like introducing yourself to someone you'd
-          actually want to know, not a resume bio.
+          <strong>Hi, I'm Ethan Chang.</strong> I'm a senior in the Web
+          Design Pathway Program, and I spend most of my time turning
+          ideas into things you can actually click on. I like building
+          sites that feel intentional — where the layout, the colors,
+          and the little interactions all agree with each other.
         </p>
         <p>
-          Placeholder paragraph two. Talk about the moments that pointed
-          you toward web design — the first site you built, the first
-          thing you styled, the first time code clicked.
+          I got into web design the first time a stylesheet I wrote
+          actually changed something on the page. Three years later I'm
+          still chasing that feeling, just on bigger projects: multi-page
+          sites, data-driven layouts, and interactive worlds like the
+          one you're driving around right now.
         </p>
         <h3>Things I'm into</h3>
         <ul class="about__interests">
@@ -1124,9 +1133,9 @@ function renderAboutMe() {
 function renderYearProjects(year) {
   const list = state.projects.filter(p => p.year === year);
   const yearBlurb = {
-    1: 'My first year — figuring out HTML, CSS, and how the web actually works.',
-    2: 'Second year — adding JavaScript, JSON, and frameworks to the toolbox.',
-    3: 'Third year — Vue, real client work, and a personal point of view.',
+    1: 'Sophomore year — my first dive into Bootstrap, the grid system, and responsive layouts.',
+    2: 'Junior year — JavaScript, the DOM, JSON, multi-page sites, and a wide range of small interactive projects.',
+    3: 'Senior year — AJAX, jQuery, Vue, multi-page client-style sites, and my most ambitious builds.',
   }[year];
   return `
     <p>${yearBlurb}</p>
@@ -1137,7 +1146,7 @@ function renderYearProjects(year) {
 function renderFeatured() {
   const featured = state.projects.filter(p => p.featured);
   return `
-    <p>Six to nine of my best projects across all three years. Click <em>View Details</em> on any card to read the full reflection.</p>
+    <p>Six of my best projects across all three years — each one has its own dedicated <em>Project Page</em> with the tech stack, features, and what I learned. Click <em>View Details</em> for the quick version, or <em>Project Page</em> for the full write-up.</p>
     ${renderProjectGrid(featured, { showDetail: true })}
   `;
 }
@@ -1146,9 +1155,15 @@ function renderProjectGrid(list, opts = {}) {
   if (!list.length) return `<p>No projects yet — check back soon.</p>`;
   return `
     <div class="gallery">
-      ${list.map(p => `
+      ${list.map(p => {
+        const isSandbox = (p.githubLink || '').includes('codesandbox.io');
+        const codeLabel = isSandbox ? 'CodeSandbox ↗' : 'GitHub ↗';
+        const imgMarkup = p.image
+          ? `<div class="proj__img has-image" aria-label="Screenshot of ${escapeHtml(p.title)}"><img src="${escapeAttr(p.image)}" alt="Screenshot of ${escapeHtml(p.title)}" loading="lazy" /></div>`
+          : `<div class="proj__img" aria-label="Screenshot placeholder for ${escapeHtml(p.title)}"></div>`;
+        return `
         <article class="proj">
-          <div class="proj__img" aria-label="Placeholder screenshot for ${escapeHtml(p.title)}"></div>
+          ${imgMarkup}
           <div class="proj__body">
             <span class="proj__year">Year ${p.year} · ${escapeHtml(p.category)}</span>
             <h3 class="proj__title">${escapeHtml(p.title)}</h3>
@@ -1156,19 +1171,19 @@ function renderProjectGrid(list, opts = {}) {
             <ul class="proj__tags">${p.tags.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
             <div class="proj__actions">
               <a href="${escapeAttr(p.liveLink)}" target="_blank" rel="noopener">Live ↗</a>
-              <a href="${escapeAttr(p.githubLink)}" target="_blank" rel="noopener">GitHub ↗</a>
-              ${opts.showDetail ? `<button class="is-primary" data-detail-id="${p.id}">View Details</button>` : ''}
+              ${p.githubLink ? `<a href="${escapeAttr(p.githubLink)}" target="_blank" rel="noopener">${codeLabel}</a>` : ''}
+              ${p.detailPage ? `<a class="is-primary" href="${escapeAttr(p.detailPage)}" target="_blank" rel="noopener">Project Page ↗</a>` : ''}
+              ${opts.showDetail ? `<button${p.detailPage ? '' : ' class="is-primary"'} data-detail-id="${p.id}">View Details</button>` : ''}
             </div>
           </div>
         </article>
-      `).join('')}
+      `;}).join('')}
     </div>
   `;
 }
 
 function renderReflection() {
   return `
-    <p><em>Placeholder reflection — replace with your real one.</em></p>
     <p>
       Three years ago I walked into the Web Design Pathway Program not
       really knowing what a div was. Today I'm shipping responsive,
@@ -1178,26 +1193,38 @@ function renderReflection() {
     </p>
     <h3>How I grew</h3>
     <p>
-      Placeholder: how you grew as both a developer and a designer.
-      Talk about the first time you debugged something painful, the
-      first time a layout actually behaved on mobile, the first time
-      a critique stung but made the work better.
+      Sophomore year I was thrilled when a Bootstrap grid stacked
+      correctly on mobile. Junior year I started caring about why it
+      stacked — breakpoints, the box model, the cascade. By senior
+      year I stopped thinking page-by-page and started thinking in
+      systems: a palette, a type scale, a component, reused everywhere.
+      The biggest growth wasn't a single skill, it was learning to
+      design <em>and</em> code at the same time instead of treating
+      them as separate jobs.
     </p>
     <h3>Key challenges</h3>
     <p>
-      Placeholder: the hardest moments — the project you almost
-      scrapped, the bug that took three days, the design you couldn't
-      get to feel right.
+      Getting the car physics on this site to feel <em>good</em> took
+      way longer than building the SVG world it drives through. Before
+      that, the AJAX project's first version rendered before the data
+      arrived — my first real fight with async code. And the KeySpace
+      site taught me that holding a consistent brand across four pages
+      is harder than styling one page well.
     </p>
     <h3>Turning points</h3>
     <p>
-      Placeholder: the moments your mindset shifted — when you
-      stopped copying tutorials and started making real choices.
+      The moment everything shifted was when I stopped copying tutorials
+      and started making real choices — picking a palette because it
+      fit the project, not because the tutorial used it; writing my
+      own JS instead of pasting in a snippet. Critique sessions helped
+      too: the first time a peer pointed out my contact page had no
+      clear CTA, I realized other people see things I can't.
     </p>
     <h3>What I'm proud of</h3>
     <p>
-      Placeholder: the work that feels most like you. Not the most
-      complicated — the most <em>yours</em>.
+      This portfolio. Not because it's the most complicated thing I've
+      built, but because every piece of it — the world, the physics,
+      the audio, the data layer — is a choice I made on purpose.
     </p>
   `;
 }
@@ -1205,20 +1232,19 @@ function renderReflection() {
 function renderFuture() {
   return `
     <p>
-      <em>Placeholder paragraph — replace with your real plans.</em>
+      After high school I'm planning to study computer science with a
+      design minor — I want to keep working at the seam between code
+      and visual design instead of picking a side. Web design is what
+      pulled me in, but the same instincts apply to product design,
+      front-end engineering, and interactive media.
     </p>
     <p>
-      After high school I'm planning to [college / program / path]. I'm
-      drawn to [field / major] because [reason], and I want to keep
-      building on what this program started — designing and coding
-      things that feel intentional, accessible, and a little bit
-      personal.
-    </p>
-    <p>
-      Long term, I'd love to [career goal]. Web design taught me how
-      to think in systems, how to take feedback, and how to ship
-      something even when it isn't perfect — and I plan to bring all
-      of that into whatever comes next.
+      Long term, I'd love to work on tools that feel as good as they
+      look — apps and sites where the interaction is the product, not
+      a wrapper around it. The Web Design Pathway taught me how to
+      think in systems, how to take feedback without flinching, and
+      how to ship something even when it isn't perfect. I plan to
+      bring all of that into whatever comes next.
     </p>
   `;
 }
@@ -1248,8 +1274,8 @@ function renderAI() {
   return `
     <p>
       I used AI tools like ChatGPT and GitHub Copilot during this build.
-      Below are placeholder examples of how I used them, what they gave
-      me, and what I changed or rejected.
+      Below are real examples of how I used them, what they gave me,
+      and what I changed or rejected.
     </p>
     <div class="stack">
       ${examples.map((ex, i) => `
@@ -1266,11 +1292,13 @@ function renderAI() {
       <div class="note">
         <h4>Reflection on AI</h4>
         <p>
-          Placeholder reflection — talk about what AI helped with
-          (boilerplate, syntax reminders, brainstorming) and where it
-          fell short (taste, layout decisions, debugging your specific
-          code). The point is to show you used it as a tool, not a
-          shortcut.
+          AI was great for boilerplate, syntax reminders, and bouncing
+          ideas around when I was stuck. It was bad at taste — every
+          palette and layout suggestion needed serious editing, and it
+          couldn't debug my actual code without me explaining the
+          context. I treated it like a fast pair-programmer who's read
+          every doc but hasn't seen my project, and that framing kept
+          me in the driver's seat instead of just copy-pasting.
         </p>
       </div>
     </div>
@@ -1287,22 +1315,22 @@ function renderFeedback() {
     <div class="stack">
       <div class="note">
         <h4>Feedback received</h4>
-        <p>Placeholder: notes from peers — things they loved, things that confused them, suggestions for polish.</p>
+        <p>People loved the car physics and the ambient sound, but a few classmates said the map markers weren't obviously clickable and that the mobile controls weren't discoverable on first load. One person pointed out the project cards had two equally-styled buttons, making it unclear which one to press first.</p>
       </div>
       <div class="note">
         <h4>Changes I made</h4>
-        <p>Placeholder: a clear list of revisions — easier marker labels, better mobile flow, clearer CTA on each card, etc.</p>
+        <p>I added a gentle bobbing animation to map markers so they read as interactive, made the mobile joystick visible by default instead of waiting for first touch, and gave the primary action on each project card a distinct accent color so the hierarchy reads immediately.</p>
       </div>
       <div class="note">
         <h4>Before / after</h4>
-        <div class="proj__img" aria-label="Placeholder before screenshot"></div>
-        <p style="margin-top:8px;">Placeholder caption — before peer feedback.</p>
-        <div class="proj__img" aria-label="Placeholder after screenshot" style="margin-top:12px;"></div>
-        <p style="margin-top:8px;">Placeholder caption — after peer feedback.</p>
+        <div class="proj__img" aria-label="Screenshot of project cards before peer feedback"></div>
+        <p style="margin-top:8px;">Before — every button looked the same; nothing pulled the eye.</p>
+        <div class="proj__img" aria-label="Screenshot of project cards after peer feedback" style="margin-top:12px;"></div>
+        <p style="margin-top:8px;">After — one clear primary action per card, secondary actions stepped back.</p>
       </div>
       <div class="note">
         <h4>How feedback improved the site</h4>
-        <p>Placeholder reflection — short paragraph about why outside eyes mattered.</p>
+        <p>Outside eyes caught things I'd gone blind to from staring at the build for weeks. Every fix from this round was something I would have called "obviously fine" the day before — which is exactly the value of running real demos before you ship.</p>
       </div>
     </div>
   `;

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snowflake Designer Lab — Holiday Traditions · Ethan Chang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./project-page.css" />
+</head>
+<body>
+  <header class="pp-topbar">
+    <a href="../index.html" class="pp-brand"><span>◇</span>Ethan's Journey Map</a>
+    <a href="../index.html" class="pp-back">← Back to the map</a>
+  </header>
+
+  <main class="pp-wrap">
+    <span class="pp-eyebrow">Featured · Senior Year · Group Project</span>
+    <h1 class="pp-title">Snowflake Designer Lab — Holiday Traditions</h1>
+    <p class="pp-lede">
+      Our group submission for the Winter Holiday &amp; Traditions Web
+      Design Challenge — an interactive snowflake designer with cultural
+      pattern stamps from 12 global winter traditions, a personal gallery,
+      and PNG export.
+    </p>
+
+    <div class="pp-meta">
+      <span><strong>Year:</strong> Senior</span>
+      <span><strong>Type:</strong> Interactive web app</span>
+      <span><strong>Role:</strong> Group / collaborative build</span>
+    </div>
+
+    <div class="pp-actions">
+      <a class="pp-btn pp-btn--primary" href="https://user319183.github.io/holiday-traditions/" target="_blank" rel="noopener">Try the live app ↗</a>
+      <a class="pp-btn" href="https://github.com/User319183/holiday-traditions" target="_blank" rel="noopener">View on GitHub ↗</a>
+    </div>
+
+    <section class="pp-section">
+      <h2>What it is</h2>
+      <p>
+        A canvas-based drawing tool where users design symmetrical
+        snowflakes using brush tools with automatic 4-fold, 6-fold, or
+        8-fold reflection. Cultural pattern stamps drawn from twelve
+        global winter traditions can be dropped onto the canvas, and
+        finished designs save to a personal gallery (LocalStorage) or
+        export as PNG.
+      </p>
+    </section>
+
+    <section class="pp-section">
+      <h2>Cultural patterns featured</h2>
+      <p>
+        Indian (Diwali) rangoli circles · Scandinavian (Yule) Nordic
+        snowflakes · Jewish (Hanukkah) Star of David · Chinese (Lunar
+        New Year) fortune coins · Japanese (Shogatsu) cherry blossoms ·
+        Mexican (Las Posadas) poinsettia flowers · German (Weihnachten)
+        traditional stars · Russian (Novy God) Matryoshka patterns ·
+        Celtic (Winter Solstice) triquetra knots · Persian (Yalda)
+        pomegranate motifs · African (Kwanzaa) unity symbols · Native
+        American four-directions.
+      </p>
+    </section>
+
+    <section class="pp-section">
+      <h2>Tech stack</h2>
+      <ul class="pp-stack">
+        <li>React</li>
+        <li>TypeScript</li>
+        <li>Vue 3 (pattern library widget)</li>
+        <li>HTML5 Canvas</li>
+        <li>Tailwind CSS</li>
+        <li>Vite</li>
+        <li>LocalStorage API</li>
+      </ul>
+    </section>
+
+    <section class="pp-section">
+      <h2>Highlights</h2>
+      <div class="pp-card">
+        <h3>Real-time symmetry drawing</h3>
+        <p>Every brush stroke is automatically reflected across 4, 6, or
+        8 axes, so users design one wedge and the snowflake builds itself.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Two frameworks, one product</h3>
+        <p>The main app is React + TypeScript, with a Vue 3 pattern-library
+        widget embedded inside it — integrating cleanly across framework
+        boundaries was the standout technical challenge.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Persistent gallery</h3>
+        <p>Saved snowflakes (with thumbnails), dark / light mode preference,
+        and achievement tracking all persist in LocalStorage across visits.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Responsive + atmospheric</h3>
+        <p>Mobile-friendly touch controls, glassmorphism UI, and an
+        animated snowfall background.</p>
+      </div>
+    </section>
+
+    <section class="pp-section">
+      <h2>What I learned</h2>
+      <ul>
+        <li>Real Git collaboration on a shared repo — branches, PRs, and
+        merge resolution under deadline pressure.</li>
+        <li>Integrating two component frameworks (React and Vue) in one
+        deployable app.</li>
+        <li>Designing for cultural sensitivity — picking patterns and
+        labelling them respectfully was a deliberate part of the build,
+        not an afterthought.</li>
+        <li>Shipping a real product with a team is fundamentally different
+        from shipping one alone.</li>
+      </ul>
+    </section>
+
+    <footer class="pp-footer">
+      <span>Ethan Chang · Class of 2026</span>
+      <a href="../index.html">← Back to the Journey Map</a>
+    </footer>
+  </main>
+</body>
+</html>

@@ -2,129 +2,573 @@
   {
     "id": 1,
     "year": 1,
-    "title": "Placeholder Project — Personal Bio Site",
-    "category": "HTML and CSS",
-    "featured": true,
-    "description": "Placeholder description: my first hand-coded personal site, built to learn the basics of semantic markup, the box model, and responsive layout.",
-    "skillsLearned": "Placeholder: semantic HTML structure, CSS layout fundamentals, basic responsive design with media queries.",
-    "reflection": "Placeholder reflection: this project taught me how much detail goes into making a single page actually feel finished. Replace with your real reflection.",
-    "image": "images/placeholder-project-1.jpg",
-    "liveLink": "#",
-    "githubLink": "#",
-    "tags": ["HTML", "CSS", "Responsive Design"]
+    "title": "My First Bootstrap Grid",
+    "category": "Bootstrap",
+    "featured": false,
+    "description": "My very first hands-on intro to the Bootstrap grid system \u2014 building a multi-column responsive layout entirely with rows, columns, and breakpoint utilities.",
+    "skillsLearned": "Bootstrap 5 grid (rows, columns, container), responsive breakpoints, the difference between fixed and fluid containers.",
+    "reflection": "Coming from raw HTML/CSS, watching columns automatically stack on mobile was the moment the 12-column grid finally made sense to me.",
+    "image": "images/projects/my-first-bootstrap-grid.png",
+    "liveLink": "https://p7v5hn.csb.app/",
+    "githubLink": "https://codesandbox.io/p/sandbox/myfirstbootstrapethanchang-p7v5hn?file=%2Findex.html",
+    "tags": [
+      "Bootstrap",
+      "Grid",
+      "Responsive"
+    ]
   },
   {
     "id": 2,
     "year": 1,
-    "title": "Placeholder Project — Color Theory Lab",
-    "category": "CSS",
+    "title": "Puppies \u2014 Bootstrap Image Gallery",
+    "category": "Bootstrap",
     "featured": false,
-    "description": "Placeholder description: a small interactive lab for experimenting with color palettes and typography pairings.",
-    "skillsLearned": "Placeholder: CSS variables, typography systems, contrast and accessibility basics.",
-    "reflection": "Placeholder reflection: I learned that a good palette can make even simple HTML feel intentional. Replace with your real reflection.",
-    "image": "images/placeholder-project-2.jpg",
-    "liveLink": "#",
-    "githubLink": "#",
-    "tags": ["CSS", "Typography", "Color"]
+    "description": "A responsive puppy image gallery built entirely with Bootstrap's grid system \u2014 practice for arranging images cleanly across desktop, tablet, and mobile.",
+    "skillsLearned": "Image-heavy responsive layouts, Bootstrap column nesting, alt text and accessibility basics, working with sandboxed cloud IDEs.",
+    "reflection": "A small project, but the first time I actually thought about how a layout breaks at every screen size instead of just \"how it looks on my laptop.\"",
+    "image": "images/projects/puppies-bootstrap-image-gallery.png",
+    "liveLink": "https://4t64xq.csb.app/",
+    "githubLink": "https://codesandbox.io/p/sandbox/puppies-part1-bootstrap-grid-image-gallery-practice-ethan-chang-4t64xq",
+    "tags": [
+      "Bootstrap",
+      "Gallery",
+      "Responsive"
+    ]
   },
   {
     "id": 3,
-    "year": 1,
-    "title": "Placeholder Project — Recipe Card",
+    "year": 2,
+    "title": "Summer-tainment Site",
     "category": "HTML and CSS",
-    "featured": true,
-    "description": "Placeholder description: a single-page recipe card focused on hierarchy, spacing, and printable layouts.",
-    "skillsLearned": "Placeholder: visual hierarchy, spacing scales, semantic lists.",
-    "reflection": "Placeholder reflection: small projects with strict constraints taught me more about design than big ones. Replace with your real reflection.",
-    "image": "images/placeholder-project-3.jpg",
-    "liveLink": "#",
-    "githubLink": "#",
-    "tags": ["HTML", "CSS", "Layout"]
+    "featured": false,
+    "description": "A multi-section summer-themed entertainment site exploring layout composition and themed visual design.",
+    "skillsLearned": "Page sectioning with semantic HTML, color theory for themed sites, hand-written CSS layout.",
+    "reflection": "A fun first attempt at giving a site a strong visual identity instead of just stacking content blocks.",
+    "image": "images/projects/summer-tainment-site.png",
+    "liveLink": "https://ethanchang13.github.io/Summer-tainment-Site/",
+    "githubLink": "https://github.com/ethanchang13/Summer-tainment-Site",
+    "tags": [
+      "HTML",
+      "CSS",
+      "Layout"
+    ]
   },
-
   {
     "id": 4,
     "year": 2,
-    "title": "Placeholder Project — Bootstrap Landing Page",
-    "category": "Bootstrap",
-    "featured": true,
-    "description": "Placeholder description: a multi-section landing page built with Bootstrap, then heavily customized so it didn't look like a default template.",
-    "skillsLearned": "Placeholder: grid systems, component composition, theme customization, responsive utilities.",
-    "reflection": "Placeholder reflection: customizing a framework taught me where defaults end and real design begins. Replace with your real reflection.",
-    "image": "images/placeholder-project-4.jpg",
-    "liveLink": "#",
-    "githubLink": "#",
-    "tags": ["Bootstrap", "Responsive", "Landing Page"]
+    "title": "Galileo Galilei Biography",
+    "category": "HTML and CSS",
+    "featured": false,
+    "description": "An illustrated, multi-section biography site about Galileo Galilei \u2014 built to practice long-form content layout, typography hierarchy, and historical-themed visual design.",
+    "skillsLearned": "Long-form content layout, typographic hierarchy, image-with-text composition, working with a themed color palette.",
+    "reflection": "First project where I really cared about how the page felt to read \u2014 not just what was on it. Choosing fonts and spacing for legibility taught me design isn't optional.",
+    "image": "images/projects/galileo-galilei-biography.png",
+    "liveLink": "https://ethanchang13.github.io/Galileo-Galilei/",
+    "githubLink": "https://github.com/ethanchang13/Galileo-Galilei",
+    "tags": [
+      "HTML",
+      "CSS",
+      "Long-form"
+    ]
   },
   {
     "id": 5,
     "year": 2,
-    "title": "Placeholder Project — JavaScript Mini-Game",
-    "category": "JavaScript",
-    "featured": true,
-    "description": "Placeholder description: a small browser game built with vanilla JS to practice DOM events, state, and game loops.",
-    "skillsLearned": "Placeholder: event handling, game loop logic, state management without a framework.",
-    "reflection": "Placeholder reflection: building something interactive made me think about feedback and feel, not just function. Replace with your real reflection.",
-    "image": "images/placeholder-project-5.jpg",
-    "liveLink": "#",
-    "githubLink": "#",
-    "tags": ["JavaScript", "DOM", "Game"]
+    "title": "Cute Spider",
+    "category": "CSS Animation",
+    "featured": false,
+    "description": "A pure CSS scene with a cute animated spider \u2014 exploring keyframe animations, transforms, and pseudo-elements to draw and move a character without images.",
+    "skillsLearned": "CSS keyframes, transform-origin, animation timing, drawing with pure CSS shapes.",
+    "reflection": "Realized how much expression you can get out of CSS alone \u2014 no JavaScript required to make something feel alive.",
+    "image": "images/projects/cute-spider.png",
+    "liveLink": "https://ethanchang13.github.io/Cute-Spider/",
+    "githubLink": "https://github.com/ethanchang13/Cute-Spider",
+    "tags": [
+      "CSS",
+      "Animation"
+    ]
   },
   {
     "id": 6,
     "year": 2,
-    "title": "Placeholder Project — JSON-Powered Data Site",
-    "category": "JavaScript + JSON",
+    "title": "Spooky Ghost",
+    "category": "CSS Animation",
     "featured": false,
-    "description": "Placeholder description: a dynamic site that pulls data from a JSON file with fetch and renders it on the page.",
-    "skillsLearned": "Placeholder: fetch API, async/await, dynamic DOM rendering.",
-    "reflection": "Placeholder reflection: separating data from markup made my projects feel real for the first time. Replace with your real reflection.",
-    "image": "images/placeholder-project-6.jpg",
-    "liveLink": "#",
-    "githubLink": "#",
-    "tags": ["JavaScript", "JSON", "Fetch"]
+    "description": "A spooky Halloween-themed scene with a floating ghost and witch's cauldron, built from CSS animations and a sprinkle of JavaScript.",
+    "skillsLearned": "Layered CSS animations, mood-driven design (color, motion, timing), scene composition.",
+    "reflection": "Liked seeing how much atmosphere comes from slow, subtle motion. Restraint with animation made the scene feel polished instead of chaotic.",
+    "image": "images/projects/spooky-ghost.png",
+    "liveLink": "https://ethanchang13.github.io/Spooky-Ghost/",
+    "githubLink": "https://github.com/ethanchang13/Spooky-Ghost",
+    "tags": [
+      "CSS",
+      "Animation",
+      "JavaScript"
+    ]
   },
-
   {
     "id": 7,
-    "year": 3,
-    "title": "Placeholder Project — Vue.js Dashboard",
-    "category": "Vue.js",
-    "featured": true,
-    "description": "Placeholder description: a multi-view dashboard built in Vue with reactive components and a custom design system.",
-    "skillsLearned": "Placeholder: Vue components, reactivity, props/events, routing.",
-    "reflection": "Placeholder reflection: Vue helped me understand why component thinking changes how you design. Replace with your real reflection.",
-    "image": "images/placeholder-project-7.jpg",
-    "liveLink": "#",
-    "githubLink": "#",
-    "tags": ["Vue", "Components", "Dashboard"]
+    "year": 2,
+    "title": "WordSalad",
+    "category": "JavaScript",
+    "featured": false,
+    "description": "A randomized word-mixing toy \u2014 pulls from word lists and assembles silly phrases on demand.",
+    "skillsLearned": "Arrays, random selection, basic DOM updates from JS.",
+    "reflection": "Tiny but satisfying \u2014 proved that even a 30-line script can be entertaining if the data is fun.",
+    "image": "images/projects/wordsalad.png",
+    "liveLink": "https://ethanchang13.github.io/WordSalad/",
+    "githubLink": "https://github.com/ethanchang13/WordSalad",
+    "tags": [
+      "JavaScript",
+      "Randomization"
+    ]
   },
   {
     "id": 8,
-    "year": 3,
-    "title": "Placeholder Project — Real Client Website",
-    "category": "Client Project",
-    "featured": true,
-    "description": "Placeholder description: a full website built for a real client, including discovery, wireframes, design, build, and handoff.",
-    "skillsLearned": "Placeholder: client communication, scoping, accessible design, deployment.",
-    "reflection": "Placeholder reflection: working with a real person changed everything about how I prioritized decisions. Replace with your real reflection.",
-    "image": "images/placeholder-project-8.jpg",
-    "liveLink": "#",
-    "githubLink": "#",
-    "tags": ["Client Work", "Design", "Deployment"]
+    "year": 2,
+    "title": "Magic 8-Ball",
+    "category": "JavaScript",
+    "featured": false,
+    "description": "A classic Magic 8-Ball recreated in the browser \u2014 click the ball, get an answer.",
+    "skillsLearned": "Arrays, Math.random, event listeners, conditional rendering of text/images.",
+    "reflection": "First time I built something where the interactivity actually felt physical \u2014 clicking the ball and waiting for an answer is its own little experience.",
+    "image": "images/projects/magic-8-ball.png",
+    "liveLink": "https://ethanchang13.github.io/Magic-8-Ball/",
+    "githubLink": "https://github.com/ethanchang13/Magic-8-Ball",
+    "tags": [
+      "JavaScript",
+      "DOM"
+    ]
   },
   {
     "id": 9,
-    "year": 3,
-    "title": "Placeholder Project — Interactive Story",
-    "category": "Vue + Animation",
+    "year": 2,
+    "title": "Name Generator",
+    "category": "JavaScript",
+    "featured": false,
+    "description": "Generates random names from configurable first/last lists \u2014 with a clean instructional UI and footer.",
+    "skillsLearned": "Splitting logic from presentation, combining arrays, writing small instructional UI.",
+    "reflection": "Pushed me to think about what the *user* sees, not just what the code does \u2014 explaining how to use the tool mattered as much as building it.",
+    "image": "images/projects/name-generator.png",
+    "liveLink": "https://ethanchang13.github.io/Name-Generator/",
+    "githubLink": "https://github.com/ethanchang13/Name-Generator",
+    "tags": [
+      "JavaScript",
+      "Randomization"
+    ]
+  },
+  {
+    "id": 10,
+    "year": 2,
+    "title": "Rock Paper Scissors",
+    "category": "JavaScript",
+    "featured": false,
+    "description": "A full Rock-Paper-Scissors game vs the computer \u2014 running score, win/loss messaging, and a reset button.",
+    "skillsLearned": "Game state, conditionals for game logic, score tracking, reset/cleanup patterns.",
+    "reflection": "First project where I had to track state across rounds. A reset button sounds easy until you build it.",
+    "image": "images/projects/rock-paper-scissors.png",
+    "liveLink": "https://ethanchang13.github.io/Rock-Paper-Scissors/",
+    "githubLink": "https://github.com/ethanchang13/Rock-Paper-Scissors",
+    "tags": [
+      "JavaScript",
+      "Game",
+      "State"
+    ]
+  },
+  {
+    "id": 11,
+    "year": 2,
+    "title": "Postcard Generator",
+    "category": "JavaScript",
+    "featured": false,
+    "description": "Build-your-own postcard \u2014 pick imagery, write a message, and see it composed live on the page.",
+    "skillsLearned": "Form inputs, dynamic DOM updates, image swapping from JS, basic UX feedback.",
+    "reflection": "Loved building something where the user's input directly shaped what they saw \u2014 that loop is what makes the web feel alive.",
+    "image": "images/projects/postcard-generator.png",
+    "liveLink": "https://ethanchang13.github.io/Postcard-Generator/",
+    "githubLink": "https://github.com/ethanchang13/Postcard-Generator",
+    "tags": [
+      "JavaScript",
+      "Forms",
+      "DOM"
+    ]
+  },
+  {
+    "id": 12,
+    "year": 2,
+    "title": "To-Do List",
+    "category": "JavaScript",
+    "featured": false,
+    "description": "A working to-do list app \u2014 add tasks, mark them complete (styled only on the text, not the buttons), and remove them.",
+    "skillsLearned": "Creating/removing DOM nodes from JS, event delegation, separating display state from data.",
+    "reflection": "The rite-of-passage to-do app. The detail I'm proud of: completed styling applies only to the text, not the buttons \u2014 small choice, big polish difference.",
+    "image": "images/projects/to-do-list.png",
+    "liveLink": "https://ethanchang13.github.io/To-Do-List/",
+    "githubLink": "https://github.com/ethanchang13/To-Do-List",
+    "tags": [
+      "JavaScript",
+      "CRUD",
+      "DOM"
+    ]
+  },
+  {
+    "id": 13,
+    "year": 2,
+    "title": "Presidential Biography",
+    "category": "Multi-page HTML",
+    "featured": false,
+    "description": "A multi-page biography site with separate pages for biography, presidency, an interactive quiz, and a formatted works-cited page.",
+    "skillsLearned": "Multi-page navigation, interactive quiz logic, properly formatted citations, site-wide styling consistency.",
+    "reflection": "First project that felt like a real *site* instead of a single page. Keeping the styling consistent across four pages was harder than I expected.",
+    "image": "images/projects/presidential-biography.png",
+    "liveLink": "https://ethanchang13.github.io/Presidential-Biography/",
+    "githubLink": "https://github.com/ethanchang13/Presidential-Biography",
+    "tags": [
+      "HTML",
+      "JavaScript",
+      "Multi-page"
+    ]
+  },
+  {
+    "id": 14,
+    "year": 2,
+    "title": "Hangman",
+    "category": "JavaScript Game",
+    "featured": false,
+    "description": "The classic Hangman game with health-indicator images that update as you guess wrong, plus sound effects.",
+    "skillsLearned": "Game loops, win/lose conditions, image-state synchronization, integrating audio.",
+    "reflection": "Adding sound effects taught me how much feedback shapes the *feel* of a game \u2014 even a tiny click sells the interaction.",
+    "image": "images/projects/hangman.png",
+    "liveLink": "https://ethanchang13.github.io/Hangman/",
+    "githubLink": "https://github.com/ethanchang13/Hangman",
+    "tags": [
+      "JavaScript",
+      "Game",
+      "Audio"
+    ]
+  },
+  {
+    "id": 15,
+    "year": 2,
+    "title": "Memory Game",
+    "category": "JavaScript Game",
     "featured": true,
-    "description": "Placeholder description: a scroll-driven, animated story experience built with Vue and CSS/JS animation.",
-    "skillsLearned": "Placeholder: scroll-linked animation, narrative pacing, performance tuning.",
-    "reflection": "Placeholder reflection: I learned how much restraint matters when motion is involved. Replace with your real reflection.",
-    "image": "images/placeholder-project-9.jpg",
-    "liveLink": "#",
-    "githubLink": "#",
-    "tags": ["Vue", "Animation", "Storytelling"]
+    "description": "A themed multi-page memory card-matching game \u2014 splash page, instructions page, and the actual game page, all sharing one design system.",
+    "skillsLearned": "Multi-page game architecture, card flip/match state, themed image assets, separating CSS files per concern.",
+    "reflection": "First time I designed a project as a *suite* of pages \u2014 splash \u2192 instructions \u2192 game. Treating it like a real product, not just an assignment, made it feel polished.",
+    "image": "images/projects/memory-game.png",
+    "liveLink": "https://ethanchang13.github.io/Memory-Game/",
+    "githubLink": "https://github.com/ethanchang13/Memory-Game",
+    "detailPage": "projects/memory-game.html",
+    "tags": [
+      "JavaScript",
+      "Game",
+      "Multi-page"
+    ]
+  },
+  {
+    "id": 16,
+    "year": 2,
+    "title": "State Facts \u2014 Objects Practice",
+    "category": "JavaScript + Objects",
+    "featured": false,
+    "description": "An interactive U.S. state facts viewer powered by JavaScript objects \u2014 pick a state, see its data rendered dynamically.",
+    "skillsLearned": "Working with JS objects and object arrays, dynamic rendering from data, separating data files from view logic.",
+    "reflection": "First time data lived in its own structure and the page read from it. After this, I never wanted to hard-code content again.",
+    "image": "images/projects/state-facts-objects-practice.png",
+    "liveLink": "https://ethanchang13.github.io/State-Facts-Objects-Practice/",
+    "githubLink": "https://github.com/ethanchang13/State-Facts-Objects-Practice",
+    "tags": [
+      "JavaScript",
+      "Objects",
+      "Data"
+    ]
+  },
+  {
+    "id": 17,
+    "year": 2,
+    "title": "Team Roster Showcase",
+    "category": "Multi-page JavaScript",
+    "featured": true,
+    "description": "A multi-page team roster site with a home page, an about page, and a card-based roster page driven by JavaScript.",
+    "skillsLearned": "Card-grid layout, multi-page navigation, JS-driven component cards, project documentation through code comments.",
+    "reflection": "Pushed myself to actually write meaningful code comments here. Re-reading the project months later, I was glad I did.",
+    "image": "images/projects/team-roster-showcase.png",
+    "liveLink": "https://ethanchang13.github.io/Team-Roster-Showcase/",
+    "githubLink": "https://github.com/ethanchang13/Team-Roster-Showcase",
+    "detailPage": "projects/team-roster-showcase.html",
+    "tags": [
+      "JavaScript",
+      "Multi-page",
+      "Cards"
+    ]
+  },
+  {
+    "id": 18,
+    "year": 3,
+    "title": "Snowflake Designer Lab \u2014 Holiday Traditions",
+    "category": "Group Project",
+    "featured": true,
+    "description": "A group submission for the Winter Holiday & Traditions Web Design Challenge: an interactive snowflake-designer with 4/6/8-fold symmetry, 12 cultural pattern stamps, LocalStorage gallery, PNG export, and an animated snowfall UI.",
+    "skillsLearned": "Cross-team collaboration on GitHub, React + TypeScript, Vue 3 widget integration, HTML5 Canvas drawing with live symmetry reflection, Tailwind CSS, LocalStorage persistence, Vite build tooling.",
+    "reflection": "My most ambitious group build \u2014 and it was the project where version control and merging features into a coherent product became the real lesson. Easily one of the projects I'm proudest of.",
+    "image": "images/projects/snowflake-designer-lab-holiday-traditions.png",
+    "liveLink": "https://user319183.github.io/holiday-traditions/",
+    "githubLink": "https://github.com/User319183/holiday-traditions",
+    "detailPage": "projects/holiday-traditions.html",
+    "tags": [
+      "React",
+      "TypeScript",
+      "Vue",
+      "Canvas",
+      "Tailwind",
+      "Group Project"
+    ]
+  },
+  {
+    "id": 19,
+    "year": 3,
+    "title": "College Recruitment",
+    "category": "JavaScript",
+    "featured": false,
+    "description": "An interactive college-recruitment site \u2014 the first big senior project, blending content, custom styling, and JS-driven interactivity.",
+    "skillsLearned": "Working on a fork-based collaborative repo, merge-conflict resolution, multi-screen interactive UX, custom theming.",
+    "reflection": "The first project where I had to resolve real merge conflicts and pull from a shared upstream. Git stopped being a scary command-line ritual and started being a normal tool.",
+    "image": "images/projects/college-recruitment.png",
+    "liveLink": "https://ethanchang13.github.io/College-Recruitment/",
+    "githubLink": "https://github.com/ethanchang13/College-Recruitment",
+    "tags": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Collaboration"
+    ]
+  },
+  {
+    "id": 20,
+    "year": 3,
+    "title": "1.01 \u2014 Functions Refresher",
+    "category": "JavaScript Fundamentals",
+    "featured": false,
+    "description": "A short refresher project on JavaScript functions \u2014 declarations, expressions, parameters, and return values.",
+    "skillsLearned": "Function declarations vs. expressions, parameters/arguments, return values, button-driven function calls.",
+    "reflection": "Senior year started with a clean rebuild of fundamentals. Doing it again on purpose was the right call \u2014 I learned things I'd skimmed past the first time.",
+    "image": "images/projects/101-functions-refresher.png",
+    "liveLink": "https://ethanchang13.github.io/1.01-Functions/",
+    "githubLink": "https://github.com/ethanchang13/1.01-Functions",
+    "tags": [
+      "JavaScript",
+      "Functions"
+    ]
+  },
+  {
+    "id": 21,
+    "year": 3,
+    "title": "1.02 \u2014 Arrays & Loops Refresher",
+    "category": "JavaScript Fundamentals",
+    "featured": false,
+    "description": "Practice with arrays and looping patterns \u2014 iterate, transform, and render results into the DOM.",
+    "skillsLearned": "for / forEach / map, array mutation vs. derivation, rendering arrays into HTML.",
+    "reflection": "After this I stopped reaching for `for` loops out of habit and started picking the right tool \u2014 `map` for transforms, `forEach` for side effects.",
+    "image": "images/projects/102-arrays-loops-refresher.png",
+    "liveLink": "https://ethanchang13.github.io/1.02-Arrays-and-Loops-Refresher/",
+    "githubLink": "https://github.com/ethanchang13/1.02-Arrays-and-Loops-Refresher",
+    "tags": [
+      "JavaScript",
+      "Arrays",
+      "Loops"
+    ]
+  },
+  {
+    "id": 22,
+    "year": 3,
+    "title": "1.03 \u2014 Event Handling Refresher",
+    "category": "JavaScript Fundamentals",
+    "featured": false,
+    "description": "Event-handling practice including a scroll progress bar \u2014 listening to user input and updating the page in response.",
+    "skillsLearned": "addEventListener, scroll events, computed positions/percentages, throttling/rendering responsiveness.",
+    "reflection": "The scroll progress bar was tiny but taught me how often the browser fires events. Performance-aware event handling clicked here.",
+    "image": "images/projects/103-event-handling-refresher.png",
+    "liveLink": "https://ethanchang13.github.io/1.03-Event-Handling-Refresher/",
+    "githubLink": "https://github.com/ethanchang13/1.03-Event-Handling-Refresher",
+    "tags": [
+      "JavaScript",
+      "Events",
+      "Scroll"
+    ]
+  },
+  {
+    "id": 23,
+    "year": 3,
+    "title": "AJAX Friends Project",
+    "category": "AJAX + JSON",
+    "featured": false,
+    "description": "A friends-card site that fetches data from a local JSON file via AJAX and renders styled cards dynamically.",
+    "skillsLearned": "AJAX / fetch, async data flow, building DOM templates from JSON, separating data from UI.",
+    "reflection": "First time a site of mine wasn't fully hard-coded \u2014 the data lived in its own JSON file and the page just read from it. That separation changed how I approached every project after.",
+    "image": "images/projects/ajax-friends-project.png",
+    "liveLink": "https://ethanchang13.github.io/AJAX-Project/",
+    "githubLink": "https://github.com/ethanchang13/AJAX-Project",
+    "tags": [
+      "JavaScript",
+      "AJAX",
+      "JSON",
+      "Fetch"
+    ]
+  },
+  {
+    "id": 24,
+    "year": 3,
+    "title": "Schedule Project",
+    "category": "Bootstrap + JSON",
+    "featured": false,
+    "description": "A Bootstrap-powered schedule viewer that pulls schedules out of JSON files and renders them dynamically.",
+    "skillsLearned": "Bootstrap 5 components, fetch + render, JSON-driven views, header iconography and styling.",
+    "reflection": "Combined two things I'd been learning separately \u2014 Bootstrap and fetching from JSON \u2014 into one project. That combination felt grown up.",
+    "image": "images/projects/schedule-project.png",
+    "liveLink": "https://ethanchang13.github.io/Schedule-Project/",
+    "githubLink": "https://github.com/ethanchang13/Schedule-Project",
+    "tags": [
+      "Bootstrap",
+      "JSON",
+      "JavaScript"
+    ]
+  },
+  {
+    "id": 25,
+    "year": 3,
+    "title": "Chang PhotoApp",
+    "category": "jQuery",
+    "featured": false,
+    "description": "A custom slideshow / photo gallery app built with jQuery and a custom JSON metadata file for each image.",
+    "skillsLearned": "jQuery selectors and animations, JSON-driven image metadata, custom slideshow controls, separating image data from markup.",
+    "reflection": "First real exposure to jQuery, but the bigger lesson was the metadata model \u2014 every image had its own structured record, not just a filename. That's still how I think about media-heavy sites.",
+    "image": "images/projects/chang-photoapp.png",
+    "liveLink": "https://ethanchang13.github.io/Chang-PhotoApp/",
+    "githubLink": "https://github.com/ethanchang13/Chang-PhotoApp",
+    "tags": [
+      "jQuery",
+      "JSON",
+      "Gallery"
+    ]
+  },
+  {
+    "id": 26,
+    "year": 3,
+    "title": "Vue Mastery Tutorial",
+    "category": "Vue.js",
+    "featured": false,
+    "description": "Worked through the Vue Mastery tutorial \u2014 building reactive components, props, computed properties, and basic Vue patterns from scratch.",
+    "skillsLearned": "Vue 2 component options API, data/methods/computed, props, conditional rendering, event binding.",
+    "reflection": "First reactive framework I'd touched. The mental shift from 'I update the DOM' to 'I update state and the DOM updates itself' was big.",
+    "image": "images/projects/vue-mastery-tutorial.png",
+    "liveLink": "https://ethanchang13.github.io/Vue-Mastery-Tutorial/",
+    "githubLink": "https://github.com/ethanchang13/Vue-Mastery-Tutorial",
+    "tags": [
+      "Vue",
+      "Components",
+      "Reactivity"
+    ]
+  },
+  {
+    "id": 27,
+    "year": 3,
+    "title": "Movie Poster Gallery",
+    "category": "Vue.js",
+    "featured": false,
+    "description": "A Vue-powered movie poster gallery \u2014 load movies and metadata from JSON, render a custom-themed gallery of posters with no jQuery.",
+    "skillsLearned": "Vue list rendering (v-for), JSON-driven content, custom theming with CSS, image asset management.",
+    "reflection": "Applied the Vue tutorial to something that was actually mine \u2014 picking my favorite movies and theming the gallery around them. Made the framework feel personal, not academic.",
+    "image": "images/projects/movie-poster-gallery.png",
+    "liveLink": "https://ethanchang13.github.io/Movie-Poster-Gallery/",
+    "githubLink": "https://github.com/ethanchang13/Movie-Poster-Gallery",
+    "tags": [
+      "Vue",
+      "JSON",
+      "Gallery"
+    ]
+  },
+  {
+    "id": 28,
+    "year": 3,
+    "title": "The KeySpace Piano Studio",
+    "category": "Client-Style Multi-page Site",
+    "featured": false,
+    "description": "A full multi-page marketing site for a fictional piano studio \u2014 home, about, programs, and contact pages with a consistent visual identity and responsive layouts.",
+    "skillsLearned": "Multi-page information architecture, brand-driven design (palette, type, imagery), consistent component patterns across pages, contact-page UX, accessible navigation.",
+    "reflection": "The closest I've come to building a 'real' client website. Owning the brand decisions \u2014 palette, typography, voice \u2014 and carrying them across four pages was the most grown-up project I've done.",
+    "image": "images/projects/the-keyspace-piano-studio.png",
+    "liveLink": "https://ethanchang13.github.io/The-KeySpace-Piano-Studio/",
+    "githubLink": "https://github.com/ethanchang13/The-KeySpace-Piano-Studio",
+    "tags": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Multi-page",
+      "Branding"
+    ]
+  },
+  {
+    "id": 29,
+    "year": 3,
+    "title": "Journey Map Portfolio (This Site)",
+    "category": "Interactive Portfolio",
+    "featured": true,
+    "description": "This portfolio: an interactive map of my three years in the program. Drive a car around a hand-illustrated SVG world, visit themed buildings, and pull project data from a JSON file with fetch.",
+    "skillsLearned": "Vanilla JS architecture without frameworks, custom physics for the car, SVG illustration and parallax layers, WebAudio for engine + ambient sound, keyboard + touch input parity, JSON-driven content rendering.",
+    "reflection": "The capstone \u2014 and the most fun. Every technique from three years had to come together: layout, animation, data, accessibility, sound. Making it feel like a *place* instead of a list was the hardest design call.",
+    "image": "images/projects/journey-map-portfolio-this-site.png",
+    "liveLink": "https://ethanchang13.github.io/Portfolio/",
+    "githubLink": "https://github.com/ethanchang13/Portfolio",
+    "detailPage": "projects/portfolio.html",
+    "tags": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "SVG",
+      "WebAudio",
+      "Portfolio"
+    ]
+  },
+  {
+    "id": 30,
+    "year": 2,
+    "title": "Little Bird Toys \u2014 Toy Company Site",
+    "category": "Group Project",
+    "featured": true,
+    "description": "A fully responsive e-commerce site for a fictional handcrafted wooden-toy company. Multi-page Bootstrap build with a product catalog, shopping cart with quantity controls, interactive components, and accessibility-first markup.",
+    "skillsLearned": "Bootstrap 5 layout system, component-based CSS organization, JavaScript-driven cart state, multi-page navigation, semantic HTML + ARIA, responsive design across mobile/tablet/desktop, collaborative GitHub workflow.",
+    "reflection": "A real multi-page product site \u2014 homepage, products, cart, about, and contact, all sharing one brand. Building the cart logic (add/remove, quantity updates, totals) was the first time I shipped state that actually felt like a real e-commerce app.",
+    "image": "images/projects/little-bird-toys-toy-company-site.png",
+    "liveLink": "https://user319183.github.io/toycompany/",
+    "githubLink": "https://github.com/User319183/toycompany",
+    "detailPage": "projects/little-bird-toy-company.html",
+    "tags": [
+      "Bootstrap",
+      "JavaScript",
+      "Multi-page",
+      "E-commerce",
+      "Group Project"
+    ]
+  },
+  {
+    "id": 31,
+    "year": 3,
+    "title": "MHSToday \u2014 Student News Site",
+    "category": "Publication / CMS",
+    "featured": true,
+    "description": "The Manalapan High School student news publication \u2014 a live, regularly updated newsroom site where I've contributed articles, photography, and digital storytelling across the school year.",
+    "skillsLearned": "Writing for a real public audience, working inside an established CMS, headline + lede craft, digital photo handling, deadlines and editorial workflow, the difference between personal projects and contributing to a live shared site.",
+    "reflection": "My first time publishing on a site I don't own. Working inside an existing CMS \u2014 with editors, deadlines, and a real readership \u2014 taught me that shipping reliably matters more than reinventing the layout for every piece.",
+    "image": "images/projects/mhstoday-student-news-site.png",
+    "liveLink": "http://mhstoday.sathviksridar.com/",
+    "githubLink": "",
+    "detailPage": "projects/mhstoday.html",
+    "tags": [
+      "Journalism",
+      "CMS",
+      "Publishing",
+      "Photography"
+    ]
   }
 ]

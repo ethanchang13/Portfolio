@@ -1143,9 +1143,16 @@ body.is-day .bg-skyline { opacity: .72; filter: saturate(.7) brightness(1.05); }
   background:
     repeating-linear-gradient(45deg, #f1e4c8 0 16px, #ead7a8 16px 32px);
   position: relative;
+  overflow: hidden;
 }
+.proj__img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.proj__img.has-image::after { display: none; }
 .proj__img::after {
-  content: 'Placeholder screenshot';
+  content: 'Screenshot coming soon';
   position: absolute; inset: 0;
   display: grid; place-items: center;
   font-family: var(--font-display); font-size: 12px;

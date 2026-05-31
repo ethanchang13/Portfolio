@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Little Bird Toys — Toy Company Site · Ethan Chang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./project-page.css" />
+</head>
+<body>
+  <header class="pp-topbar">
+    <a href="../index.html" class="pp-brand"><span>◇</span>Ethan's Journey Map</a>
+    <a href="../index.html" class="pp-back">← Back to the map</a>
+  </header>
+
+  <main class="pp-wrap">
+    <span class="pp-eyebrow">Featured · Junior Year · Group Project</span>
+    <h1 class="pp-title">Little Bird Toys — Toy Company Site</h1>
+    <p class="pp-lede">
+      A fully responsive e-commerce site for a fictional handcrafted
+      wooden-toy company — homepage, product catalog, shopping cart,
+      about, and contact, all under one consistent brand.
+    </p>
+
+    <div class="pp-meta">
+      <span><strong>Year:</strong> Junior</span>
+      <span><strong>Type:</strong> Multi-page e-commerce site</span>
+      <span><strong>Role:</strong> Group / collaborative build</span>
+    </div>
+
+    <div class="pp-actions">
+      <a class="pp-btn pp-btn--primary" href="https://user319183.github.io/toycompany/" target="_blank" rel="noopener">Visit the live site ↗</a>
+      <a class="pp-btn" href="https://github.com/User319183/toycompany" target="_blank" rel="noopener">View on GitHub ↗</a>
+    </div>
+
+    <section class="pp-section">
+      <h2>What it is</h2>
+      <p>
+        Little Bird Toys is a fictional handcrafted-wooden-toy shop, built
+        out as a real five-page e-commerce experience. The homepage
+        introduces the brand, the products page lists the catalog with
+        filtering and sorting, the cart page handles add / remove / update
+        with live order summaries, and about + contact pages round out
+        the site like a real small business.
+      </p>
+    </section>
+
+    <section class="pp-section">
+      <h2>Pages</h2>
+      <ul>
+        <li><strong>index.html</strong> — homepage with featured products and hero.</li>
+        <li><strong>products.html</strong> — full catalog with filter + sort.</li>
+        <li><strong>cart.html</strong> — shopping cart with quantity controls and order totals.</li>
+        <li><strong>about.html</strong> — brand story and CTA back to the shop.</li>
+        <li><strong>contact.html</strong> — contact form and information.</li>
+      </ul>
+    </section>
+
+    <section class="pp-section">
+      <h2>Tech stack</h2>
+      <ul class="pp-stack">
+        <li>HTML5</li>
+        <li>CSS3 (component-based)</li>
+        <li>JavaScript (ES6+)</li>
+        <li>Bootstrap 5</li>
+        <li>Font Awesome 6</li>
+        <li>GitHub Pages</li>
+      </ul>
+    </section>
+
+    <section class="pp-section">
+      <h2>Highlights</h2>
+      <div class="pp-card">
+        <h3>Real shopping-cart state</h3>
+        <p>The cart actually works — add items, change quantities, remove
+        items, and watch the order summary recalculate in real time.
+        First project where I shipped genuine app-style state, not just
+        styled pages.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Component-based CSS</h3>
+        <p>Stylesheets are split into <code>components/</code> and
+        <code>utilities/</code> folders so every page reuses the same
+        building blocks instead of re-styling from scratch.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Responsive across every device</h3>
+        <p>Mobile, tablet, and desktop layouts all work with no separate
+        markup — Bootstrap 5's grid plus custom breakpoints.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Accessibility-first</h3>
+        <p>Semantic HTML and ARIA attributes throughout so the site reads
+        properly in a screen reader, not just visually.</p>
+      </div>
+    </section>
+
+    <section class="pp-section">
+      <h2>What I learned</h2>
+      <ul>
+        <li>How to architect a multi-page product site so every page feels
+        like the same product, not five separate ones.</li>
+        <li>Real client-side state management — cart contents, quantity
+        changes, totals — without a framework.</li>
+        <li>Why splitting CSS into reusable components pays off the moment
+        you add a second page.</li>
+        <li>Collaborative GitHub workflow: branches, pull requests, and
+        merging features into one cohesive build.</li>
+      </ul>
+    </section>
+
+    <footer class="pp-footer">
+      <span>Ethan Chang · Class of 2026</span>
+      <a href="../index.html">← Back to the Journey Map</a>
+    </footer>
+  </main>
+</body>
+</html>

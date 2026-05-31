@@ -1,0 +1,195 @@
+/* =============================================================
+   Featured project pages — shared stylesheet
+   Reuses the same palette / type as the main Journey Map site,
+   but in a calmer, scrollable document layout (no map / canvas).
+   ============================================================= */
+:root {
+  --navy:        #0e1430;
+  --navy-2:      #161d3f;
+  --navy-3:      #222a55;
+  --accent:      #ff8b5a;
+  --accent-2:    #ffd166;
+  --accent-dark: #c25a32;
+  --cream:       #fff7ec;
+  --line:        rgba(255,255,255,.10);
+  --shadow-card: 0 24px 60px -20px rgba(0,0,0,.5),
+                 0 8px 18px -8px rgba(0,0,0,.35);
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(1200px 600px at 80% -100px, rgba(255,139,90,.12), transparent 60%),
+    radial-gradient(800px 500px at 10% 110%, rgba(94,123,255,.15), transparent 65%),
+    linear-gradient(180deg, #06091e 0%, #101848 60%, #2a2363 100%);
+  background-attachment: fixed;
+  color: #e8ecff;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Top bar ---------- */
+.pp-topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(14, 20, 48, .55);
+  backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 10;
+}
+.pp-brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  letter-spacing: .2px;
+}
+.pp-brand span { color: var(--accent-2); margin-right: 6px; }
+.pp-back {
+  color: #e8ecff;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: background .2s ease, border-color .2s ease;
+}
+.pp-back:hover { background: rgba(255,255,255,.06); border-color: var(--accent-2); }
+
+/* ---------- Layout ---------- */
+.pp-wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+.pp-eyebrow {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 209, 102, .35);
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+
+h1.pp-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.1;
+  margin: 0 0 14px;
+  color: #fff;
+}
+.pp-lede {
+  font-size: 19px;
+  color: #c8cdee;
+  margin: 0 0 28px;
+  max-width: 60ch;
+}
+
+/* ---------- Action bar ---------- */
+.pp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0 40px;
+}
+.pp-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid var(--line);
+  color: #e8ecff;
+  background: rgba(255,255,255,.04);
+  transition: transform .15s ease, background .2s ease, border-color .2s ease;
+}
+.pp-btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.08); }
+.pp-btn--primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border-color: transparent;
+  color: #2a1408;
+}
+.pp-btn--primary:hover { background: linear-gradient(135deg, #ffa37a, var(--accent)); }
+
+/* ---------- Sections ---------- */
+.pp-section { margin: 44px 0; }
+.pp-section h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin: 0 0 14px;
+  color: var(--accent-2);
+}
+.pp-section p, .pp-section li { color: #d6daf3; }
+.pp-section ul { padding-left: 1.2em; margin: 10px 0; }
+.pp-section li { margin: 6px 0; }
+
+/* ---------- Tech stack pills ---------- */
+.pp-stack {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  list-style: none; padding: 0; margin: 12px 0 0;
+}
+.pp-stack li {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: .04em;
+  padding: 6px 12px;
+  background: rgba(94,123,255,.15);
+  border: 1px solid rgba(94,123,255,.35);
+  color: #c8d4ff;
+  border-radius: 999px;
+}
+
+/* ---------- Card / callout ---------- */
+.pp-card {
+  background: rgba(22, 29, 63, .65);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px 26px;
+  box-shadow: var(--shadow-card);
+}
+.pp-card + .pp-card { margin-top: 16px; }
+.pp-card h3 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  margin: 0 0 8px;
+  color: #fff;
+}
+
+/* ---------- Meta strip ---------- */
+.pp-meta {
+  display: flex; flex-wrap: wrap; gap: 18px;
+  font-size: 13px;
+  color: #a4abcf;
+  margin-bottom: 20px;
+}
+.pp-meta span strong { color: #e8ecff; font-weight: 600; }
+
+/* ---------- Footer ---------- */
+.pp-footer {
+  margin-top: 60px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: #8a90b3;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.pp-footer a { color: #c8cdee; text-decoration: none; }
+.pp-footer a:hover { color: var(--accent-2); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .pp-wrap { padding: 36px 18px 72px; }
+  .pp-topbar { padding: 14px 18px; }
+}

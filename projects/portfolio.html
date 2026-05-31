@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journey Map Portfolio · Ethan Chang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./project-page.css" />
+</head>
+<body>
+  <header class="pp-topbar">
+    <a href="../index.html" class="pp-brand"><span>◇</span>Ethan's Journey Map</a>
+    <a href="../index.html" class="pp-back">← Back to the map</a>
+  </header>
+
+  <main class="pp-wrap">
+    <span class="pp-eyebrow">Featured · Senior Year · Capstone</span>
+    <h1 class="pp-title">Journey Map Portfolio (This Site)</h1>
+    <p class="pp-lede">
+      An interactive map of my three years in the Web Design Pathway —
+      drive a car around a hand-illustrated SVG world, visit themed
+      buildings, and explore project data pulled from a JSON file with
+      fetch.
+    </p>
+
+    <div class="pp-meta">
+      <span><strong>Year:</strong> Senior · Capstone</span>
+      <span><strong>Type:</strong> Interactive portfolio</span>
+      <span><strong>Role:</strong> Solo design + build</span>
+    </div>
+
+    <div class="pp-actions">
+      <a class="pp-btn pp-btn--primary" href="https://ethanchang13.github.io/Portfolio/" target="_blank" rel="noopener">Visit the live site ↗</a>
+      <a class="pp-btn" href="https://github.com/ethanchang13/Portfolio" target="_blank" rel="noopener">View on GitHub ↗</a>
+    </div>
+
+    <section class="pp-section">
+      <h2>What it is</h2>
+      <p>
+        Instead of a traditional scrolling portfolio, this site is a
+        small drivable world. The car has real momentum, the sky has
+        parallax depth, fireworks burst over a castle on a loop, and
+        every building corresponds to a stop on my journey through the
+        program. Project content is loaded from a single
+        <code>projects.json</code> file so every card is data-driven.
+      </p>
+    </section>
+
+    <section class="pp-section">
+      <h2>Tech stack</h2>
+      <ul class="pp-stack">
+        <li>HTML5</li>
+        <li>CSS3 (custom properties, animations)</li>
+        <li>Vanilla JavaScript (no frameworks)</li>
+        <li>SVG (hand-illustrated world)</li>
+        <li>Web Audio API</li>
+        <li>Fetch API + JSON</li>
+        <li>GitHub Pages</li>
+      </ul>
+    </section>
+
+    <section class="pp-section">
+      <h2>Highlights</h2>
+      <div class="pp-card">
+        <h3>A real, drivable car</h3>
+        <p>Acceleration, friction, steering, and clamped world bounds —
+        all hand-tuned to <em>feel</em> right rather than just move.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Parallax SVG world</h3>
+        <p>Sky, mountains, and the main world all scroll at different
+        rates as the car moves. The world is illustrated as inline SVG so
+        every shape stays crisp at any zoom.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Web Audio engine + ambient sound</h3>
+        <p>The car's engine is layered live: a deep sub-sine for the
+        rumble plus a detuned sawtooth for harmonic growl, both modulated
+        by current speed. Chimes, whooshes, splashes, rocket roars, and
+        firework cracks are all synthesized from scratch, not sampled.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Keyboard <em>and</em> touch parity</h3>
+        <p>Desktop visitors drive with WASD or arrows; mobile visitors get
+        a drag-joystick and action button. Both control schemes drive the
+        exact same physics.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Data-driven content</h3>
+        <p>Every project card on the site is rendered from
+        <code>projects.json</code> via <code>fetch</code> — there is no
+        hard-coded project markup. Adding a project is a JSON edit, full
+        stop.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Ambient life</h3>
+        <p>Rockets launch from a pad on a timer, fireworks burst over the
+        castle, hot-air balloons drift across the sky, and a flock of
+        birds crosses in V formation. The world feels alive even when
+        you're not driving.</p>
+      </div>
+    </section>
+
+    <section class="pp-section">
+      <h2>What I learned</h2>
+      <ul>
+        <li>How to architect a moderately complex vanilla-JS app without
+        reaching for a framework.</li>
+        <li>Game-feel: small things like easing, sound, and feedback
+        completely change how an interaction reads.</li>
+        <li>Web Audio from scratch — synthesizing engines, chimes, and
+        explosions instead of shipping audio files.</li>
+        <li>Building parity across input devices so the experience isn't
+        second-class on mobile.</li>
+        <li>That a portfolio can be a piece of work in itself, not just
+        a container for other work.</li>
+      </ul>
+    </section>
+
+    <footer class="pp-footer">
+      <span>Ethan Chang · Class of 2026</span>
+      <a href="../index.html">← Back to the Journey Map</a>
+    </footer>
+  </main>
+</body>
+</html>

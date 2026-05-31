@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Game · Ethan Chang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./project-page.css" />
+</head>
+<body>
+  <header class="pp-topbar">
+    <a href="../index.html" class="pp-brand"><span>◇</span>Ethan's Journey Map</a>
+    <a href="../index.html" class="pp-back">← Back to the map</a>
+  </header>
+
+  <main class="pp-wrap">
+    <span class="pp-eyebrow">Featured · Junior Year</span>
+    <h1 class="pp-title">Memory Game</h1>
+    <p class="pp-lede">
+      A themed multi-page card-matching game — splash page, instructions
+      page, and the game page itself, all sharing one consistent design
+      system.
+    </p>
+
+    <div class="pp-meta">
+      <span><strong>Year:</strong> Junior</span>
+      <span><strong>Type:</strong> Browser game (multi-page)</span>
+      <span><strong>Role:</strong> Solo build</span>
+    </div>
+
+    <div class="pp-actions">
+      <a class="pp-btn pp-btn--primary" href="https://ethanchang13.github.io/Memory-Game/" target="_blank" rel="noopener">Play the game ↗</a>
+      <a class="pp-btn" href="https://github.com/ethanchang13/Memory-Game" target="_blank" rel="noopener">View on GitHub ↗</a>
+    </div>
+
+    <section class="pp-section">
+      <h2>What it is</h2>
+      <p>
+        The classic flip-and-match memory game, but designed as a small
+        suite of pages rather than a single screen. There's a landing page
+        that introduces the game, an instructions page, and the actual
+        game board — all sharing one visual identity so they feel like
+        one product.
+      </p>
+    </section>
+
+    <section class="pp-section">
+      <h2>Tech stack</h2>
+      <ul class="pp-stack">
+        <li>HTML5</li>
+        <li>CSS3 (per-page stylesheets)</li>
+        <li>Vanilla JavaScript</li>
+        <li>Themed image assets</li>
+        <li>GitHub Pages</li>
+      </ul>
+    </section>
+
+    <section class="pp-section">
+      <h2>Highlights</h2>
+      <div class="pp-card">
+        <h3>Multi-page architecture</h3>
+        <p>Splash → instructions → game. Each page has one job, and the
+        navigation between them feels intentional, not bolted on.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Card flip + match logic</h3>
+        <p>Tracks revealed cards, compares pairs, locks the board between
+        guesses, and resets non-matching cards cleanly so the game state
+        never gets confused.</p>
+      </div>
+      <div class="pp-card">
+        <h3>Themed image set</h3>
+        <p>Custom card faces tied to the site's color palette so the game
+        board feels like part of the world, not a generic grid of icons.</p>
+      </div>
+    </section>
+
+    <section class="pp-section">
+      <h2>What I learned</h2>
+      <ul>
+        <li>How to architect a small site as a <em>suite</em> of pages with a
+        shared identity.</li>
+        <li>Locking interaction during animation windows — the difference
+        between a janky and a polished game feel.</li>
+        <li>Writing documentation comments while building, not after.</li>
+      </ul>
+    </section>
+
+    <footer class="pp-footer">
+      <span>Ethan Chang · Class of 2026</span>
+      <a href="../index.html">← Back to the Journey Map</a>
+    </footer>
+  </main>
+</body>
+</html>
