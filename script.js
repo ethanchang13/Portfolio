@@ -1159,7 +1159,7 @@ function renderFeatured() {
   const y3 = featured.filter(p => p.year === 3);
   return `
     <p>Eight of my best projects across all three years — each one has its own dedicated <em>Project Page</em> with the tech stack, features, and what I learned. Click <em>View Details</em> for the quick version, or <em>Project Page</em> for the full write-up.</p>
-    ${renderProjectGrid(y1, { showDetail: true, galleryClass: 'gallery--2col' })}
+    ${renderProjectGrid(y1, { showDetail: true, galleryClass: 'gallery--3col' })}
     ${renderProjectGrid(y2, { showDetail: true, galleryClass: 'gallery--3col' })}
     ${renderProjectGrid(y3, { showDetail: true, galleryClass: 'gallery--3col' })}
   `;
