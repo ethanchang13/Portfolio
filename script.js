@@ -1061,9 +1061,9 @@ function openProjectDetail(id) {
     <h3>Tags</h3>
     <ul class="proj__tags">${p.tags.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
     <div class="proj__actions" style="margin-top:14px;">
-      <a class="is-primary" href="${escapeAttr(p.liveLink)}" target="_blank" rel="noopener">Live Project ↗</a>
+      <a href="${escapeAttr(p.liveLink)}" target="_blank" rel="noopener">Live Project ↗</a>
       ${p.githubLink ? `<a href="${escapeAttr(p.githubLink)}" target="_blank" rel="noopener">${codeLabel}</a>` : ''}
-      ${p.detailPage ? `<a href="${escapeAttr(p.detailPage)}" target="_blank" rel="noopener">Full Project Page ↗</a>` : ''}
+      ${p.detailPage ? `<a class="is-primary" href="${escapeAttr(p.detailPage)}" target="_blank" rel="noopener">Project Page ↗</a>` : ''}
     </div>
   `;
   document.getElementById('detail-modal').hidden = false;
@@ -1100,7 +1100,7 @@ function renderAboutMe() {
   return `
     <div class="about">
       <img class="about__photo" alt="Illustrated avatar of Ethan Chang"
-           src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><rect fill='%23e7d6a6' width='200' height='200'/><circle cx='100' cy='80' r='34' fill='%23c25a32'/><rect x='50' y='120' width='100' height='80' rx='20' fill='%23c25a32'/><text x='100' y='195' font-family='Inter,sans-serif' font-size='10' fill='%231a2240' text-anchor='middle'>Ethan Chang</text></svg>" />
+           src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><rect fill='%23e7d6a6' width='200' height='200'/><circle cx='100' cy='80' r='34' fill='%23c25a32'/><rect x='50' y='120' width='100' height='80' rx='20' fill='%23c25a32'/></svg>" />
       <div>
         <p>
           <strong>Hi, I'm Ethan Chang.</strong> I'm a senior in the Web
@@ -1116,6 +1116,15 @@ function renderAboutMe() {
           sites, data-driven layouts, and interactive worlds like the
           one you're driving around right now.
         </p>
+        <h3>Skillset</h3>
+        <ul class="about__interests">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+          <li>jQuery</li>
+          <li>Vue</li>
+          <li>JSON</li>
+        </ul>
         <h3>Things I'm into</h3>
         <ul class="about__interests">
           <li>Coding</li>
@@ -1177,7 +1186,7 @@ function renderProjectGrid(list, opts = {}) {
             <div class="proj__actions">
               <a href="${escapeAttr(p.liveLink)}" target="_blank" rel="noopener">Live ↗</a>
               ${p.githubLink ? `<a href="${escapeAttr(p.githubLink)}" target="_blank" rel="noopener">${codeLabel}</a>` : ''}
-              ${opts.showDetail ? `<button${p.detailPage ? '' : ' class="is-primary"'} data-detail-id="${p.id}">View Details</button>` : ''}
+              ${opts.showDetail ? `<button data-detail-id="${p.id}">View Details</button>` : ''}
               ${p.detailPage ? `<a class="is-primary" href="${escapeAttr(p.detailPage)}" target="_blank" rel="noopener">Project Page ↗</a>` : ''}
             </div>
           </div>
