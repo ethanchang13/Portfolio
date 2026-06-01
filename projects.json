@@ -588,27 +588,5 @@
       "Multi-page",
       "Branding"
     ]
-  },
-  {
-    "id": 29,
-    "year": 3,
-    "title": "Journey Map Portfolio (This Site)",
-    "category": "Interactive Portfolio",
-    "featured": false,
-    "description": "This portfolio: an interactive map of my three years in the program. Drive a car around a hand-illustrated SVG world, visit themed buildings, and pull project data from a JSON file with fetch.",
-    "skillsLearned": "Vanilla JS architecture without frameworks, custom physics for the car, SVG illustration and parallax layers, WebAudio for engine + ambient sound, keyboard + touch input parity, JSON-driven content rendering.",
-    "reflection": "The capstone - and the most fun. Every technique from three years had to come together: layout, animation, data, accessibility, sound. Making it feel like a *place* instead of a list was the hardest design call.",
-    "image": "images/projects/journey-map-portfolio-this-site.png",
-    "liveLink": "https://ethanchang13.github.io/Portfolio/",
-    "githubLink": "https://github.com/ethanchang13/Portfolio",
-    "detailPage": "projects/portfolio.html",
-    "tags": [
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "SVG",
-      "WebAudio",
-      "Portfolio"
-    ]
   }
 ]

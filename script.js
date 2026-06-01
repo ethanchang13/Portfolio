@@ -1099,8 +1099,8 @@ function updateProgress() {
 function renderAboutMe() {
   return `
     <div class="about">
-      <img class="about__photo" alt="Illustrated avatar of Ethan Chang"
-           src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><rect fill='%23e7d6a6' width='200' height='200'/><circle cx='100' cy='80' r='34' fill='%23c25a32'/><rect x='50' y='120' width='100' height='80' rx='20' fill='%23c25a32'/></svg>" />
+      <img class="about__photo" alt="Photo of Ethan Chang"
+           src="images/ethan-photo.png" />
       <div>
         <p>
           <strong>Hi, I'm Ethan Chang.</strong> I'm a senior in the Web
@@ -1134,6 +1134,10 @@ function renderAboutMe() {
           <li>Clubs</li>
           <li>Personal hobbies</li>
         </ul>
+        <h3>What's next</h3>
+        <p>
+          After graduation, I'm attending the University of Michigan as a Michigan Research and Discovery Scholar (MRADS), where I'll double major in Computer Science and Mathematics. There, I'll expand my knowledge of software development, artificial intelligence, machine learning, and mathematical modeling through advanced coursework and research opportunities. My experience in web design has shown me how technology can combine creativity, problem solving, and user experience to create meaningful solutions. The programming, design, and analytical skills I have developed through web design will continue to play an important role as I work on larger and more complex projects, helping me create technology that is both effective and accessible.
+        </p>
       </div>
     </div>
   `;
