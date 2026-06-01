@@ -1105,13 +1105,7 @@ body.is-day .bg-skyline { opacity: .72; filter: saturate(.7) brightness(1.05); }
 
 /* ---------- About / Profile block ---------- */
 .about {
-  display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: start;
-}
-.about__photo {
-  width: 180px; height: 180px;
-  border-radius: 22px; object-fit: cover;
-  background: #ddd;
-  box-shadow: var(--shadow-soft);
+  display: grid; gap: 24px;
 }
 .about__interests {
   display: flex; flex-wrap: wrap; gap: 6px;
@@ -1395,7 +1389,6 @@ body:has(.touch-controls.is-active) .hud-instructions { display: none; }
   }
   .welcome__card { padding: 28px 22px; }
   .about { grid-template-columns: 1fr; text-align: center; }
-  .about__photo { margin: 0 auto; }
   .about__interests { justify-content: center; }
   .modal__body { padding: 14px 18px 22px; }
   .modal__head { padding: 18px 18px 8px; }

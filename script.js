@@ -1099,8 +1099,6 @@ function updateProgress() {
 function renderAboutMe() {
   return `
     <div class="about">
-      <img class="about__photo" alt="Photo of Ethan Chang"
-           src="images/ethan-photo.png" />
       <div>
         <p>
           <strong>Hi, I'm Ethan Chang.</strong> I'm a senior in the Web
@@ -1136,7 +1134,9 @@ function renderAboutMe() {
         </ul>
         <h3>What's next</h3>
         <p>
-          After graduation, I'm attending the University of Michigan as a Michigan Research and Discovery Scholar (MRADS), where I'll double major in Computer Science and Mathematics. There, I'll expand my knowledge of software development, artificial intelligence, machine learning, and mathematical modeling through advanced coursework and research opportunities. My experience in web design has shown me how technology can combine creativity, problem solving, and user experience to create meaningful solutions. The programming, design, and analytical skills I have developed through web design will continue to play an important role as I work on larger and more complex projects, helping me create technology that is both effective and accessible.
+          I'm continuing to grow as a designer and developer while preparing
+          for college and the next chapter of my work in interactive web
+          experiences.
         </p>
       </div>
     </div>
@@ -1249,6 +1249,9 @@ function renderReflection() {
 
 function renderFuture() {
   return `
+    <p>
+      After graduation, I'm attending the University of Michigan as a Michigan Research and Discovery Scholar (MRADS), where I'll double major in Computer Science and Mathematics. There, I'll expand my knowledge of software development, artificial intelligence, machine learning, and mathematical modeling through advanced coursework and research opportunities. My experience in web design has shown me how technology can combine creativity, problem solving, and user experience to create meaningful solutions. The programming, design, and analytical skills I have developed through web design will continue to play an important role as I work on larger and more complex projects, helping me create technology that is both effective and accessible.
+    </p>
     <p>
       After high school I'm planning to study computer science with a
       design minor — I want to keep working at the seam between code
