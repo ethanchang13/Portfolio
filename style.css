@@ -1107,6 +1107,9 @@ body.is-day .bg-skyline { opacity: .72; filter: saturate(.7) brightness(1.05); }
 .about {
   display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: start;
 }
+.about--no-photo {
+  display: block;
+}
 .about__photo {
   width: 180px; height: 180px;
   border-radius: 22px; object-fit: cover;

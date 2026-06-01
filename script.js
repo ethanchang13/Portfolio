@@ -1098,23 +1098,27 @@ function updateProgress() {
    ============================================================= */
 function renderAboutMe() {
   return `
-    <div class="about">
-      <img class="about__photo" alt="Photo of Ethan Chang"
-           src="images/ethan-photo.png" />
+    <div class="about about--no-photo">
       <div>
         <p>
-          <strong>Hi, I'm Ethan Chang.</strong> I'm a senior in the Web
-          Design Pathway Program, and I spend most of my time turning
-          ideas into things you can actually click on. I like building
-          sites that feel intentional — where the layout, the colors,
-          and the little interactions all agree with each other.
+          <strong>Hi, I'm Ethan Chang.</strong> I am a senior in the Web
+          Design Pathway Program. Growing up, I spent different parts of my
+          childhood in both Taiwan and the United States, adapting to new
+          schools, communities, and cultures along the way. Those experiences
+          taught me how to be flexible, open minded, and comfortable stepping
+          into unfamiliar environments. As I moved between countries, I
+          developed an appreciation for different perspectives and learned how
+          to connect with people from diverse backgrounds.
         </p>
         <p>
-          I got into web design the first time a stylesheet I wrote
-          actually changed something on the page. Three years later I'm
-          still chasing that feeling, just on bigger projects: multi-page
-          sites, data-driven layouts, and interactive worlds like the
-          one you're driving around right now.
+          Today, I am passionate about computer science, mathematics, and web
+          design because they challenge me to think critically and create
+          solutions from the ground up. I enjoy tackling complex problems,
+          whether through programming projects, mathematical research,
+          hackathons, or data and actuarial competitions. What excites me most
+          is the process of turning ideas into something tangible, combining
+          logic, creativity, and persistence to build solutions that can make
+          a meaningful impact.
         </p>
         <h3>Skillset</h3>
         <ul class="about__interests">
@@ -1128,16 +1132,12 @@ function renderAboutMe() {
         <h3>Things I'm into</h3>
         <ul class="about__interests">
           <li>Coding</li>
-          <li>Design</li>
-          <li>Running</li>
-          <li>Music</li>
-          <li>Clubs</li>
-          <li>Personal hobbies</li>
+          <li>Mathematics</li>
+          <li>Badminton</li>
+          <li>Pickleball</li>
+          <li>Drumming</li>
+          <li>Video games</li>
         </ul>
-        <h3>What's next</h3>
-        <p>
-          After graduation, I'm attending the University of Michigan as a Michigan Research and Discovery Scholar (MRADS), where I'll double major in Computer Science and Mathematics. There, I'll expand my knowledge of software development, artificial intelligence, machine learning, and mathematical modeling through advanced coursework and research opportunities. My experience in web design has shown me how technology can combine creativity, problem solving, and user experience to create meaningful solutions. The programming, design, and analytical skills I have developed through web design will continue to play an important role as I work on larger and more complex projects, helping me create technology that is both effective and accessible.
-        </p>
       </div>
     </div>
   `;
@@ -1203,46 +1203,80 @@ function renderProjectGrid(list, opts = {}) {
 function renderReflection() {
   return `
     <p>
-      Three years ago I walked into the Web Design Pathway Program not
-      really knowing what a div was. Today I'm shipping responsive,
-      JSON-powered sites with custom design systems. The journey wasn't
-      a straight line — it was more like the road on this map: looping,
-      branching, sometimes doubling back.
+      The Web Design Pathway Program has been the place where I stopped
+      doing assignments and started building things that feel like they
+      belong to me. It taught me how to bring together the skills I am
+      most interested in, the values I care about, and the attitude I want
+      to bring to future work.
     </p>
-    <h3>How I grew</h3>
+    <h3>My overall experience</h3>
     <p>
-      Sophomore year I was thrilled when a Bootstrap grid stacked
-      correctly on mobile. Junior year I started caring about why it
-      stacked — breakpoints, the box model, the cascade. By senior
-      year I stopped thinking page-by-page and started thinking in
-      systems: a palette, a type scale, a component, reused everywhere.
-      The biggest growth wasn't a single skill, it was learning to
-      design <em>and</em> code at the same time instead of treating
-      them as separate jobs.
+      The class helped me develop a strong sense of craft. I learned the
+      fundamentals of HTML, CSS, and JavaScript, and I started to see how
+      those skills fit into larger design decisions. I also learned the
+      value of persistence, of rewriting something until it feels right.
+      I became more curious about why a layout works, more disciplined about
+      working with constraints, and more patient with the process of making.
+      My interest in design grew alongside my interest in writing code, and
+      that combination now feels like the core of how I enjoy building.
     </p>
-    <h3>Key challenges</h3>
+    <h3>How I have grown</h3>
     <p>
-      Getting the car physics on this site to feel <em>good</em> took
-      way longer than building the SVG world it drives through. Before
-      that, the AJAX project's first version rendered before the data
-      arrived — my first real fight with async code. And the KeySpace
-      site taught me that holding a consistent brand across four pages
-      is harder than styling one page well.
+      In year one I learned to think in structure. The grid and the layout
+      rules were new territory, and I spent a lot of time learning how to
+      put pieces in the right place. In year two I learned to think in
+      experience. I started paying attention to how people move through a
+      page and how interactions feel when a button is clicked or an image
+      appears.
     </p>
-    <h3>Turning points</h3>
     <p>
-      The moment everything shifted was when I stopped copying tutorials
-      and started making real choices — picking a palette because it
-      fit the project, not because the tutorial used it; writing my
-      own JS instead of pasting in a snippet. Critique sessions helped
-      too: the first time a peer pointed out my contact page had no
-      clear CTA, I realized other people see things I can't.
+      The Memory Game and the Roster Site were both moments where I had to
+      make the page feel stable and reliable. The Memory Game taught me how
+      to manage state, handle user actions, and make feedback clear.
+      The Roster Site taught me how to make a data-heavy page feel easy to
+      scan and how to keep a simple design system working across many items.
+      Those experiences changed the way I think about building something
+      that people can actually use.
     </p>
-    <h3>What I'm proud of</h3>
+    <h3>Key moments and challenges</h3>
     <p>
-      This portfolio. Not because it's the most complicated thing I've
-      built, but because every piece of it — the world, the physics,
-      the audio, the data layer — is a choice I made on purpose.
+      The Snowflake Designer Lab was a big challenge because it could have
+      become cluttered very quickly. It forced me to choose which controls
+      mattered most and to keep the interface clean while still making the
+      interaction fun. I learned that a project can be ambitious and still
+      feel thoughtful if the design is organized.
+    </p>
+    <p>
+      MHSToday was a different kind of challenge. It taught me how to pay
+      attention to writing for a real audience, to think about readability,
+      and to respect deadlines. That project showed me how design and
+      communication work together when people are expecting a polished
+      final product.
+    </p>
+    <p>
+      Little Bird Toys and KeySpace Piano Studio taught me the importance
+      of consistency. Those projects pushed me to keep the same visual
+      language across multiple sections, to make brand choices that felt
+      intentional, and to turn separate pages into a coherent whole.
+      I learned how much trust is built when a site feels unified.
+    </p>
+    <h3>Why this feels personal</h3>
+    <p>
+      This portfolio feels personal because it reflects the way I think now.
+      I am not just showing finished pages, I am showing the way I learned
+      to care about the process. I care about clarity, about making things
+      that are useful, and about building with purpose.
+    </p>
+    <p>
+      I am proud of these projects because they represent the habits I have
+      developed: testing, refining, and listening to feedback. The work is
+      not perfect, but it is honest, and that honesty is what makes it feel
+      like my own.
+    </p>
+    <p>
+      Above all, I want the pages I build to be welcoming and easy to use.
+      That value has shaped the way I design, and it is the reason this
+      portfolio feels like more than a collection of assignments.
     </p>
   `;
 }
@@ -1250,19 +1284,7 @@ function renderReflection() {
 function renderFuture() {
   return `
     <p>
-      After high school I'm planning to study computer science with a
-      design minor — I want to keep working at the seam between code
-      and visual design instead of picking a side. Web design is what
-      pulled me in, but the same instincts apply to product design,
-      front-end engineering, and interactive media.
-    </p>
-    <p>
-      Long term, I'd love to work on tools that feel as good as they
-      look — apps and sites where the interaction is the product, not
-      a wrapper around it. The Web Design Pathway taught me how to
-      think in systems, how to take feedback without flinching, and
-      how to ship something even when it isn't perfect. I plan to
-      bring all of that into whatever comes next.
+      After graduation, I'm attending the University of Michigan as a Michigan Research and Discovery Scholar (MRADS), where I'll double major in Computer Science and Mathematics. There, I'll expand my knowledge of software development, artificial intelligence, machine learning, and mathematical modeling through advanced coursework and research opportunities. My experience in web design has shown me how technology can combine creativity, problem solving, and user experience to create meaningful solutions. The programming, design, and analytical skills I have developed through web design will continue to play an important role as I work on larger and more complex projects, helping me create technology that is both effective and accessible.
     </p>
   `;
 }
